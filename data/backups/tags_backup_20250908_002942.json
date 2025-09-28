@@ -1,0 +1,22 @@
+[
+  {
+    "id": "new",
+    "name": "Nouveau",
+    "color": "#28a745"
+  },
+  {
+    "id": "limited",
+    "name": "Édition limitée",
+    "color": "#dc3545"
+  },
+  {
+    "id": "vintage",
+    "name": "Vintage",
+    "color": "#6c757d"
+  },
+  {
+    "id": "player",
+    "name": "Joueur",
+    "color": "#007bff"
+  }
+]
