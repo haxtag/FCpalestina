@@ -1,0 +1,97 @@
+{
+  "last_updated": "2025-09-29T00:18:55.748791",
+  "source": "vinted_real_scraper",
+  "total_reviews": 9,
+  "reviews": [
+    {
+      "id": 1,
+      "username": "rosiecol3",
+      "rating": 5,
+      "comment": "Stunning!",
+      "date": "2 jours",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.228697"
+    },
+    {
+      "id": 2,
+      "username": "sosso3440",
+      "rating": 5,
+      "comment": "Au top et très bonne qualité je recommande !!",
+      "date": "4 jours",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.310826"
+    },
+    {
+      "id": 3,
+      "username": "youyou21259650",
+      "rating": 5,
+      "comment": "Maillot de Bonne qualité 10/10",
+      "date": "1 semaine",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.447533"
+    },
+    {
+      "id": 4,
+      "username": "mvingt266",
+      "rating": 5,
+      "comment": "Rien à dire je recommande",
+      "date": "1 semaine",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.504019"
+    },
+    {
+      "id": 5,
+      "username": "yanisaguaguenia",
+      "rating": 5,
+      "comment": "Nickel",
+      "date": "2 semaines",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.547609"
+    },
+    {
+      "id": 6,
+      "username": "yacen.ouhyan",
+      "rating": 5,
+      "comment": "Parfait, merci",
+      "date": "2 semaines",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.632187"
+    },
+    {
+      "id": 7,
+      "username": "mendoza2195",
+      "rating": 5,
+      "comment": "Parfait",
+      "date": "2 semaines",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.674188"
+    },
+    {
+      "id": 8,
+      "username": "bohne234",
+      "rating": 5,
+      "comment": "Schneller Versand, alles toppi",
+      "date": "2 semaines",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.722031"
+    },
+    {
+      "id": 9,
+      "username": "micka872",
+      "rating": 5,
+      "comment": "Au top rien à dire",
+      "date": "3 semaines",
+      "source": "vinted_real",
+      "verified": true,
+      "extracted_at": "2025-09-29T00:18:52.762068"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Ticker Avis - FC Palestina</title>
+    <link rel="stylesheet" href="assets/css/components/reviews.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff1744;
+            --rose-color: #ff69b4;
+            --card-bg: #ffffff;
+            --text-primary: #333;
+            --text-muted: #666;
+            --border-color: #e0e0e0;
+            --surface-bg: #f8f9fa;
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--surface-bg);
+            padding: 20px;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-ticker {
+            max-width: 600px;
+            margin: 0 auto;
+            height: 400px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>🧪 Test Ticker Avis Vinted</h1>
+        <p>Vitesse: 55s desktop, 40s tablette, 30s mobile</p>
+    </div>
+    
+    <!-- Ticker des avis -->
+    <div class="reviews-ticker test-ticker">
+        <div class="ticker-live-indicator">
+            <div class="live-dot"></div>
+            <span class="live-text">LIVE</span>
+        </div>
+        <h3 class="ticker-title">
+            <i class="fas fa-star"></i>
+            Avis des Clients Vinted
+        </h3>
+        <div class="ticker-container">
+            <div class="ticker-fade-top"></div>
+            <div class="ticker-content" id="reviews-ticker-content">
+                <!-- Contenu généré dynamiquement -->
+            </div>
+            <div class="ticker-fade-bottom"></div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <p>📊 <strong id="reviews-count">0</strong> avis réels chargés</p>
+        <button onclick="location.reload()" style="padding: 10px 20px; background: var(--rose-color); color: white; border: none; border-radius: 6px; cursor: pointer;">
+            🔄 Recharger
+        </button>
+    </div>
+
+    <script src="assets/js/modules/reviews.js"></script>
+    <script>
+        // Attendre que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🧪 Test du ticker démarré');
+            
+            // Attendre que le reviewsManager soit initialisé
+            const waitForReviews = setInterval(() => {
+                if (window.reviewsManager && window.reviewsManager.reviews) {
+                    clearInterval(waitForReviews);
+                    document.getElementById('reviews-count').textContent = window.reviewsManager.reviews.length;
+                    console.log('✅ Avis chargés pour le test');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

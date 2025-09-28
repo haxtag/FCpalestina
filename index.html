@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="assets/css/components/modal.css?v=8">
     <link rel="stylesheet" href="assets/css/components/footer.css?v=8">
     <link rel="stylesheet" href="assets/css/components/pagination.css?v=4">
-    <link rel="stylesheet" href="assets/css/responsive.css?v=8">
+    <link rel="stylesheet" href="assets/css/components/reviews.css?v=4">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=10">
     <link rel="stylesheet" href="assets/css/dark-theme.css?v=3">
     <link rel="stylesheet" href="assets/css/logo-fixes.css?v=1">
     <link rel="stylesheet" href="fix_modal_styles.css?v=8">
@@ -177,6 +178,9 @@
                             <a href="#about" class="nav-link">À Propos</a>
                         </li>
                         <li class="nav-item">
+                            <a href="#reviews" class="nav-link">Avis</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#contact" class="nav-link">Contact</a>
                         </li>
                         <li class="nav-item">
@@ -280,6 +284,72 @@
                 </div>
                 <div class="about-image">
                     <img src="assets/img/fcp1.png" alt="FC Palestina" class="about-img">
+                </div>
+                <div class="about-reviews-ticker">
+                    <div class="ticker-header">
+                        <h3 class="ticker-title">
+                            <i class="fas fa-comments"></i>
+                            Avis des Clients Vinted
+                        </h3>
+                        <div class="ticker-indicator">
+                            <span class="ticker-dot"></span>
+                            <span class="ticker-live">LIVE</span>
+                        </div>
+                    </div>
+                    <div class="ticker-container" id="reviews-ticker-container">
+                        <div class="ticker-content" id="reviews-ticker-content">
+                            <!-- Les avis défileront verticalement ici -->
+                            <div class="ticker-review-item">
+                                <div class="ticker-review-text">
+                                    "Chargement des avis..."
+                                </div>
+                                <div class="ticker-review-meta">
+                                    <span class="ticker-review-author">FC Palestina</span>
+                                    <div class="ticker-review-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Avis de Nos Clients</h2>
+                <p class="section-subtitle">Découvrez ce que pensent nos clients de notre service</p>
+            </div>
+            
+            <div class="reviews-content">
+                <div class="reviews-stats">
+                    <div class="average-rating">
+                        <span class="rating-number" id="average-rating">4.9</span>
+                        <div class="stars" id="average-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="total-reviews">Basé sur <span id="total-reviews">8</span> avis</p>
+                    </div>
+                </div>
+                
+                <div class="reviews-grid" id="reviews-grid">
+                    <!-- Les avis seront chargés ici par JavaScript -->
+                </div>
+                
+                <div class="reviews-pagination" id="reviews-pagination">
+                    <!-- Pagination des avis -->
                 </div>
             </div>
         </div>
@@ -423,6 +493,7 @@
                         <li><a href="#home">Accueil</a></li>
                         <li><a href="#gallery">Collection</a></li>
                         <li><a href="#about">À Propos</a></li>
+                        <li><a href="#reviews">Avis</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -467,6 +538,7 @@
     <script src="assets/js/modules/api.js?v=8"></script>
     <script src="assets/js/modules/modal.js?v=15"></script>
     <script src="assets/js/modules/gallery.js?v=15"></script>
+    <script src="assets/js/modules/reviews.js?v=3"></script>
     <script src="assets/js/main.js?v=13"></script>
     <script src="force_buttons.js?v=8"></script>
     <script src="assets/js/ultra-simple-admin.js?v=14"></script>
