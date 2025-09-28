@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Générateur d'Images de Démonstration</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .demo-image { 
+            width: 300px; 
+            height: 200px; 
+            background: linear-gradient(45deg, #2c5530, #4a7c59);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .instructions { background: #f0f0f0; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Images de Démonstration FC Palestina</h1>
+    
+    <div class="instructions">
+        <h3>Instructions :</h3>
+        <p>1. Faites un clic droit sur chaque image ci-dessous</p>
+        <p>2. Sélectionnez "Enregistrer l'image sous..."</p>
+        <p>3. Sauvegardez dans le dossier <code>assets/images/jerseys/</code></p>
+        <p>4. Renommez les fichiers selon les noms indiqués</p>
+    </div>
+
+    <div class="demo-image" id="jersey1">Maillot Domicile 2024</div>
+    <div class="demo-image" id="jersey2">Maillot Extérieur 2024</div>
+    <div class="demo-image" id="jersey3">Maillot Spécial Liberté</div>
+    <div class="demo-image" id="jersey4">Maillot Vintage 1990</div>
+    <div class="demo-image" id="jersey5">Maillot Gardien 2024</div>
+    <div class="demo-image" id="jersey6">Maillot Célébration 2023</div>
+
+    <script>
+        // Générer des images avec des couleurs différentes
+        const images = [
+            { id: 'jersey1', color: 'linear-gradient(45deg, #2c5530, #4a7c59)', name: 'jersey-home-2024-1.jpg' },
+            { id: 'jersey2', color: 'linear-gradient(45deg, #ffffff, #e0e0e0)', name: 'jersey-away-2024-1.jpg' },
+            { id: 'jersey3', color: 'linear-gradient(45deg, #ff6b35, #ff8c42)', name: 'jersey-special-2024-1.jpg' },
+            { id: 'jersey4', color: 'linear-gradient(45deg, #8b4513, #a0522d)', name: 'jersey-vintage-1990-1.jpg' },
+            { id: 'jersey5', color: 'linear-gradient(45deg, #ffd700, #ffed4e)', name: 'jersey-keeper-2024-1.jpg' },
+            { id: 'jersey6', color: 'linear-gradient(45deg, #dc143c, #ff6347)', name: 'jersey-celebration-2023-1.jpg' }
+        ];
+
+        images.forEach(img => {
+            const element = document.getElementById(img.id);
+            element.style.background = img.color;
+            element.title = `Sauvegarder comme: ${img.name}`;
+        });
+    </script>
+</body>
+</html>

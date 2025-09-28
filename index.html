@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC Palestina - Collection de Maillots</title>
+    <meta name="description" content="Découvrez notre collection exclusive de maillots FC Palestina">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/main.css?v=8">
+    <link rel="stylesheet" href="assets/css/components/header.css?v=8">
+    <link rel="stylesheet" href="assets/css/components/gallery.css?v=8">
+    <link rel="stylesheet" href="assets/css/components/modal.css?v=8">
+    <link rel="stylesheet" href="assets/css/components/footer.css?v=8">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=8">
+    <link rel="stylesheet" href="fix_modal_styles.css?v=8">
+    
+    <!-- Admin Panel Styles -->
+    <style>
+        .admin-tab-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .admin-tab-btn.active {
+            background: #28a745;
+        }
+        .admin-tab-btn:hover {
+            background: #5a6268;
+        }
+        .admin-tab-content {
+            color: white;
+        }
+        .jersey-admin-card {
+            background: #343a40;
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+        }
+        .jersey-admin-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .jersey-admin-card h4 {
+            color: white;
+            margin: 10px 0;
+        }
+        .jersey-admin-card p {
+            color: #e9ecef;
+            margin: 5px 0;
+        }
+        .admin-form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .admin-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .admin-btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        .admin-btn-close {
+            background: #dc3545;
+            color: white;
+        }
+        .admin-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles forcés pour les nouvelles couleurs -->
+    <style>
+        :root {
+            --primary-color: #8B1538 !important;
+            --primary-dark: #5C0E26 !important;
+            --primary-light: #A61E47 !important;
+            --secondary-color: #FFB6C1 !important;
+            --accent-color: #FF1493 !important;
+            --text-dark: #000000 !important;
+            --text-light: #666666 !important;
+            --white: #ffffff !important;
+            --light-gray: #f5f5f5 !important;
+            --border-color: #e0e0e0 !important;
+        }
+        
+        .header {
+            background: rgba(139, 21, 56, 0.95) !important;
+        }
+        
+        .header.scrolled {
+            background: rgba(139, 21, 56, 0.98) !important;
+        }
+        
+        .brand-name {
+            color: var(--white) !important;
+        }
+        
+        .nav-link {
+            color: var(--white) !important;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--secondary-color) !important;
+            background: rgba(255, 182, 193, 0.2) !important;
+        }
+        
+        .bar {
+            background: var(--white) !important;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #8B1538 0%, #5C0E26 50%, #000000 100%) !important;
+            color: var(--white) !important;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8B1538, #A61E47) !important;
+            color: var(--white) !important;
+            box-shadow: 0 4px 15px rgba(139, 21, 56, 0.3) !important;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(139, 21, 56, 0.4) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="assets/img/fcp.png" alt="FC Palestina" class="logo">
+                    <span class="brand-name">FC Palestina</span>
+                </div>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#home" class="nav-link active">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#gallery" class="nav-link">Collection</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#about" class="nav-link">À Propos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#contact" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Collection FC Palestina</h1>
+                <p class="hero-subtitle">Découvrez notre collection exclusive de maillots officiels</p>
+                <a href="#gallery" class="btn btn-primary">Voir la Collection</a>
+            </div>
+            <div class="hero-image">
+                <img src="assets/img/fcp1.png" alt="FC Palestina" class="hero-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Notre Collection</h2>
+                <p class="section-subtitle">Explorez notre sélection de maillots FC Palestina</p>
+            </div>
+            
+            <!-- Filters -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="home">Domicile</button>
+                <button class="filter-btn" data-filter="away">Extérieur</button>
+                <button class="filter-btn" data-filter="special">Spéciaux</button>
+                <button class="filter-btn" data-filter="vintage">Vintage</button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="gallery-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Rechercher un maillot...">
+                </div>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Les maillots seront chargés dynamiquement ici -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="gallery-load-more">
+                <button class="btn btn-secondary" id="load-more">Charger Plus</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">À Propos de FC Palestina</h2>
+                    <p class="about-description">
+                        FC Palestina est plus qu'un simple club de football. C'est un symbole de résistance, 
+                        d'unité et de fierté pour le peuple palestinien. Notre collection de maillots reflète 
+                        cette passion et cette histoire riche.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Maillots Uniques</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Authentiques</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Mise à Jour</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="assets/img/fcp1.png" alt="FC Palestina" class="about-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contactez-Nous</h2>
+                <p class="section-subtitle">Une question sur notre collection ?</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>contact@fcpalestina.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Téléphone</h3>
+                            <p>+33 1 23 45 67 89</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Adresse</h3>
+                            <p>Paris, France</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Votre email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Votre message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/img/fcp.png" alt="FC Palestina" class="footer-logo-img">
+                        <span class="footer-brand">FC Palestina</span>
+                    </div>
+                    <p class="footer-description">
+                        Collection officielle de maillots FC Palestina. 
+                        Qualité, authenticité et passion du football.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Liens Rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#gallery">Collection</a></li>
+                        <li><a href="#about">À Propos</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Suivez-Nous</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 FC Palestina. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Image Preview -->
+    <div class="modal" id="image-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img class="modal-image" id="modal-image" src="" alt="">
+            <div class="modal-info">
+                <h3 class="modal-title" id="modal-title"></h3>
+                <p class="modal-description" id="modal-description"></p>
+            </div>
+            <!-- Navigation et miniatures seront ajoutées par JavaScript -->
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="assets/js/config.js?v=8"></script>
+    <script src="assets/js/utils/helpers.js?v=8"></script>
+    <script src="assets/js/modules/api.js?v=8"></script>
+    <script src="assets/js/modules/modal.js?v=11"></script>
+    <script src="assets/js/modules/gallery.js?v=11"></script>
+    <script src="assets/js/main.js?v=11"></script>
+    <script src="force_buttons.js?v=8"></script>
+    <script src="assets/js/ultra-simple-admin.js?v=12"></script>
+    
+        <!-- Admin Panel (hidden by default) -->
+        <div id="admin-panel" style="display: none; position: fixed; top: 0; left: 0; right: 0; background: #8B1538; color: white; padding: 10px; z-index: 1000; text-align: center;">
+            <span>Mode Admin</span>
+            <button onclick="openUltraAdmin()" style="margin-left: 20px; background: white; color: #8B1538; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">🔧 Administration</button>
+            <button onclick="toggleAdminMode()" style="margin-left: 10px; background: white; color: #8B1538; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Sortir</button>
+        </div>
+
+        <!-- Ancien système admin supprimé - Utilise ultra-simple-admin.js -->
+    
+    <script>
+        // Vérifier si on est en mode admin
+        function checkAdminMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('admin') === 'true') {
+                document.getElementById('admin-panel').style.display = 'block';
+                document.body.style.paddingTop = '50px';
+            }
+        }
+        
+        
+        // Basculer le mode admin
+        function toggleAdminMode() {
+            window.location.href = window.location.pathname;
+        }
+        
+        // Fonction pour fermer l'admin
+        function closeAdminPanel() {
+            document.getElementById('admin-main-panel').style.display = 'none';
+        }
+        
+        // Fonction pour ouvrir l'admin
+        function openAdminPanel() {
+            document.getElementById('admin-main-panel').style.display = 'block';
+            // Initialiser l'admin manager si nécessaire
+            if (!window.adminManager) {
+                // Attendre que le script admin.js soit chargé
+                setTimeout(() => {
+                    if (window.AdminManager) {
+                        window.adminManager = new window.AdminManager();
+                        window.adminManager.openAdmin();
+                    }
+                }, 100);
+            } else {
+                window.adminManager.openAdmin();
+            }
+        }
+        
+        
+        // Vérifier au chargement
+        document.addEventListener('DOMContentLoaded', checkAdminMode);
+    </script>
+</body>
+</html>

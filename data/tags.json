@@ -1,0 +1,32 @@
+[
+  {
+    "id": "new",
+    "name": "Nouveau",
+    "color": "#28a745"
+  },
+  {
+    "id": "limited",
+    "name": "Édition limitée",
+    "color": "#dc3545"
+  },
+  {
+    "id": "vintage",
+    "name": "Vintage",
+    "color": "#6c757d"
+  },
+  {
+    "id": "selection",
+    "name": "Sélection",
+    "color": "#ffc107"
+  },
+  {
+    "id": "home",
+    "name": "Domicile",
+    "color": "#8B1538"
+  },
+  {
+    "id": "fcpalestina",
+    "name": "FC Palestina",
+    "color": "#17a2b8"
+  }
+]

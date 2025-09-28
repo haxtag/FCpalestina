@@ -1,0 +1,22 @@
+[
+  {
+    "id": "home",
+    "name": "Domicile",
+    "color": "#8B1538"
+  },
+  {
+    "id": "away",
+    "name": "Extérieur",
+    "color": "#000000"
+  },
+  {
+    "id": "third",
+    "name": "Troisième",
+    "color": "#FFB6C1"
+  },
+  {
+    "id": "special",
+    "name": "Spécial",
+    "color": "#FF1493"
+  }
+]

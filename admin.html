@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - FC Palestina</title>
+    <meta name="description" content="Interface d'administration FC Palestina">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components/header.css">
+    <link rel="stylesheet" href="assets/css/components/gallery.css">
+    <link rel="stylesheet" href="assets/css/components/modal.css">
+    <link rel="stylesheet" href="assets/css/components/footer.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="fix_modal_styles.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .admin-bar {
+            background: #2c5530;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .admin-user {
+            font-weight: 500;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .admin-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .admin-btn.danger {
+            background: #dc3545;
+        }
+        
+        .admin-btn.danger:hover {
+            background: #c82333;
+        }
+        
+        .admin-content {
+            margin-top: 60px;
+        }
+        
+        .jersey-card {
+            position: relative;
+        }
+        
+        .admin-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            z-index: 10;
+        }
+        
+        .jersey-card:hover .admin-overlay {
+            display: flex;
+        }
+        
+        .admin-overlay-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .admin-overlay-btn {
+            background: white;
+            color: #2c5530;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .admin-overlay-btn:hover {
+            background: #2c5530;
+            color: white;
+        }
+        
+        .admin-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .admin-modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .admin-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .admin-modal-close:hover {
+            color: #333;
+        }
+        
+        .admin-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .admin-form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .admin-form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .admin-form-input:focus {
+            outline: none;
+            border-color: #2c5530;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+        }
+        
+        .admin-form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .admin-form-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .admin-form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        
+        .admin-form-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-form-btn.primary {
+            background: #2c5530;
+            color: white;
+        }
+        
+        .admin-form-btn.primary:hover {
+            background: #1e3a21;
+        }
+        
+        .admin-form-btn.secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .admin-form-btn.secondary:hover {
+            background: #5a6268;
+        }
+        
+        .image-preview {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .image-preview-item {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .image-preview-item:hover {
+            border-color: #2c5530;
+        }
+        
+        .image-preview-item.selected {
+            border-color: #2c5530;
+            box-shadow: 0 0 0 2px rgba(44, 85, 48, 0.2);
+        }
+        
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-preview-item .remove-btn {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(220, 53, 69, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-stats {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .admin-stat-item {
+            text-align: center;
+        }
+        
+        .admin-stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 5px;
+        }
+        
+        .admin-stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-bar {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .admin-content {
+                margin-top: 100px;
+            }
+            
+            .admin-modal-content {
+                margin: 10% auto;
+                padding: 20px;
+                width: 95%;
+            }
+            
+            .admin-form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barre d'administration -->
+    <div class="admin-bar">
+        <div class="admin-info">
+            <i class="fas fa-shield-alt"></i>
+            <span class="admin-user" id="admin-user">Administrateur</span>
+        </div>
+        <div class="admin-actions">
+            <button class="admin-btn" onclick="showAddJerseyModal()">
+                <i class="fas fa-plus"></i> Ajouter
+            </button>
+            <button class="admin-btn" onclick="refreshData()">
+                <i class="fas fa-sync"></i> Actualiser
+            </button>
+            <button class="admin-btn danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="admin-content">
+        <!-- Statistiques -->
+        <div class="admin-stats">
+            <div class="admin-stats-grid">
+                <div class="admin-stat-item">
+                    <div class="admin-stat-number" id="total-jerseys">0</div>
+                    <div class="admin-stat-label">Maillots</div>
+                </div>
+                <div class="admin-stat-item">
+                    <div class="admin-stat-number" id="total-categories">0</div>
+                    <div class="admin-stat-label">Catégories</div>
+                </div>
+                <div class="admin-stat-item">
+                    <div class="admin-stat-number" id="total-views">0</div>
+                    <div class="admin-stat-label">Vues totales</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galerie des maillots -->
+        <div class="gallery" id="admin-gallery">
+            <!-- Les maillots seront chargés ici -->
+        </div>
+    </div>
+
+    <!-- Modal d'édition de maillot -->
+    <div class="admin-modal" id="edit-jersey-modal">
+        <div class="admin-modal-content">
+            <span class="admin-modal-close" onclick="closeEditModal()">&times;</span>
+            <h2 id="edit-modal-title">Modifier le maillot</h2>
+            
+            <form id="edit-jersey-form">
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="edit-title">Titre</label>
+                    <input type="text" id="edit-title" name="title" class="admin-form-input" required>
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="edit-description">Description</label>
+                    <textarea id="edit-description" name="description" class="admin-form-input admin-form-textarea"></textarea>
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="edit-category">Catégorie</label>
+                    <select id="edit-category" name="category" class="admin-form-select">
+                        <option value="Domicile">Domicile</option>
+                        <option value="Extérieur">Extérieur</option>
+                        <option value="Gardien">Gardien</option>
+                        <option value="Édition Spéciale">Édition Spéciale</option>
+                    </select>
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="edit-year">Année</label>
+                    <input type="number" id="edit-year" name="year" class="admin-form-input" min="2020" max="2030">
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="edit-tags">Tags (séparés par des virgules)</label>
+                    <input type="text" id="edit-tags" name="tags" class="admin-form-input" placeholder="home, FC Palestina, officiel">
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label">Images disponibles</label>
+                    <div class="image-preview" id="image-preview">
+                        <!-- Les images seront chargées ici -->
+                    </div>
+                </div>
+                
+                <div class="admin-form-actions">
+                    <button type="button" class="admin-form-btn secondary" onclick="closeEditModal()">Annuler</button>
+                    <button type="submit" class="admin-form-btn primary">Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal d'ajout de maillot -->
+    <div class="admin-modal" id="add-jersey-modal">
+        <div class="admin-modal-content">
+            <span class="admin-modal-close" onclick="closeAddModal()">&times;</span>
+            <h2>Ajouter un nouveau maillot</h2>
+            
+            <form id="add-jersey-form">
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="add-title">Titre</label>
+                    <input type="text" id="add-title" name="title" class="admin-form-input" required>
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="add-description">Description</label>
+                    <textarea id="add-description" name="description" class="admin-form-input admin-form-textarea"></textarea>
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="add-category">Catégorie</label>
+                    <select id="add-category" name="category" class="admin-form-select">
+                        <option value="Domicile">Domicile</option>
+                        <option value="Extérieur">Extérieur</option>
+                        <option value="Gardien">Gardien</option>
+                        <option value="Édition Spéciale">Édition Spéciale</option>
+                    </select>
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="add-year">Année</label>
+                    <input type="number" id="add-year" name="year" class="admin-form-input" min="2020" max="2030" value="2024">
+                </div>
+                
+                <div class="admin-form-group">
+                    <label class="admin-form-label" for="add-tags">Tags (séparés par des virgules)</label>
+                    <input type="text" id="add-tags" name="tags" class="admin-form-input" placeholder="home, FC Palestina, officiel">
+                </div>
+                
+                <div class="admin-form-actions">
+                    <button type="button" class="admin-form-btn secondary" onclick="closeAddModal()">Annuler</button>
+                    <button type="submit" class="admin-form-btn primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/utils/helpers.js"></script>
+    <script src="assets/js/modules/api.js"></script>
+    <script src="assets/js/modules/modal.js"></script>
+    <script src="assets/js/modules/gallery.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="force_buttons.js"></script>
+    
+    <script>
+        // Vérifier la connexion admin
+        if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+        
+        // Variables globales
+        let jerseys = [];
+        let currentEditingJersey = null;
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminUser = sessionStorage.getItem('adminUser');
+            if (adminUser) {
+                document.getElementById('admin-user').textContent = adminUser;
+            }
+            
+            loadJerseys();
+        });
+        
+        // Charger les maillots
+        async function loadJerseys() {
+            try {
+                const response = await fetch('data/jerseys.json');
+                jerseys = await response.json();
+                renderJerseys();
+                updateStats();
+            } catch (error) {
+                console.error('Erreur lors du chargement des maillots:', error);
+            }
+        }
+        
+        // Afficher les maillots
+        function renderJerseys() {
+            const gallery = document.getElementById('admin-gallery');
+            gallery.innerHTML = '';
+            
+            jerseys.forEach(jersey => {
+                const jerseyCard = createJerseyCard(jersey);
+                gallery.appendChild(jerseyCard);
+            });
+        }
+        
+        // Créer une carte de maillot avec overlay admin
+        function createJerseyCard(jersey) {
+            const card = document.createElement('div');
+            card.className = 'jersey-card';
+            card.innerHTML = `
+                <img src="${window.CONFIG.IMAGES_BASE_URL}/${jersey.thumbnail}" alt="${jersey.title}" loading="lazy">
+                <div class="jersey-info">
+                    <h3>${jersey.title}</h3>
+                    <p>${jersey.description}</p>
+                    <div class="jersey-details">
+                        <span class="jersey-category">${jersey.category}</span>
+                        <span class="jersey-year">${jersey.year}</span>
+                    </div>
+                </div>
+                <div class="admin-overlay">
+                    <div class="admin-overlay-buttons">
+                        <button class="admin-overlay-btn" onclick="editJersey('${jersey.id}')">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                        <button class="admin-overlay-btn" onclick="changeCoverImage('${jersey.id}')">
+                            <i class="fas fa-image"></i> Image
+                        </button>
+                        <button class="admin-overlay-btn danger" onclick="deleteJersey('${jersey.id}')">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Ajouter l'événement de clic pour ouvrir le modal normal
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.admin-overlay')) {
+                    if (window.jerseyModal) {
+                        window.jerseyModal.open(jersey);
+                    }
+                }
+            });
+            
+            return card;
+        }
+        
+        // Mettre à jour les statistiques
+        function updateStats() {
+            document.getElementById('total-jerseys').textContent = jerseys.length;
+            
+            const categories = [...new Set(jerseys.map(j => j.category))];
+            document.getElementById('total-categories').textContent = categories.length;
+            
+            const totalViews = jerseys.reduce((sum, j) => sum + (j.views || 0), 0);
+            document.getElementById('total-views').textContent = totalViews;
+        }
+        
+        // Modifier un maillot
+        function editJersey(jerseyId) {
+            const jersey = jerseys.find(j => j.id === jerseyId);
+            if (!jersey) return;
+            
+            currentEditingJersey = jersey;
+            
+            // Remplir le formulaire
+            document.getElementById('edit-title').value = jersey.title;
+            document.getElementById('edit-description').value = jersey.description;
+            document.getElementById('edit-category').value = jersey.category;
+            document.getElementById('edit-year').value = jersey.year;
+            document.getElementById('edit-tags').value = jersey.tags ? jersey.tags.join(', ') : '';
+            
+            // Afficher les images
+            displayImages(jersey.images, 'image-preview', jersey.thumbnail);
+            
+            // Afficher le modal
+            document.getElementById('edit-jersey-modal').style.display = 'block';
+        }
+        
+        // Changer l'image de couverture
+        function changeCoverImage(jerseyId) {
+            const jersey = jerseys.find(j => j.id === jerseyId);
+            if (!jersey) return;
+            
+            currentEditingJersey = jersey;
+            
+            // Afficher les images
+            displayImages(jersey.images, 'image-preview', jersey.thumbnail);
+            
+            // Afficher le modal
+            document.getElementById('edit-jersey-modal').style.display = 'block';
+        }
+        
+        // Afficher les images
+        function displayImages(images, containerId, currentThumbnail) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            images.forEach((image, index) => {
+                const imageItem = document.createElement('div');
+                imageItem.className = `image-preview-item ${image === currentThumbnail ? 'selected' : ''}`;
+                imageItem.innerHTML = `
+                    <img src="${window.CONFIG.IMAGES_BASE_URL}/${image}" alt="Image ${index + 1}">
+                    <button class="remove-btn" onclick="removeImage('${image}')" style="display: none;">×</button>
+                `;
+                
+                imageItem.addEventListener('click', function() {
+                    // Désélectionner toutes les images
+                    container.querySelectorAll('.image-preview-item').forEach(item => {
+                        item.classList.remove('selected');
+                    });
+                    
+                    // Sélectionner cette image
+                    this.classList.add('selected');
+                    
+                    // Mettre à jour l'image de couverture
+                    if (currentEditingJersey) {
+                        currentEditingJersey.thumbnail = image;
+                        saveJerseys();
+                        renderJerseys();
+                    }
+                });
+                
+                container.appendChild(imageItem);
+            });
+        }
+        
+        // Supprimer un maillot
+        function deleteJersey(jerseyId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce maillot ?')) {
+                jerseys = jerseys.filter(j => j.id !== jerseyId);
+                saveJerseys();
+                renderJerseys();
+                updateStats();
+            }
+        }
+        
+        // Sauvegarder les maillots
+        async function saveJerseys() {
+            try {
+                const response = await fetch('data/jerseys.json', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(jerseys)
+                });
+                
+                if (!response.ok) {
+                    // Si PUT ne fonctionne pas, on peut essayer de sauvegarder localement
+                    console.log('Sauvegarde locale des modifications');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la sauvegarde:', error);
+            }
+        }
+        
+        // Fermer le modal d'édition
+        function closeEditModal() {
+            document.getElementById('edit-jersey-modal').style.display = 'none';
+            currentEditingJersey = null;
+        }
+        
+        // Fermer le modal d'ajout
+        function closeAddModal() {
+            document.getElementById('add-jersey-modal').style.display = 'none';
+        }
+        
+        // Afficher le modal d'ajout
+        function showAddJerseyModal() {
+            document.getElementById('add-jersey-modal').style.display = 'block';
+        }
+        
+        // Actualiser les données
+        function refreshData() {
+            loadJerseys();
+        }
+        
+        // Déconnexion
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('adminUser');
+            window.location.href = 'admin-login.html';
+        }
+        
+        // Fermer les modals en cliquant à l'extérieur
+        window.addEventListener('click', function(e) {
+            const modals = document.querySelectorAll('.admin-modal');
+            modals.forEach(modal => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

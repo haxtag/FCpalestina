@@ -1,0 +1,32 @@
+[
+  {
+    "id": "home",
+    "name": "Domicile",
+    "color": "#8B1538"
+  },
+  {
+    "id": "away",
+    "name": "Extérieur",
+    "color": "#000000"
+  },
+  {
+    "id": "special",
+    "name": "Spéciaux",
+    "color": "#FFD700"
+  },
+  {
+    "id": "vintage",
+    "name": "Vintage",
+    "color": "#8B4513"
+  },
+  {
+    "id": "keeper",
+    "name": "Gardien",
+    "color": "#FF6B6B"
+  },
+  {
+    "id": "cat_6",
+    "name": "Sélection",
+    "color": "#f20276"
+  }
+]
