@@ -1,0 +1,495 @@
+/* MODE SOMBRE - FC PALESTINA */
+
+/* Bouton toggle mode sombre - CORRIGÉ EN BLANC */
+.theme-toggle {
+    background: transparent !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin: 0;
+    outline: none;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    transform: scale(1.1);
+}
+
+.theme-toggle:focus,
+.theme-toggle:active {
+    outline: none;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* FORCER LA COULEUR BLANCHE même si CSS primaire interfère */
+.nav-item .theme-toggle,
+.navbar .theme-toggle,
+#theme-toggle,
+li .theme-toggle {
+    background: transparent !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+}
+
+.nav-item .theme-toggle:hover,
+.navbar .theme-toggle:hover,
+#theme-toggle:hover,
+li .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+/* Mode sombre - même style */
+[data-theme="dark"] .theme-toggle,
+[data-theme="dark"] .nav-item .theme-toggle,
+[data-theme="dark"] #theme-toggle {
+    background: transparent !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .theme-toggle:hover,
+[data-theme="dark"] .nav-item .theme-toggle:hover,
+[data-theme="dark"] #theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+/* Variables pour le mode sombre */
+[data-theme="dark"] {
+    --background-color: #121212;
+    --surface-color: #1e1e1e;
+    --surface-variant: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --text-tertiary: #8a8a8a;
+    --border-color: #333333;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Transitions fluides pour tous les éléments */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Appliquer le thème sombre */
+[data-theme="dark"] body {
+    background-color: var(--background-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .header {
+    background: rgba(18, 18, 18, 0.95) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%) !important;
+}
+
+[data-theme="dark"] .hero-title {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .hero-subtitle {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .section {
+    background: var(--background-color) !important;
+}
+
+[data-theme="dark"] .section-title,
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, 
+[data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .section-subtitle,
+[data-theme="dark"] p {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .gallery-item {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .gallery-item:hover {
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+[data-theme="dark"] .gallery-item-title {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .gallery-item-price {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .gallery-item-category {
+    background: var(--surface-variant);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .contact-section {
+    background: var(--background-color);
+}
+
+[data-theme="dark"] .contact-form {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .contact-form input,
+[data-theme="dark"] .contact-form textarea {
+    background: var(--surface-variant);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .contact-form input::placeholder,
+[data-theme="dark"] .contact-form textarea::placeholder {
+    color: var(--text-tertiary);
+}
+
+[data-theme="dark"] .contact-form input:focus,
+[data-theme="dark"] .contact-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(139, 21, 56, 0.2);
+}
+
+[data-theme="dark"] .contact-info h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .contact-info p {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .contact-info a {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .footer {
+    background: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .footer-title {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .footer-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .footer-links a:hover {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top: 1px solid var(--border-color);
+    color: var(--text-tertiary);
+}
+
+[data-theme="dark"] .theme-toggle {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .modal-content {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .modal-title {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal-description {
+    color: var(--text-secondary);
+}
+
+/* Animation de transition pour le mode sombre */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Responsive pour le bouton toggle */
+@media (max-width: 768px) {
+    .theme-toggle {
+        margin-left: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
+/* CORRECTIONS SUPPLÉMENTAIRES POUR ÉLÉMENTS QUI DISPARAISSENT */
+
+/* Section À Propos - CORRECTION SPÉCIALE */
+[data-theme="dark"] #about {
+    background: var(--background-color) !important;
+}
+
+[data-theme="dark"] #about .section-title,
+[data-theme="dark"] #about .section-subtitle,
+[data-theme="dark"] #about h1,
+[data-theme="dark"] #about h2 {
+    color: #ff69b4 !important; /* Rose pour les titres */
+}
+
+[data-theme="dark"] #about p,
+[data-theme="dark"] #about .section-subtitle {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] #about .about-description {
+    color: #ffb3d9 !important; /* Rose plus clair pour la description */
+}
+
+/* Stats avec accents roses */
+[data-theme="dark"] .stat-number {
+    color: #ff69b4 !important; /* Rose pour les chiffres */
+    text-shadow: 0 2px 4px rgba(255, 105, 180, 0.3);
+}
+
+[data-theme="dark"] .stat-label {
+    color: #ffcceb !important; /* Rose très clair pour les labels */
+}
+
+/* Stats cards dans À Propos */
+[data-theme="dark"] .stats-grid {
+    background: transparent !important;
+}
+
+[data-theme="dark"] .stat-card {
+    background: var(--surface-color) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .stat-card h3 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .stat-card p {
+    color: var(--text-secondary) !important;
+}
+
+/* Textes généraux */
+[data-theme="dark"] p, 
+[data-theme="dark"] span, 
+[data-theme="dark"] div,
+[data-theme="dark"] label {
+    color: var(--text-secondary) !important;
+}
+
+/* Titres - tous niveaux */
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3, 
+[data-theme="dark"] h4, 
+[data-theme="dark"] h5, 
+[data-theme="dark"] h6 {
+    color: var(--text-primary) !important;
+}
+
+/* Header complet */
+[data-theme="dark"] .header,
+[data-theme="dark"] .navbar {
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .brand-name {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: var(--text-primary) !important;
+}
+
+/* Sections principales */
+[data-theme="dark"] .hero,
+[data-theme="dark"] .section,
+[data-theme="dark"] #gallery,
+[data-theme="dark"] #about,
+[data-theme="dark"] #contact {
+    background: var(--background-color) !important;
+}
+
+/* Gallery et cartes */
+[data-theme="dark"] .gallery-grid {
+    background: var(--background-color) !important;
+}
+
+[data-theme="dark"] .gallery-item {
+    background: var(--surface-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .gallery-item-content {
+    background: var(--surface-color) !important;
+}
+
+/* Filtres */
+[data-theme="dark"] .filter-container {
+    background: var(--background-color) !important;
+}
+
+[data-theme="dark"] .filter-btn {
+    background: var(--surface-color) !important;
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .filter-btn.active {
+    background: var(--surface-variant) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Recherche */
+[data-theme="dark"] .search-container input {
+    background: var(--surface-color) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .search-container input::placeholder {
+    color: var(--text-tertiary) !important;
+}
+
+/* Tags et badges */
+[data-theme="dark"] .tag,
+[data-theme="dark"] .badge {
+    background: var(--surface-variant) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Boutons principaux */
+[data-theme="dark"] .btn {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .btn-primary {
+    background: #8B1538 !important;
+    border-color: #8B1538 !important;
+    color: white !important;
+}
+
+[data-theme="dark"] .btn-secondary {
+    background: var(--surface-variant) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Admin panel corrections */
+[data-theme="dark"] #ultra-admin-overlay {
+    background: rgba(18, 18, 18, 0.98) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .admin-card {
+    background: var(--surface-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .admin-card h4,
+[data-theme="dark"] .admin-card h5,
+[data-theme="dark"] .admin-card label {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .admin-card input,
+[data-theme="dark"] .admin-card textarea,
+[data-theme="dark"] .admin-card select {
+    background: var(--surface-variant) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Contact form */
+[data-theme="dark"] .contact-form {
+    background: var(--surface-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Modal corrections */
+[data-theme="dark"] .modal {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+[data-theme="dark"] .modal-content {
+    background: var(--surface-color) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .modal-close {
+    color: var(--text-primary) !important;
+    background: var(--surface-variant) !important;
+}
+
+/* Footer */
+[data-theme="dark"] .footer {
+    background: var(--surface-color) !important;
+    border-top: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .footer-title {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .footer-links a,
+[data-theme="dark"] .footer p {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top: 1px solid var(--border-color) !important;
+    color: var(--text-tertiary) !important;
+}
+
+/* Social links */
+[data-theme="dark"] .social-link {
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .social-link:hover {
+    color: var(--text-primary) !important;
+    background: var(--surface-variant) !important;
+}

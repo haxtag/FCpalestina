@@ -288,10 +288,18 @@ def delete_tag():
         if not tag_id:
             return jsonify({"error": "ID requis"}), 400
             
+        # Charger et supprimer le tag
         tags = load_json_file(TAGS_FILE, [])
         tags = [tag for tag in tags if tag['id'] != tag_id]
         
-        if save_json_file(TAGS_FILE, tags):
+        # Nettoyer les maillots (retirer ce tag de tous les maillots)
+        jerseys = load_json_file(JERSEYS_FILE, [])
+        for jersey in jerseys:
+            if 'tags' in jersey and isinstance(jersey['tags'], list):
+                jersey['tags'] = [t for t in jersey['tags'] if t != tag_id]
+        
+        # Sauvegarder les deux fichiers
+        if save_json_file(TAGS_FILE, tags) and save_json_file(JERSEYS_FILE, jerseys):
             return jsonify({"success": True, "message": "Tag supprimé"})
         else:
             return jsonify({"error": "Erreur lors de la sauvegarde"}), 500

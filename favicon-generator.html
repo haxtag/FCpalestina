@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Moderne - FC Palestina</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #8B1538, #A61E47);
+            color: white;
+            text-align: center;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .favicon-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: inline-block;
+        }
+        
+        .sizes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .size-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .favicon-svg {
+            border: 1px solid #ddd;
+            margin: 10px;
+            border-radius: 4px;
+        }
+        
+        button {
+            background: white;
+            color: #8B1538;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+            font-family: monospace;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Favicon Moderne FC Palestina</h1>
+        <p>Générez une favicon moderne et épurée pour FC Palestina</p>
+        
+        <div class="favicon-preview">
+            <h3 style="color: #333; margin-bottom: 20px;">Aperçu des tailles</h3>
+            
+            <div class="sizes-grid">
+                <div class="size-item">
+                    <strong>16x16</strong><br>
+                    <svg class="favicon-svg" id="favicon-16" width="16" height="16"></svg>
+                </div>
+                <div class="size-item">
+                    <strong>32x32</strong><br>
+                    <svg class="favicon-svg" id="favicon-32" width="32" height="32"></svg>
+                </div>
+                <div class="size-item">
+                    <strong>48x48</strong><br>
+                    <svg class="favicon-svg" id="favicon-48" width="48" height="48"></svg>
+                </div>
+                <div class="size-item">
+                    <strong>64x64</strong><br>
+                    <svg class="favicon-svg" id="favicon-64" width="64" height="64"></svg>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="generateFavicons()">🚀 Générer toutes les favicons</button>
+        <button onclick="downloadSVG()">📥 Télécharger SVG</button>
+        <button onclick="copyHTMLCode()">📋 Copier code HTML</button>
+        
+        <div class="code-block">
+            <h4>Code HTML à ajouter dans le &lt;head&gt; :</h4>
+            <pre id="html-code"><!-- Favicon moderne FC Palestina -->
+&lt;link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png"&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png"&gt;
+&lt;link rel="manifest" href="assets/img/site.webmanifest"&gt;</pre>
+        </div>
+        
+        <div id="generated-svg" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Générer une favicon moderne FC Palestina
+        function createFaviconSVG(size) {
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("width", size);
+            svg.setAttribute("height", size);
+            svg.setAttribute("viewBox", "0 0 100 100");
+            svg.style.background = "white";
+            
+            // Cercle de fond avec dégradé
+            const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+            const gradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+            gradient.setAttribute("id", `grad-${size}`);
+            gradient.setAttribute("x1", "0%");
+            gradient.setAttribute("y1", "0%");
+            gradient.setAttribute("x2", "100%");
+            gradient.setAttribute("y2", "100%");
+            
+            const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+            stop1.setAttribute("offset", "0%");
+            stop1.setAttribute("stop-color", "#8B1538");
+            
+            const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+            stop2.setAttribute("offset", "100%");
+            stop2.setAttribute("stop-color", "#A61E47");
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            defs.appendChild(gradient);
+            svg.appendChild(defs);
+            
+            // Cercle de fond
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", "50");
+            circle.setAttribute("cy", "50");
+            circle.setAttribute("r", "45");
+            circle.setAttribute("fill", `url(#grad-${size})`);
+            svg.appendChild(circle);
+            
+            // Lettres FC stylisées
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute("x", "50");
+            text.setAttribute("y", "65");
+            text.setAttribute("text-anchor", "middle");
+            text.setAttribute("fill", "white");
+            text.setAttribute("font-family", "Arial, sans-serif");
+            text.setAttribute("font-weight", "bold");
+            text.setAttribute("font-size", size < 24 ? "24" : "28");
+            text.textContent = "FC";
+            svg.appendChild(text);
+            
+            // Étoile décorative (petite)
+            if (size >= 32) {
+                const star = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                star.setAttribute("points", "50,15 52,21 58,21 53,25 55,31 50,27 45,31 47,25 42,21 48,21");
+                star.setAttribute("fill", "rgba(255,255,255,0.8)");
+                svg.appendChild(star);
+            }
+            
+            return svg;
+        }
+        
+        // Générer tous les aperçus
+        function generateFavicons() {
+            [16, 32, 48, 64].forEach(size => {
+                const container = document.getElementById(`favicon-${size}`);
+                container.innerHTML = '';
+                const svg = createFaviconSVG(size);
+                container.appendChild(svg);
+            });
+            
+            // Générer le SVG principal
+            const mainSVG = createMainSVG();
+            document.getElementById('generated-svg').innerHTML = mainSVG;
+            
+            alert('🎉 Favicons générées ! Utilisez le code HTML ci-dessous.');
+        }
+        
+        // Créer le SVG principal haute qualité
+        function createMainSVG() {
+            return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 100 100">
+    <defs>
+        <linearGradient id="fcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8B1538"/>
+            <stop offset="100%" stop-color="#A61E47"/>
+        </linearGradient>
+    </defs>
+    <circle cx="50" cy="50" r="45" fill="url(#fcGradient)"/>
+    <text x="50" y="65" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-weight="bold" font-size="28">FC</text>
+    <polygon points="50,15 52,21 58,21 53,25 55,31 50,27 45,31 47,25 42,21 48,21" fill="rgba(255,255,255,0.8)"/>
+</svg>`;
+        }
+        
+        // Télécharger le SVG
+        function downloadSVG() {
+            const svgContent = createMainSVG();
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'favicon-fc-palestina.svg';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Copier le code HTML
+        function copyHTMLCode() {
+            const code = document.getElementById('html-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('📋 Code HTML copié ! Collez-le dans votre <head>');
+            });
+        }
+        
+        // Générer au chargement
+        window.addEventListener('load', generateFavicons);
+    </script>
+</body>
+</html>

@@ -8,22 +8,23 @@ import sys
 import os
 
 def start_backend():
-    """Démarre le backend admin sur le port 8001"""
+    """Démarre le backend admin (Flask simple_backend) sur le port 8001"""
     try:
         # Chemin vers le script backend
-        backend_script = os.path.join('scripts', 'admin_backend.py')
-        
+        backend_script = os.path.join('scripts', 'simple_backend.py')
+
         if not os.path.exists(backend_script):
             print(f"❌ Script backend non trouvé: {backend_script}")
             return False
-        
-        print("🚀 Démarrage du backend admin sur le port 8001...")
+
+        print("🚀 Démarrage du backend admin (Flask) sur le port 8001...")
         print("📱 API disponible sur: http://localhost:8001/api/")
+        print("💡 Admin ultra-simple: http://localhost:8000/index.html?admin=true")
         print("🛑 Appuyez sur Ctrl+C pour arrêter")
-        
+
         # Démarrer le backend
         subprocess.run([sys.executable, backend_script], cwd=os.getcwd())
-        
+
     except KeyboardInterrupt:
         print("\n🛑 Backend arrêté par l'utilisateur")
     except Exception as e:

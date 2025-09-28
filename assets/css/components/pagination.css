@@ -1,0 +1,219 @@
+/**
+ * PAGINATION MODERNE - FC PALESTINA
+ * Design élégant et intuitif pour la navigation des maillots
+ */
+
+.pagination-container {
+    margin: 40px 0;
+    padding: 20px 0;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+    padding: 20px 0;
+}
+
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    min-width: 48px;
+    height: 48px;
+    border: 2px solid transparent;
+    background: var(--white);
+    color: var(--text-dark);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.pagination-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 21, 56, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.pagination-btn:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #8B1538 !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    border-color: #8B1538 !important;
+}
+
+.pagination-btn.active:hover {
+    background: #A61E47 !important;
+    color: #ff69b4 !important;
+    transform: scale(1.1) !important;
+}
+
+.pagination-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(139, 21, 56, 0.2);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: var(--light-gray);
+    color: var(--text-light);
+    transform: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-btn.active {
+    background: #8B1538 !important;
+    color: #ff69b4 !important;
+    border: 2px solid #8B1538 !important;
+    transform: scale(1.05) !important;
+    font-weight: 700 !important;
+}
+
+/* Boutons de navigation spéciaux */
+.pagination-btn i {
+    font-size: 14px;
+}
+
+/* Indicateur de points de suspension */
+.pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 16px;
+    min-width: 32px;
+}
+
+.pagination-ellipsis::before {
+    content: '⋯';
+    font-size: 18px;
+}
+
+/* Informations de pagination */
+.pagination-info {
+    background: linear-gradient(135deg, var(--light-gray), #f8f9fa);
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 14px;
+    margin: 0 16px;
+    border: 1px solid rgba(139, 21, 56, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations d'entrée */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pagination-controls {
+    animation: slideInUp 0.4s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pagination-controls {
+        gap: 6px;
+        margin: 30px 0;
+        padding: 15px 10px;
+    }
+    
+    .pagination-btn {
+        padding: 10px 12px;
+        min-width: 42px;
+        height: 42px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+    
+    .pagination-info {
+        font-size: 12px;
+        padding: 8px 15px;
+        margin: 0 8px;
+    }
+    
+    /* Masquer certains boutons sur très petit écran */
+    @media (max-width: 480px) {
+        .pagination-btn:nth-child(n+4):nth-last-child(n+4):not(.active) {
+            display: none;
+        }
+        
+        .pagination-info {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin: 10px 0 0 0;
+        }
+        
+        .pagination-controls {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .pagination-controls > div:first-child {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+    }
+}
+
+/* Mode sombre */
+[data-theme="dark"] .pagination-btn {
+    background: var(--bg-secondary);
+    color: var(--text-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .pagination-btn:hover:not(:disabled) {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 6px 20px rgba(139, 21, 56, 0.4);
+}
+
+[data-theme="dark"] .pagination-btn:disabled {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .pagination-info {
+    background: var(--bg-secondary);
+    color: var(--text-light);
+    border-color: rgba(139, 21, 56, 0.2);
+}
+
+[data-theme="dark"] .pagination-btn.active {
+    background: #8B1538 !important;
+    color: #ff69b4 !important;
+}

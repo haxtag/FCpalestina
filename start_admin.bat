@@ -1,12 +1,12 @@
 @echo off
-echo 🚀 Démarrage du serveur d'administration FC Palestina...
+echo 🚀 Démarrage du backend d'administration (Flask)...
 echo.
-echo 📱 Interface admin: http://localhost:8001/admin-login.html
-echo 🔑 Identifiants: admin / fcpalestina2024
+echo 🌐 Ouvrez ensuite: http://localhost:8000/index.html?admin=true
+echo    (Le panneau admin ultra-simple s'ouvrira sur la page principale)
 echo.
 echo 🛑 Appuyez sur Ctrl+C pour arrêter
 echo.
 
-python scripts/admin_server.py 8001
+python scripts/simple_backend.py
 
 pause

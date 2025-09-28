@@ -1,263 +1,709 @@
 [
   {
-    "id": "jersey-76886",
-    "title": "salam",
-    "description": "sayer",
-    "category": "cat_6",
-    "year": "2026",
-    "images": [
-      "jersey-jersey-76886-hd-0.jpg",
-      "jersey-jersey-76886-hd-1.jpg",
-      "jersey-jersey-76886-hd-2.jpg",
-      "jersey-jersey-76886-hd-3.jpg",
-      "jersey-jersey-76886-hd-4.jpg"
-    ],
-    "thumbnail": "jersey-jersey-76886-hd-0.jpg",
-    "price": null,
-    "availability": true,
-    "tags": [
-      "Édition limitée",
-      "Domicile",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:44.851072",
-    "updated_at": "2025-09-09T23:07:31.608416",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209322633?uid=1&isSubCate=false&referrercate=4713543",
-    "name": "salam",
+    "id": "test-jersey-001",
+    "title": "ojnbzdlojnabqfdljnbazfe",
+    "name": "ojnbzdlojnabqfdljnbazfe",
+    "description": "Maillot domicile officiel Palestine National saison 2022",
+    "category": "home",
     "categories": [
-      "cat_6"
+      "home",
+      "away",
+      "keeper",
+      "special"
     ],
-    "size": "L"
-  },
-  {
-    "id": "jersey-69229",
-    "title": "AjaxGraffitiÉdition SpécialeTaille S-2Xqshcdbzsekhvb",
-    "description": "Maillot officiel FC Palestina - AjaxGraffitiÉdition SpécialeTaille S-2XL",
-    "category": "cat_6",
-    "year": "2024",
+    "year": "2027",
     "images": [
-      "jersey-jersey-69229-hd-0.jpg",
-      "jersey-jersey-69229-hd-1.jpg",
-      "jersey-jersey-69229-hd-2.jpg",
-      "jersey-jersey-69229-hd-3.jpg",
-      "jersey-jersey-69229-hd-4.jpg"
+      "test-jersey-001-hd-0.jpg",
+      "test-jersey-001-hd-1.jpg",
+      "test-jersey-001-hd-2.jpg"
     ],
-    "thumbnail": "jersey-jersey-69229-hd-0.jpg",
+    "thumbnail": "test-jersey-001-hd-1.jpg",
     "price": null,
+    "size": "S-XL",
     "availability": true,
     "tags": [
-      "special",
-      "FC Palestina"
+      "fcpalestina",
+      "new",
+      "popular",
+      "home",
+      "away"
     ],
-    "created_at": "2025-09-07T22:22:45.209166",
-    "updated_at": "2025-09-07T22:22:45.209166",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209322566?uid=1&isSubCate=false&referrercate=4713543",
-    "name": "AjaxGraffitiÉdition SpécialeTaille S-2Xqshcdbzsekhvb"
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-001"
   },
   {
-    "id": "jersey-10267",
-    "title": "2526Chelsea二Extérieur-Noir Taille S-2XL",
-    "description": "Maillot officiel FC Palestina - 2526Chelsea二Extérieur-Noir Taille S-2XL",
+    "id": "test-jersey-002",
+    "title": "ALI",
+    "name": "ALI",
+    "description": "MAILOOT 2",
+    "category": "third",
+    "categories": [
+      "third",
+      "keeper",
+      "vintage"
+    ],
+    "year": "20480",
+    "images": [
+      "test-jersey-002-hd-0.jpg",
+      "test-jersey-002-hd-1.jpg",
+      "test-jersey-002-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-002-hd-2.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-002"
+  },
+  {
+    "id": "test-jersey-003",
+    "title": "test",
+    "name": "test",
+    "description": "Maillot domicile officiel Westbank FC saison 2023",
+    "category": "home",
+    "categories": [
+      "home",
+      "cat_7"
+    ],
+    "year": "2023",
+    "images": [
+      "test-jersey-003-hd-0.jpg",
+      "test-jersey-003-hd-1.jpg",
+      "test-jersey-003-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-003-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "classic",
+      "home"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-003"
+  },
+  {
+    "id": "test-jersey-004",
+    "title": "Gaza United Domicile 2023",
+    "name": "Gaza United Domicile 2023",
+    "description": "Maillot domicile officiel Gaza United saison 2023",
+    "category": "home",
+    "categories": [
+      "home"
+    ],
+    "year": "2023",
+    "images": [
+      "test-jersey-004-hd-0.jpg",
+      "test-jersey-004-hd-1.jpg",
+      "test-jersey-004-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-004-hd-0.jpg",
+    "price": null,
+    "size": "S-XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "home"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-004"
+  },
+  {
+    "id": "test-jersey-005",
+    "title": "Westbank FC Spécial 2025",
+    "name": "Westbank FC Spécial 2025",
+    "description": "Maillot spécial officiel Westbank FC saison 2025",
+    "category": "special",
+    "categories": [
+      "special"
+    ],
+    "year": "2025",
+    "images": [
+      "test-jersey-005-hd-0.jpg",
+      "test-jersey-005-hd-1.jpg",
+      "test-jersey-005-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-005-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "classic",
+      "special"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-005"
+  },
+  {
+    "id": "test-jersey-006",
+    "title": "Palestine National Troisième 2020",
+    "name": "Palestine National Troisième 2020",
+    "description": "Maillot troisième officiel Palestine National saison 2020",
+    "category": "third",
+    "categories": [
+      "third"
+    ],
+    "year": "2020",
+    "images": [
+      "test-jersey-006-hd-0.jpg",
+      "test-jersey-006-hd-1.jpg",
+      "test-jersey-006-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-006-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "third"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-006"
+  },
+  {
+    "id": "test-jersey-007",
+    "title": "Gaza United Spécial 2023",
+    "name": "Gaza United Spécial 2023",
+    "description": "Maillot spécial officiel Gaza United saison 2023",
+    "category": "special",
+    "categories": [
+      "special"
+    ],
+    "year": "2023",
+    "images": [
+      "test-jersey-007-hd-0.jpg",
+      "test-jersey-007-hd-1.jpg",
+      "test-jersey-007-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-007-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "special"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-007"
+  },
+  {
+    "id": "test-jersey-008",
+    "title": "Westbank FC Domicile 2021",
+    "name": "Westbank FC Domicile 2021",
+    "description": "Maillot domicile officiel Westbank FC saison 2021",
+    "category": "home",
+    "categories": [
+      "home"
+    ],
+    "year": "2021",
+    "images": [
+      "test-jersey-008-hd-0.jpg",
+      "test-jersey-008-hd-1.jpg",
+      "test-jersey-008-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-008-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "home"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-008"
+  },
+  {
+    "id": "test-jersey-009",
+    "title": "Westbank FC Domicile 2021",
+    "name": "Westbank FC Domicile 2021",
+    "description": "Maillot domicile officiel Westbank FC saison 2021",
+    "category": "home",
+    "categories": [
+      "home"
+    ],
+    "year": "2021",
+    "images": [
+      "test-jersey-009-hd-0.jpg",
+      "test-jersey-009-hd-1.jpg",
+      "test-jersey-009-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-009-hd-0.jpg",
+    "price": null,
+    "size": "S-XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "home"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-009"
+  },
+  {
+    "id": "test-jersey-010",
+    "title": "Palestine National Extérieur 2020",
+    "name": "Palestine National Extérieur 2020",
+    "description": "Maillot extérieur officiel Palestine National saison 2020",
     "category": "away",
-    "year": "2024",
-    "images": [
-      "jersey-jersey-10267-hd-0.jpg",
-      "jersey-jersey-10267-hd-1.jpg",
-      "jersey-jersey-10267-hd-2.jpg",
-      "jersey-jersey-10267-hd-3.jpg"
-    ],
-    "thumbnail": "jersey-jersey-10267-hd-0.jpg",
-    "price": null,
-    "availability": true,
-    "tags": [
-      "away",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:45.558139",
-    "updated_at": "2025-09-07T22:22:45.558139",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209322412?uid=1&isSubCate=false&referrercate=4713543"
-  },
-  {
-    "id": "jersey-46124",
-    "title": "2526Manchester UnitedGardienNoirTaille S-2XL",
-    "description": "Maillot officiel FC Palestina - 2526Manchester UnitedGardienNoirTaille S-2XL",
-    "category": "home",
-    "year": "2024",
-    "images": [
-      "jersey-jersey-46124-hd-0.jpg",
-      "jersey-jersey-46124-hd-1.jpg",
-      "jersey-jersey-46124-hd-2.jpg",
-      "jersey-jersey-46124-hd-3.jpg"
-    ],
-    "thumbnail": "jersey-jersey-46124-hd-2.jpg",
-    "price": null,
-    "availability": true,
-    "tags": [
-      "home",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:45.858955",
-    "updated_at": "2025-09-08T01:18:51.304465",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209322282?uid=1&isSubCate=false&referrercate=4713543"
-  },
-  {
-    "id": "jersey-3170",
-    "title": "2526Los AngelesDomicile-Avec Étoiles Taille S-4XL",
-    "description": "Maillot officiel FC Palestina - 2526Los AngelesDomicile-Avec Étoiles Taille S-4XL",
-    "category": "home",
-    "year": "2024",
-    "images": [
-      "jersey-jersey-3170-hd-0.jpg",
-      "jersey-jersey-3170-hd-1.jpg",
-      "jersey-jersey-3170-hd-2.jpg",
-      "jersey-jersey-3170-hd-3.jpg",
-      "jersey-jersey-3170-hd-4.jpg"
-    ],
-    "thumbnail": "jersey-jersey-3170-hd-4.jpg",
-    "price": null,
-    "availability": true,
-    "tags": [
-      "home",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:46.168816",
-    "updated_at": "2025-09-07T22:22:46.168816",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209322146?uid=1&isSubCate=false&referrercate=4713543"
-  },
-  {
-    "id": "jersey-4257",
-    "title": "2526Los AngelesDomicile-不Avec Étoiles Taille S-4XL",
-    "description": "Maillot officiel FC Palestina - 2526Los AngelesDomicile-不Avec Étoiles Taille S-4XL",
-    "category": "home",
-    "year": "2024",
-    "images": [
-      "jersey-jersey-4257-hd-0.jpg",
-      "jersey-jersey-4257-hd-1.jpg",
-      "jersey-jersey-4257-hd-2.jpg",
-      "jersey-jersey-4257-hd-3.jpg",
-      "jersey-jersey-4257-hd-4.jpg"
-    ],
-    "thumbnail": "jersey-jersey-4257-hd-2.jpg",
-    "price": null,
-    "availability": true,
-    "tags": [
-      "home",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:46.522011",
-    "updated_at": "2025-09-07T22:22:46.522011",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209321967?uid=1&isSubCate=false&referrercate=4713543"
-  },
-  {
-    "id": "jersey-36511",
-    "title": "2526FulhamDomicile场-Blanc Taille S-2XL",
-    "description": "Maillot officiel FC Palestina - 2526FulhamDomicile场-Blanc Taille S-2XL",
-    "category": "home",
-    "year": "2024",
-    "images": [
-      "jersey-jersey-36511-hd-0.jpg",
-      "jersey-jersey-36511-hd-1.jpg",
-      "jersey-jersey-36511-hd-2.jpg",
-      "jersey-jersey-36511-hd-3.jpg",
-      "jersey-jersey-36511-hd-4.jpg"
-    ],
-    "thumbnail": "jersey-jersey-36511-hd-3.jpg",
-    "price": null,
-    "availability": true,
-    "tags": [
-      "home",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:46.835851",
-    "updated_at": "2025-09-07T22:22:46.835851",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209321517?uid=1&isSubCate=false&referrercate=4713543"
-  },
-  {
-    "id": "jersey-26427",
-    "title": "2526BournemouthDomicile-Rouge Taille S-2XL",
-    "description": "Maillot officiel FC Palestina - 2526BournemouthDomicile-Rouge Taille S-2XL",
-    "category": "home",
-    "year": "2024",
-    "images": [
-      "jersey-jersey-26427-hd-0.jpg",
-      "jersey-jersey-26427-hd-1.jpg",
-      "jersey-jersey-26427-hd-2.jpg",
-      "jersey-jersey-26427-hd-3.jpg",
-      "jersey-jersey-26427-hd-4.jpg",
-      "jersey-jersey-26427-hd-5.jpg"
-    ],
-    "thumbnail": "jersey-jersey-26427-hd-4.jpg",
-    "price": null,
-    "availability": true,
-    "tags": [
-      "home",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:47.157457",
-    "updated_at": "2025-09-07T22:22:47.157457",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209320655?uid=1&isSubCate=false&referrercate=4713543"
-  },
-  {
-    "id": "jersey-41032",
-    "title": "2526BournemouthExtérieur-Bleu Taille S-2XL",
-    "description": "Maillot officiel FC Palestina - 2526BournemouthExtérieur-Bleu Taille S-2XL",
-    "category": "cat_6",
-    "year": "2024",
-    "images": [
-      "jersey-jersey-41032-hd-0.jpg",
-      "jersey-jersey-41032-hd-1.jpg",
-      "jersey-jersey-41032-hd-2.jpg",
-      "jersey-jersey-41032-hd-3.jpg",
-      "jersey-jersey-41032-hd-4.jpg"
-    ],
-    "thumbnail": "jersey-jersey-41032-hd-1.jpg",
-    "price": "",
-    "availability": true,
-    "tags": [
-      "Nouveau",
-      "Édition limitée",
-      "away",
-      "FC Palestina"
-    ],
-    "created_at": "2025-09-07T22:22:47.461869",
-    "updated_at": "2025-09-09T22:46:37.499921",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209320551?uid=1&isSubCate=false&referrercate=4713543",
-    "name": "2526BournemouthExtérieur-Bleu Taille S-2XL",
     "categories": [
-      "cat_6"
+      "away"
     ],
-    "size": ""
-  },
-  {
-    "id": "jersey-8946",
-    "title": "non",
-    "description": "lol",
-    "category": "cat_6",
-    "year": "2028",
+    "year": "2020",
     "images": [
-      "jersey-jersey-8946-hd-0.jpg",
-      "jersey-jersey-8946-hd-1.jpg",
-      "jersey-jersey-8946-hd-2.jpg",
-      "jersey-jersey-8946-hd-3.jpg"
+      "test-jersey-010-hd-0.jpg",
+      "test-jersey-010-hd-1.jpg",
+      "test-jersey-010-hd-2.jpg"
     ],
-    "thumbnail": "jersey-jersey-8946-hd-0.jpg",
-    "price": "65",
+    "thumbnail": "test-jersey-010-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
     "availability": true,
     "tags": [
-      "Nouveau",
-      "Édition limitée",
-      "Vintage",
-      "Sélection",
-      "Domicile",
-      "FC Palestina"
+      "fcpalestina",
+      "popular",
+      "away"
     ],
-    "created_at": "2025-09-07T22:22:47.759995",
-    "updated_at": "2025-09-09T23:09:19.942074",
-    "source_url": "https://shixingtiyu.x.yupoo.com/albums/209320437?uid=1&isSubCate=false&referrercate=4713543",
-    "name": "non",
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-010"
+  },
+  {
+    "id": "test-jersey-011",
+    "title": "Palestine National Gardien 2023",
+    "name": "Palestine National Gardien 2023",
+    "description": "Maillot gardien officiel Palestine National saison 2023",
+    "category": "keeper",
     "categories": [
-      "cat_6"
+      "keeper"
     ],
-    "size": "XL"
+    "year": "2023",
+    "images": [
+      "test-jersey-011-hd-0.jpg",
+      "test-jersey-011-hd-1.jpg",
+      "test-jersey-011-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-011-hd-0.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "new",
+      "keeper"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-011"
+  },
+  {
+    "id": "test-jersey-012",
+    "title": "FC Palestina Gardien 2023",
+    "name": "FC Palestina Gardien 2023",
+    "description": "Maillot gardien officiel FC Palestina saison 2023",
+    "category": "keeper",
+    "categories": [
+      "keeper"
+    ],
+    "year": "2023",
+    "images": [
+      "test-jersey-012-hd-0.jpg",
+      "test-jersey-012-hd-1.jpg",
+      "test-jersey-012-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-012-hd-0.jpg",
+    "price": null,
+    "size": "S-XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "new",
+      "keeper"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-012"
+  },
+  {
+    "id": "test-jersey-013",
+    "title": "FC Palestina Spécial 2024",
+    "name": "FC Palestina Spécial 2024",
+    "description": "Maillot spécial officiel FC Palestina saison 2024",
+    "category": "special",
+    "categories": [
+      "special"
+    ],
+    "year": "2024",
+    "images": [
+      "test-jersey-013-hd-0.jpg",
+      "test-jersey-013-hd-1.jpg",
+      "test-jersey-013-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-013-hd-0.jpg",
+    "price": null,
+    "size": "S-XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "special"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-013"
+  },
+  {
+    "id": "test-jersey-014",
+    "title": "FC Palestina Extérieur 2020",
+    "name": "FC Palestina Extérieur 2020",
+    "description": "Maillot extérieur officiel FC Palestina saison 2020",
+    "category": "away",
+    "categories": [
+      "away"
+    ],
+    "year": "2020",
+    "images": [
+      "test-jersey-014-hd-0.jpg",
+      "test-jersey-014-hd-1.jpg",
+      "test-jersey-014-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-014-hd-0.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "away"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-014"
+  },
+  {
+    "id": "test-jersey-015",
+    "title": "Gaza United Spécial 2020",
+    "name": "Gaza United Spécial 2020",
+    "description": "Maillot spécial officiel Gaza United saison 2020",
+    "category": "special",
+    "categories": [
+      "special"
+    ],
+    "year": "2020",
+    "images": [
+      "test-jersey-015-hd-0.jpg",
+      "test-jersey-015-hd-1.jpg",
+      "test-jersey-015-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-015-hd-0.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "special"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-015"
+  },
+  {
+    "id": "test-jersey-016",
+    "title": "Gaza United Gardien 2023",
+    "name": "Gaza United Gardien 2023",
+    "description": "Maillot gardien officiel Gaza United saison 2023",
+    "category": "keeper",
+    "categories": [
+      "keeper"
+    ],
+    "year": "2023",
+    "images": [
+      "test-jersey-016-hd-0.jpg",
+      "test-jersey-016-hd-1.jpg",
+      "test-jersey-016-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-016-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "classic",
+      "keeper"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-016"
+  },
+  {
+    "id": "test-jersey-017",
+    "title": "Westbank FC Extérieur 2021",
+    "name": "Westbank FC Extérieur 2021",
+    "description": "Maillot extérieur officiel Westbank FC saison 2021",
+    "category": "away",
+    "categories": [
+      "away"
+    ],
+    "year": "2021",
+    "images": [
+      "test-jersey-017-hd-0.jpg",
+      "test-jersey-017-hd-1.jpg",
+      "test-jersey-017-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-017-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "classic",
+      "away"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-017"
+  },
+  {
+    "id": "test-jersey-018",
+    "title": "Gaza United Domicile 2024",
+    "name": "Gaza United Domicile 2024",
+    "description": "Maillot domicile officiel Gaza United saison 2024",
+    "category": "home",
+    "categories": [
+      "home"
+    ],
+    "year": "2024",
+    "images": [
+      "test-jersey-018-hd-0.jpg",
+      "test-jersey-018-hd-1.jpg",
+      "test-jersey-018-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-018-hd-0.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "classic",
+      "home"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-018"
+  },
+  {
+    "id": "test-jersey-019",
+    "title": "FC Palestina Vintage 2021",
+    "name": "FC Palestina Vintage 2021",
+    "description": "Maillot vintage officiel FC Palestina saison 2021",
+    "category": "vintage",
+    "categories": [
+      "vintage"
+    ],
+    "year": "2021",
+    "images": [
+      "test-jersey-019-hd-0.jpg",
+      "test-jersey-019-hd-1.jpg",
+      "test-jersey-019-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-019-hd-0.jpg",
+    "price": null,
+    "size": "S-XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "vintage"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-019"
+  },
+  {
+    "id": "test-jersey-020",
+    "title": "Westbank FC Gardien 2020",
+    "name": "Westbank FC Gardien 2020",
+    "description": "Maillot gardien officiel Westbank FC saison 2020",
+    "category": "keeper",
+    "categories": [
+      "keeper"
+    ],
+    "year": "2020",
+    "images": [
+      "test-jersey-020-hd-0.jpg",
+      "test-jersey-020-hd-1.jpg",
+      "test-jersey-020-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-020-hd-0.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "classic",
+      "keeper"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-020"
+  },
+  {
+    "id": "test-jersey-021",
+    "title": "Gaza United Troisième 2024",
+    "name": "Gaza United Troisième 2024",
+    "description": "Maillot troisième officiel Gaza United saison 2024",
+    "category": "third",
+    "categories": [
+      "third"
+    ],
+    "year": "2024",
+    "images": [
+      "test-jersey-021-hd-0.jpg",
+      "test-jersey-021-hd-1.jpg",
+      "test-jersey-021-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-021-hd-0.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "new",
+      "third"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-021"
+  },
+  {
+    "id": "test-jersey-022",
+    "title": "Westbank FC Domicile 2020",
+    "name": "Westbank FC Domicile 2020",
+    "description": "Maillot domicile officiel Westbank FC saison 2020",
+    "category": "home",
+    "categories": [
+      "home"
+    ],
+    "year": "2020",
+    "images": [
+      "test-jersey-022-hd-0.jpg",
+      "test-jersey-022-hd-1.jpg",
+      "test-jersey-022-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-022-hd-0.jpg",
+    "price": null,
+    "size": "S-XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "new",
+      "home"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-022"
+  },
+  {
+    "id": "test-jersey-023",
+    "title": "FC Palestina Gardien 2022",
+    "name": "FC Palestina Gardien 2022",
+    "description": "Maillot gardien officiel FC Palestina saison 2022",
+    "category": "keeper",
+    "categories": [
+      "keeper"
+    ],
+    "year": "2022",
+    "images": [
+      "test-jersey-023-hd-0.jpg",
+      "test-jersey-023-hd-1.jpg",
+      "test-jersey-023-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-023-hd-0.jpg",
+    "price": null,
+    "size": "L-2XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "keeper"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-023"
+  },
+  {
+    "id": "test-jersey-024",
+    "title": "Westbank FC Troisième 2021",
+    "name": "Westbank FC Troisième 2021",
+    "description": "Maillot troisième officiel Westbank FC saison 2021",
+    "category": "third",
+    "categories": [
+      "third"
+    ],
+    "year": "2021",
+    "images": [
+      "test-jersey-024-hd-0.jpg",
+      "test-jersey-024-hd-1.jpg",
+      "test-jersey-024-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-024-hd-0.jpg",
+    "price": null,
+    "size": "M-XXL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "classic",
+      "third"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-024"
+  },
+  {
+    "id": "test-jersey-025",
+    "title": "Gaza United Vintage 2022",
+    "name": "Gaza United Vintage 2022",
+    "description": "Maillot vintage officiel Gaza United saison 2022",
+    "category": "vintage",
+    "categories": [
+      "vintage"
+    ],
+    "year": "2022",
+    "images": [
+      "test-jersey-025-hd-0.jpg",
+      "test-jersey-025-hd-1.jpg",
+      "test-jersey-025-hd-2.jpg"
+    ],
+    "thumbnail": "test-jersey-025-hd-0.jpg",
+    "price": null,
+    "size": "S-XL",
+    "availability": true,
+    "tags": [
+      "fcpalestina",
+      "popular",
+      "vintage"
+    ],
+    "created_at": "2025-09-28T21:33:39.081300",
+    "updated_at": "2025-09-28T21:33:39.081300",
+    "source_url": "https://test.com/album/test-jersey-025"
   }
 ]

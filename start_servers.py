@@ -24,9 +24,10 @@ if __name__ == "__main__":
     print("📱 Site principal: http://localhost:8000")
     print("🔧 API admin: http://localhost:8001/api/")
     print("🛑 Appuyez sur Ctrl+C pour arrêter tous les serveurs")
+    print("💡 Admin ultra-simple: ouvrez http://localhost:8000/index.html?admin=true pour l'administration")
     
     try:
-        # Démarrer le backend en arrière-plan
+    # Démarrer le backend en arrière-plan (depuis la racine du projet)
         backend_thread = threading.Thread(target=start_backend_server)
         backend_thread.daemon = True
         backend_thread.start()
