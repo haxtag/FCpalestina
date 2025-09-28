@@ -14,6 +14,14 @@ from urllib.parse import urlparse, parse_qs
 import cgi
 
 class AdminHandler(BaseHTTPRequestHandler):
+<<<<<<< HEAD
+=======
+    BASE_DIR = Path(__file__).resolve().parents[1]
+    DATA_DIR = BASE_DIR / 'data'
+
+    def data_file(self, name):
+        return (self.DATA_DIR / name).resolve()
+>>>>>>> e920c3f (Initial commit)
     def do_GET(self):
         """Gérer les requêtes GET"""
         parsed_path = urlparse(self.path)
@@ -50,7 +58,11 @@ class AdminHandler(BaseHTTPRequestHandler):
     def get_jerseys(self):
         """Récupérer tous les maillots"""
         try:
+<<<<<<< HEAD
             jerseys_file = Path("data/jerseys.json")
+=======
+            jerseys_file = self.data_file('jerseys.json')
+>>>>>>> e920c3f (Initial commit)
             if jerseys_file.exists():
                 with open(jerseys_file, 'r', encoding='utf-8') as f:
                     jerseys = json.load(f)
@@ -68,7 +80,11 @@ class AdminHandler(BaseHTTPRequestHandler):
     def get_stats(self):
         """Récupérer les statistiques"""
         try:
+<<<<<<< HEAD
             jerseys_file = Path("data/jerseys.json")
+=======
+            jerseys_file = self.data_file('jerseys.json')
+>>>>>>> e920c3f (Initial commit)
             if jerseys_file.exists():
                 with open(jerseys_file, 'r', encoding='utf-8') as f:
                     jerseys = json.load(f)
@@ -103,7 +119,11 @@ class AdminHandler(BaseHTTPRequestHandler):
             jersey_data['views'] = 0
             
             # Charger les maillots existants
+<<<<<<< HEAD
             jerseys_file = Path("data/jerseys.json")
+=======
+            jerseys_file = self.data_file('jerseys.json')
+>>>>>>> e920c3f (Initial commit)
             if jerseys_file.exists():
                 with open(jerseys_file, 'r', encoding='utf-8') as f:
                     jerseys = json.load(f)
@@ -114,6 +134,10 @@ class AdminHandler(BaseHTTPRequestHandler):
             jerseys.append(jersey_data)
             
             # Sauvegarder
+<<<<<<< HEAD
+=======
+            self.DATA_DIR.mkdir(parents=True, exist_ok=True)
+>>>>>>> e920c3f (Initial commit)
             with open(jerseys_file, 'w', encoding='utf-8') as f:
                 json.dump(jerseys, f, ensure_ascii=False, indent=2)
             
@@ -133,7 +157,11 @@ class AdminHandler(BaseHTTPRequestHandler):
             jersey_data = json.loads(post_data.decode('utf-8'))
             
             # Charger les maillots existants
+<<<<<<< HEAD
             jerseys_file = Path("data/jerseys.json")
+=======
+            jerseys_file = self.data_file('jerseys.json')
+>>>>>>> e920c3f (Initial commit)
             if jerseys_file.exists():
                 with open(jerseys_file, 'r', encoding='utf-8') as f:
                     jerseys = json.load(f)
@@ -156,6 +184,10 @@ class AdminHandler(BaseHTTPRequestHandler):
                 return
             
             # Sauvegarder
+<<<<<<< HEAD
+=======
+            self.DATA_DIR.mkdir(parents=True, exist_ok=True)
+>>>>>>> e920c3f (Initial commit)
             with open(jerseys_file, 'w', encoding='utf-8') as f:
                 json.dump(jerseys, f, ensure_ascii=False, indent=2)
             
@@ -175,7 +207,12 @@ class AdminHandler(BaseHTTPRequestHandler):
             jerseys = json.loads(post_data.decode('utf-8'))
             
             # Sauvegarder
+<<<<<<< HEAD
             jerseys_file = Path("data/jerseys.json")
+=======
+            jerseys_file = self.data_file('jerseys.json')
+            self.DATA_DIR.mkdir(parents=True, exist_ok=True)
+>>>>>>> e920c3f (Initial commit)
             with open(jerseys_file, 'w', encoding='utf-8') as f:
                 json.dump(jerseys, f, ensure_ascii=False, indent=2)
             
@@ -196,7 +233,11 @@ class AdminHandler(BaseHTTPRequestHandler):
             jersey_id = data.get('id')
             
             # Charger les maillots existants
+<<<<<<< HEAD
             jerseys_file = Path("data/jerseys.json")
+=======
+            jerseys_file = self.data_file('jerseys.json')
+>>>>>>> e920c3f (Initial commit)
             if jerseys_file.exists():
                 with open(jerseys_file, 'r', encoding='utf-8') as f:
                     jerseys = json.load(f)
@@ -207,6 +248,10 @@ class AdminHandler(BaseHTTPRequestHandler):
             jerseys = [j for j in jerseys if j.get('id') != jersey_id]
             
             # Sauvegarder
+<<<<<<< HEAD
+=======
+            self.DATA_DIR.mkdir(parents=True, exist_ok=True)
+>>>>>>> e920c3f (Initial commit)
             with open(jerseys_file, 'w', encoding='utf-8') as f:
                 json.dump(jerseys, f, ensure_ascii=False, indent=2)
             

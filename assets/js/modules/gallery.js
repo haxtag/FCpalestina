@@ -11,6 +11,11 @@ class Gallery {
         this.currentOrder = 'desc';
         this.isLoading = false;
         this.hasMoreItems = true;
+<<<<<<< HEAD
+=======
+        // Définition des tags (chargée au premier fetch)
+        this.tagsDef = null;
+>>>>>>> e920c3f (Initial commit)
         
         this.galleryGrid = document.getElementById('gallery-grid');
         this.filterButtons = document.querySelectorAll('.filter-btn');
@@ -118,11 +123,36 @@ class Gallery {
         try {
             console.log('🔄 Chargement des maillots...');
             
+<<<<<<< HEAD
+=======
+            // Charger la définition des tags une seule fois
+            if (!this.tagsDef) {
+                try {
+                    const tagsRes = await fetch('/data/tags.json');
+                    if (tagsRes.ok) {
+                        const ct = tagsRes.headers.get('content-type') || '';
+                        if (ct.includes('application/json')) {
+                            this.tagsDef = await tagsRes.json();
+                        }
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Impossible de charger tags.json');
+                }
+            }
+
+>>>>>>> e920c3f (Initial commit)
             // Charger directement depuis le fichier JSON pour avoir les données les plus récentes
             const response = await fetch('/data/jerseys.json');
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
+<<<<<<< HEAD
+=======
+            const ct = response.headers.get('content-type') || '';
+            if (!ct.includes('application/json')) {
+                throw new Error('jerseys.json ne renvoie pas du JSON');
+            }
+>>>>>>> e920c3f (Initial commit)
             const allJerseys = await response.json();
             
             console.log('📦 Maillots chargés:', allJerseys.length);
@@ -283,9 +313,13 @@ class Gallery {
                     <span class="gallery-item-category">${jerseyAPI.getCategoryDisplayName(jersey.category)}</span>
                     <span class="gallery-item-year">${jersey.year}</span>
                 </div>
+<<<<<<< HEAD
                 <div class="gallery-item-tags">
                     ${jersey.tags && jersey.tags.length > 0 ? jersey.tags.map(tag => `<span class="tag">${sanitizeHTML(tag)}</span>`).join('') : ''}
                 </div>
+=======
+                <div class="gallery-item-tags">${this.renderTags(jersey.tags)}</div>
+>>>>>>> e920c3f (Initial commit)
                 <!-- Debug: ${JSON.stringify(jersey.tags)} -->
             </div>
         `;
@@ -298,6 +332,32 @@ class Gallery {
         return article;
     }
 
+<<<<<<< HEAD
+=======
+    // Rendu des tags basé sur la définition (id -> name) et dédoublonnage; ignore les tags inconnus
+    renderTags(tags) {
+        if (!tags || tags.length === 0) return '';
+        const norm = (s) => (s || '').toString().normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+        const byId = new Map((this.tagsDef || []).map(t => [norm(t.id), t.name]));
+        const byName = new Map((this.tagsDef || []).map(t => [norm(t.name), t.name]));
+        const fallback = new Map([
+            ['home','Domicile'],['away','Extérieur'],['special','Spéciaux'],['vintage','Vintage']
+        ]);
+        const seen = new Set();
+        const pills = [];
+        (tags || []).forEach(raw => {
+            const n = norm(raw);
+            const display = byId.get(n) || byName.get(n) || fallback.get(n) || null;
+            if (!display) return;
+            const key = norm(display);
+            if (seen.has(key)) return;
+            seen.add(key);
+            pills.push(`<span class="tag">${sanitizeHTML(display)}</span>`);
+        });
+        return pills.join('');
+    }
+
+>>>>>>> e920c3f (Initial commit)
     /**
      * Ouvrir la modal d'un maillot
      * @param {Object} jersey - Données du maillot
