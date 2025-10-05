@@ -17,6 +17,14 @@ class JerseyModal {
         
         this.init();
         this.loadDefinitions();
+                // NOTE: Patch ajout chemin images locaux simplifies si le code modal consomme jersey.images
+                // Si votre modal utilise encore des URLs absolues pour les images, ajouter une fonction utilitaire :
+                if (typeof window.buildJerseyImagePath === 'undefined') {
+                    window.buildJerseyImagePath = function(img) {
+                        if (!img) return '/assets/images/jerseys/placeholder.jpg';
+                        return /^https?:/i.test(img) ? img : `${(window.CONFIG && window.CONFIG.IMAGES_BASE_URL) || '/assets/images/jerseys'}/${img}`;
+                    };
+                }
     }
 
     /**

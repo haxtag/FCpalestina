@@ -159,8 +159,8 @@ class SimpleGallery {
         article.dataset.category = jersey.category;
         article.dataset.id = jersey.id;
 
-        const imageUrl = jersey.thumbnail || jersey.images[0];
-        const imagePath = `${SIMPLE_CONFIG.IMAGES_BASE_URL}/${imageUrl}`;
+    const imageUrl = jersey.thumbnail || (jersey.images && jersey.images[0]) || 'placeholder.jpg';
+    const imagePath = /^https?:/i.test(imageUrl) ? imageUrl : `${SIMPLE_CONFIG.IMAGES_BASE_URL}/${imageUrl}`;
 
         article.innerHTML = `
             <div class="gallery-item-image">
@@ -175,8 +175,8 @@ class SimpleGallery {
                 </div>
             </div>
             <div class="gallery-item-content">
-                <h3 class="gallery-item-title">${jersey.title}</h3>
-                <p class="gallery-item-description">${jersey.description}</p>
+                <h3 class="gallery-item-title">${jersey.title || jersey.name || 'Maillot'}</h3>
+                <p class="gallery-item-description">${jersey.description || ''}</p>
                 <div class="gallery-item-meta">
                     <span class="gallery-item-category">${this.getCategoryDisplayName(jersey.category)}</span>
                     <span class="gallery-item-year">${jersey.year}</span>

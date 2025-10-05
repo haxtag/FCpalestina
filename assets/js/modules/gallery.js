@@ -406,8 +406,9 @@ class Gallery {
         article.dataset.id = jersey.id;
         article.dataset.jerseyId = jersey.id;
 
-        const imageUrl = jersey.thumbnail || jersey.images[0];
-        const imagePath = `${window.CONFIG.IMAGES_BASE_URL}/${imageUrl}`;
+    const imageUrl = jersey.thumbnail || (jersey.images && jersey.images[0]) || 'placeholder.jpg';
+    // Si l'URL commence déjà par http, on la garde telle quelle, sinon on prepend le dossier local
+    const imagePath = /^https?:/i.test(imageUrl) ? imageUrl : `${window.CONFIG.IMAGES_BASE_URL}/${imageUrl}`;
 
         article.innerHTML = `
             <div class="gallery-item-image">
@@ -422,8 +423,8 @@ class Gallery {
                 </div>
             </div>
             <div class="gallery-item-content">
-                <h3 class="gallery-item-title">${sanitizeHTML(jersey.title)}</h3>
-                <p class="gallery-item-description">${sanitizeHTML(jersey.description)}</p>
+                <h3 class="gallery-item-title">${sanitizeHTML(jersey.title || jersey.name || 'Maillot')}</h3>
+                <p class="gallery-item-description">${sanitizeHTML(jersey.description || '')}</p>
                 <div class="gallery-item-meta">
                     <span class="gallery-item-category">${this.getCategoryName(jersey.category)}</span>
                     <span class="gallery-item-year">${jersey.year}</span>

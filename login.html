@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Admin - FC Palestina</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff1744, #ff69b4, #2c5530);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2c5530, #ff1744);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(44, 85, 48, 0.3);
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #2c5530;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 85, 48, 0.1);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 12px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2c5530, #ff1744);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(44, 85, 48, 0.3);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .login-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .loading-spinner {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #c62828;
+        }
+        
+        .alert-success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-left: 4px solid #2e7d32;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .footer-text {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .security-info {
+            background: #f0f7ff;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #1565c0;
+        }
+        
+        .security-info i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 40px 25px;
+                margin: 10px;
+            }
+            
+            .login-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        
+        <h1 class="login-title">Administration</h1>
+        <p class="login-subtitle">FC Palestina - Accès sécurisé</p>
+        
+        <div id="alert" class="alert"></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="username">Nom d'utilisateur</label>
+                <div style="position: relative;">
+                    <i class="fas fa-user input-icon"></i>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="Entrez votre nom d'utilisateur"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">Mot de passe</label>
+                <div style="position: relative;">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Entrez votre mot de passe"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+            </div>
+            
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span id="btnText">Se connecter</span>
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                </div>
+            </button>
+        </form>
+        
+        <div class="security-info">
+            <i class="fas fa-info-circle"></i>
+            Session sécurisée avec expiration automatique
+        </div>
+        
+        <p class="footer-text">
+            FC Palestina © 2025 - Administration sécurisée
+        </p>
+    </div>
+
+    <script>
+        class LoginManager {
+            constructor() {
+                this.apiUrl = '/api';
+                this.form = document.getElementById('loginForm');
+                this.alertEl = document.getElementById('alert');
+                this.loginBtn = document.getElementById('loginBtn');
+                this.btnText = document.getElementById('btnText');
+                this.loadingSpinner = document.getElementById('loadingSpinner');
+                
+                this.init();
+            }
+            
+            init() {
+                // Vérifier si déjà connecté
+                this.checkAuthStatus();
+                
+                // Event listeners
+                this.form.addEventListener('submit', (e) => this.handleLogin(e));
+                
+                // Auto-focus sur le premier champ
+                document.getElementById('username').focus();
+                
+                // Entrée sur les champs
+                document.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !this.loginBtn.disabled) {
+                        this.handleLogin(e);
+                    }
+                });
+            }
+            
+            async checkAuthStatus() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/auth/status`, {
+                        credentials: 'include'
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.authenticated) {
+                            // Déjà connecté, rediriger vers l'admin
+                            this.redirectToAdmin();
+                        }
+                    }
+                } catch (error) {
+                    console.log('Pas encore authentifié');
+                }
+            }
+            
+            async handleLogin(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                
+                if (!username || !password) {
+                    this.showAlert('Veuillez remplir tous les champs', 'error');
+                    return;
+                }
+                
+                this.setLoading(true);
+                this.hideAlert();
+                
+                try {
+                    const response = await fetch(`${this.apiUrl}/auth/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ username, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                        this.showAlert('Connexion réussie ! Redirection...', 'success');
+                        setTimeout(() => {
+                            this.redirectToAdmin();
+                        }, 1500);
+                    } else {
+                        this.showAlert(data.error || 'Identifiants invalides', 'error');
+                    }
+                    
+                } catch (error) {
+                    console.error('Erreur login:', error);
+                    this.showAlert('Erreur de connexion au serveur', 'error');
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+            
+            setLoading(loading) {
+                this.loginBtn.disabled = loading;
+                if (loading) {
+                    this.btnText.style.opacity = '0';
+                    this.loadingSpinner.style.display = 'block';
+                } else {
+                    this.btnText.style.opacity = '1';
+                    this.loadingSpinner.style.display = 'none';
+                }
+            }
+            
+            showAlert(message, type) {
+                this.alertEl.textContent = message;
+                this.alertEl.className = `alert alert-${type}`;
+                this.alertEl.style.display = 'block';
+                
+                // Auto-hide success messages
+                if (type === 'success') {
+                    setTimeout(() => {
+                        this.hideAlert();
+                    }, 3000);
+                }
+            }
+            
+            hideAlert() {
+                this.alertEl.style.display = 'none';
+            }
+            
+            redirectToAdmin() {
+                window.location.href = '/admin.html';
+            }
+        }
+        
+        // Initialiser quand le DOM est prêt
+        document.addEventListener('DOMContentLoaded', () => {
+            new LoginManager();
+        });
+    </script>
+</body>
+</html>
