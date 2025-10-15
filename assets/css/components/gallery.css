@@ -213,7 +213,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(44, 85, 48, 0.8), rgba(44, 85, 48, 0.6));
+    background: linear-gradient(45deg, rgba(219, 112, 147, 0.8), rgba(255, 192, 203, 0.6));
     opacity: 0;
     transition: opacity var(--transition-normal);
     display: flex;

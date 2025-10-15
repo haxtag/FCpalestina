@@ -6,13 +6,24 @@
     <title>FC Palestina - Collection de Maillots</title>
     <meta name="description" content="Découvrez notre collection exclusive de maillots FC Palestina">
     
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="assets/img/fcp3.png">
+        <link rel="shortcut icon" type="image/png" href="assets/img/fcp3.png">
+        <link rel="apple-touch-icon" href="assets/img/fcp3.png">
+    
+    <!-- EmailJS pour envoi automatique d'emails -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/main.css?v=8">
     <link rel="stylesheet" href="assets/css/components/header.css?v=8">
     <link rel="stylesheet" href="assets/css/components/gallery.css?v=8">
     <link rel="stylesheet" href="assets/css/components/modal.css?v=8">
     <link rel="stylesheet" href="assets/css/components/footer.css?v=8">
+    <link rel="stylesheet" href="assets/css/components/pagination.css?v=4">
     <link rel="stylesheet" href="assets/css/responsive.css?v=8">
+    <link rel="stylesheet" href="assets/css/dark-theme.css?v=3">
+    <link rel="stylesheet" href="assets/css/logo-fixes.css?v=1">
     <link rel="stylesheet" href="fix_modal_styles.css?v=8">
     
     <!-- Admin Panel Styles -->
@@ -150,7 +161,7 @@
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="assets/img/fcp.png" alt="FC Palestina" class="logo">
+                    <img src="assets/img/fcp3.png" alt="FC Palestina" class="logo">
                     <span class="brand-name">FC Palestina</span>
                 </div>
                 
@@ -167,6 +178,11 @@
                         </li>
                         <li class="nav-item">
                             <a href="#contact" class="nav-link">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <button id="theme-toggle" class="theme-toggle" title="Basculer en mode sombre">
+                                <i class="fas fa-moon"></i>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -224,8 +240,13 @@
                 <!-- Les maillots seront chargés dynamiquement ici -->
             </div>
             
-            <!-- Load More Button -->
-            <div class="gallery-load-more">
+            <!-- Pagination Controls -->
+            <div id="pagination-container" class="pagination-container" style="display: none;">
+                <!-- Les contrôles de pagination seront générés ici -->
+            </div>
+            
+            <!-- Load More Button (conservé pour compatibilité) -->
+            <div class="gallery-load-more" style="display: none;">
                 <button class="btn btn-secondary" id="load-more">Charger Plus</button>
             </div>
         </div>
@@ -275,17 +296,17 @@
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
+                        <i class="fab fa-tiktok"></i>
                         <div>
-                            <h3>Email</h3>
-                            <p>contact@fcpalestina.com</p>
+                            <h3>TikTok</h3>
+                            <p><a href="https://www.tiktok.com/@maillots.du.peuple" target="_blank" onclick="try { window.open('tiktok://user/@maillots.du.peuple', '_self'); } catch(e) { return true; }">maillots.du.peuple</a></p>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-phone"></i>
+                        <i class="fas fa-shopping-bag"></i>
                         <div>
-                            <h3>Téléphone</h3>
-                            <p>+33 1 23 45 67 89</p>
+                            <h3>Vinted</h3>
+                            <p><a href="https://www.vinted.fr/member/287196181-maillotsdupeuple" target="_blank">Maillots Du Peuple</a></p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -297,18 +318,86 @@
                     </div>
                 </div>
                 
-                <form class="contact-form">
+                <form class="contact-form" id="contactForm">
                     <div class="form-group">
-                        <input type="text" placeholder="Votre nom" required>
+                        <input type="text" id="userName" placeholder="Votre nom" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Votre email" required>
+                        <input type="email" id="userEmail" placeholder="votre@email.com" required>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Votre message" rows="5" required></textarea>
+                        <textarea id="userMessage" placeholder="Votre message" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <span class="btn-text">📧 Envoyer le message</span>
+                        <span class="btn-loading" style="display: none;">⏳ Envoi en cours...</span>
+                    </button>
+                    
+                    <div id="status-message" style="margin-top: 15px; text-align: center; font-size: 14px; display: none;"></div>
                 </form>
+                
+                <script>
+                // Configuration EmailJS
+                (function(){
+                    emailjs.init("4CnuC09JQL1JzEAiM"); // Clé publique temporaire
+                })();
+                
+                document.getElementById('contactForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = document.getElementById('submitBtn');
+                    const statusMsg = document.getElementById('status-message');
+                    const btnText = submitBtn.querySelector('.btn-text');
+                    const btnLoading = submitBtn.querySelector('.btn-loading');
+                    
+                    // Afficher l'état de chargement
+                    btnText.style.display = 'none';
+                    btnLoading.style.display = 'inline';
+                    submitBtn.disabled = true;
+                    
+                    // Paramètres de l'email
+                    const templateParams = {
+                        from_name: document.getElementById('userName').value,
+                        from_email: document.getElementById('userEmail').value,
+                        message: document.getElementById('userMessage').value,
+                        to_email: 'maillots.du.peuple91@gmail.com'
+                    };
+                    
+                    // Envoyer avec EmailJS
+                    emailjs.send('service_jvn6t9h', 'template_4egl7j4', templateParams)
+                        .then(function(response) {
+                            console.log('Email envoyé !', response.status, response.text);
+                            
+                            // Succès
+                            statusMsg.style.display = 'block';
+                            statusMsg.style.color = '#4CAF50';
+                            statusMsg.innerHTML = '✅ Message envoyé avec succès ! Nous vous répondrons rapidement.';
+                            
+                            // Réinitialiser le formulaire
+                            document.getElementById('contactForm').reset();
+                            
+                            // Masquer le message après 5 secondes
+                            setTimeout(() => {
+                                statusMsg.style.display = 'none';
+                            }, 5000);
+                            
+                        }, function(error) {
+                            console.log('Erreur:', error);
+                            
+                            // Erreur - utiliser fallback
+                            statusMsg.style.display = 'block';
+                            statusMsg.style.color = '#f44336';
+                            statusMsg.innerHTML = '⚠️ Erreur technique. <a href="mailto:maillots.du.peuple91@gmail.com?subject=Message depuis FC Palestina&body=Nom: ' + templateParams.from_name + '%0AEmail: ' + templateParams.from_email + '%0A%0AMessage: ' + templateParams.message + '" style="color: #8B1538; text-decoration: underline;">Cliquez ici pour envoyer via email</a>';
+                        })
+                        .finally(function() {
+                            // Restaurer le bouton
+                            btnText.style.display = 'inline';
+                            btnLoading.style.display = 'none';
+                            submitBtn.disabled = false;
+                        });
+                });
+                </script>
             </div>
         </div>
     </section>
@@ -319,7 +408,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="assets/img/fcp.png" alt="FC Palestina" class="footer-logo-img">
+                        <img src="assets/img/fcp3.png" alt="FC Palestina" class="footer-logo-img">
                         <span class="footer-brand">FC Palestina</span>
                     </div>
                     <p class="footer-description">
@@ -341,16 +430,14 @@
                 <div class="footer-section">
                     <h3 class="footer-title">Suivez-Nous</h3>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@maillots.du.peuple" target="_blank" onclick="try { window.open('tiktok://user/@maillots.du.peuple', '_self'); } catch(e) { return true; }" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.vinted.fr/member/223176724" target="_blank" class="social-link"><i class="fas fa-shopping-bag"></i></a>
                     </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 FC Palestina. Tous droits réservés.</p>
+                <p>&copy; 2025 FC Palestina. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
@@ -376,12 +463,13 @@
     <!-- JavaScript -->
     <script src="assets/js/config.js?v=8"></script>
     <script src="assets/js/utils/helpers.js?v=8"></script>
+    <script src="assets/js/dark-mode.js?v=1"></script>
     <script src="assets/js/modules/api.js?v=8"></script>
-    <script src="assets/js/modules/modal.js?v=11"></script>
-    <script src="assets/js/modules/gallery.js?v=11"></script>
-    <script src="assets/js/main.js?v=11"></script>
+    <script src="assets/js/modules/modal.js?v=15"></script>
+    <script src="assets/js/modules/gallery.js?v=15"></script>
+    <script src="assets/js/main.js?v=13"></script>
     <script src="force_buttons.js?v=8"></script>
-    <script src="assets/js/ultra-simple-admin.js?v=12"></script>
+    <script src="assets/js/ultra-simple-admin.js?v=14"></script>
     
         <!-- Admin Panel (hidden by default) -->
         <div id="admin-panel" style="display: none; position: fixed; top: 0; left: 0; right: 0; background: #8B1538; color: white; padding: 10px; z-index: 1000; text-align: center;">

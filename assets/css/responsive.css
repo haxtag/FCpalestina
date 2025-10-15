@@ -129,6 +129,18 @@
     margin: 0;
 }
 
+.contact-item p a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.contact-item p a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
 .contact-form {
     background: var(--white);
     padding: var(--spacing-xl);

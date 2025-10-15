@@ -2,31 +2,37 @@
   {
     "id": "home",
     "name": "Domicile",
+    "description": "Maillots domicile",
     "color": "#8B1538"
   },
   {
     "id": "away",
     "name": "Extérieur",
+    "description": "Maillots extérieur",
+    "color": "#6c757d"
+  },
+  {
+    "id": "third",
+    "name": "Troisième",
+    "description": "Troisièmes maillots",
     "color": "#000000"
-  },
-  {
-    "id": "special",
-    "name": "Spéciaux",
-    "color": "#FFD700"
-  },
-  {
-    "id": "vintage",
-    "name": "Vintage",
-    "color": "#8B4513"
   },
   {
     "id": "keeper",
     "name": "Gardien",
-    "color": "#FF6B6B"
+    "description": "Maillots de gardien",
+    "color": "#28a745"
   },
   {
-    "id": "cat_6",
-    "name": "Sélection",
-    "color": "#f20276"
+    "id": "special",
+    "name": "Spéciaux",
+    "description": "Éditions spéciales",
+    "color": "#ffc107"
+  },
+  {
+    "id": "vintage",
+    "name": "Vintage",
+    "description": "Maillots vintage",
+    "color": "#8b4513"
   }
 ]

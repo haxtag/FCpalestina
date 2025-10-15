@@ -35,6 +35,7 @@ def main():
     print("📱 Site principal: http://localhost:8000")
     print("🔧 API admin: http://localhost:8001/api/")
     print("🛑 Appuyez sur Ctrl+C pour arrêter tous les serveurs")
+    print("💡 Admin ultra-simple: http://localhost:8000/index.html?admin=true")
     print()
     
     # Vérifier que les fichiers existent
@@ -55,7 +56,7 @@ def main():
     
     # Ouvrir le navigateur
     print("🌐 Ouverture du navigateur...")
-    webbrowser.open("http://localhost:8000")
+    webbrowser.open("http://localhost:8000/index.html?admin=true")
     
     # Démarrer le frontend (bloquant)
     try:

@@ -2,7 +2,7 @@
 .modal {
     display: none;
     position: fixed;
-    z-index: 10000;
+    z-index: 1000000;
     left: 0;
     top: 0;
     width: 100%;
@@ -41,7 +41,7 @@
     font-weight: bold;
     color: var(--white);
     cursor: pointer;
-    z-index: 10001;
+    z-index: 1000001;
     width: 40px;
     height: 40px;
     display: flex;

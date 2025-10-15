@@ -1,23 +1,23 @@
 [
   {
+    "id": "fcpalestina",
+    "name": "FC Palestina",
+    "color": "#8B1538"
+  },
+  {
     "id": "new",
     "name": "Nouveau",
     "color": "#28a745"
   },
   {
-    "id": "limited",
-    "name": "Édition limitée",
-    "color": "#dc3545"
+    "id": "popular",
+    "name": "Populaire",
+    "color": "#007bff"
   },
   {
-    "id": "vintage",
-    "name": "Vintage",
-    "color": "#6c757d"
-  },
-  {
-    "id": "selection",
-    "name": "Sélection",
-    "color": "#ffc107"
+    "id": "classic",
+    "name": "Classique",
+    "color": "#6f42c1"
   },
   {
     "id": "home",
@@ -25,8 +25,13 @@
     "color": "#8B1538"
   },
   {
-    "id": "fcpalestina",
-    "name": "FC Palestina",
-    "color": "#17a2b8"
+    "id": "away",
+    "name": "Extérieur",
+    "color": "#6c757d"
+  },
+  {
+    "id": "keeper",
+    "name": "Gardien",
+    "color": "#ffc107"
   }
 ]

@@ -12,8 +12,34 @@ class JerseyModal {
         this.currentJersey = null;
         this.currentImageIndex = 0;
         this.jerseys = [];
+        this.tagsDef = null;
+        this.categoriesDef = null;
         
         this.init();
+        this.loadDefinitions();
+    }
+
+    /**
+     * Charger les définitions des tags et catégories
+     */
+    async loadDefinitions() {
+        try {
+            const ts = Date.now();
+            const [tagsRes, catRes] = await Promise.all([
+                fetch(`/data/tags.json?t=${ts}`, { cache: 'no-store' }),
+                fetch(`/data/categories.json?t=${ts}`, { cache: 'no-store' })
+            ]);
+            
+            if (tagsRes.ok && tagsRes.headers.get('content-type')?.includes('application/json')) {
+                this.tagsDef = await tagsRes.json();
+            }
+            if (catRes.ok && catRes.headers.get('content-type')?.includes('application/json')) {
+                this.categoriesDef = await catRes.json();
+            }
+            console.log('📚 Définitions chargées:', { tags: this.tagsDef?.length, categories: this.categoriesDef?.length });
+        } catch (e) {
+            console.warn('⚠️ Impossible de charger les définitions:', e);
+        }
     }
 
     /**
@@ -46,12 +72,20 @@ class JerseyModal {
 
         // Écouter l'événement personnalisé pour ouvrir la modal
         document.addEventListener('openJerseyModal', (e) => {
+            // Fermer toutes les modals admin ouvertes d'abord
+            const adminModals = document.querySelectorAll('.admin-modal-overlay');
+            if (adminModals.length > 0) {
+                adminModals.forEach(modal => modal.remove());
+                console.log(`🧹 ${adminModals.length} modal(s) admin fermé(s) avant ouverture modal détail`);
+            }
+
             // Vérifier si on est en mode admin
             const adminPanel = document.getElementById('admin-main-panel');
             if (adminPanel && adminPanel.style.display !== 'none') {
                 console.log('🚫 Modal bloquée en mode admin');
                 return; // Ne pas ouvrir le modal normal en mode admin
             }
+            
             this.open(e.detail.jersey);
         });
 
@@ -64,16 +98,26 @@ class JerseyModal {
     }
 
     /**
-     * Ouvrir la modal avec un maillot
-     * @param {Object} jersey - Données du maillot
+     * Ouvrir la modal avec les détails d'un maillot
+     * @param {Object} jersey - Les données du maillot à afficher
      */
     open(jersey) {
-        console.log('🔍 Modal.open() appelé avec:', jersey);
+        console.log('� Ouverture de la modal:', jersey);
         
         if (!jersey) {
             console.error('❌ Aucun maillot fourni à la modal');
             return;
         }
+
+        // Fermer toutes les modals admin qui pourraient être ouvertes
+        const adminModals = document.querySelectorAll('.admin-modal-overlay');
+        adminModals.forEach(modal => {
+            modal.remove();
+        });
+        console.log(`🧹 ${adminModals.length} modal(s) admin fermé(s)`);
+
+        // RESET COMPLET du modal avant ouverture
+        this.resetModal();
 
         this.currentJersey = jersey;
         this.currentImageIndex = 0;
@@ -93,25 +137,112 @@ class JerseyModal {
     }
 
     /**
+     * Réinitialisation complète du modal
+     */
+    resetModal() {
+        if (!this.modal) return;
+        
+        // Supprimer toutes les classes et styles
+        this.modal.classList.remove('active');
+        this.modal.style.cssText = '';
+        this.modal.style.display = 'none';
+        
+        // Réinitialiser l'overflow du body
+        document.body.style.overflow = 'auto';
+        
+        console.log('🔄 Modal complètement réinitialisé');
+    }
+
+    /**
+     * Charger les définitions des tags et catégories
+     */
+    async loadDefinitions() {
+        try {
+            const ts = Date.now();
+            const [tagsRes, catRes] = await Promise.all([
+                fetch(`/data/tags.json?t=${ts}`, { cache: 'no-store' }),
+                fetch(`/data/categories.json?t=${ts}`, { cache: 'no-store' })
+            ]);
+            
+            if (tagsRes.ok && tagsRes.headers.get('content-type')?.includes('application/json')) {
+                this.tagsDef = await tagsRes.json();
+            }
+            if (catRes.ok && catRes.headers.get('content-type')?.includes('application/json')) {
+                this.categoriesDef = await catRes.json();
+            }
+        } catch (e) {
+            console.warn('⚠️ Impossible de charger les définitions:', e);
+        }
+    }
+
+    /**
      * Fermer la modal
      */
     close() {
-        this.modal.classList.remove('active');
-        document.body.style.overflow = '';
-        
-        // Nettoyer après l'animation
-        setTimeout(() => {
-            this.modal.style.display = 'none';
-        }, 300);
+        try {
+            if (this.modal) {
+                this.modal.classList.remove('active');
+                // IMPORTANT: Remettre display none pour éviter les problèmes de repositionnement
+                setTimeout(() => {
+                    if (this.modal && !this.modal.classList.contains('active')) {
+                        this.modal.style.display = 'none';
+                        // Réinitialiser complètement les styles pour la prochaine ouverture
+                        this.modal.style.cssText = '';
+                    }
+                }, 300); // Attendre la fin de l'animation CSS
+            }
+            document.body.style.overflow = 'auto';
+            
+            // Réinitialiser les données
+            this.currentJersey = null;
+            this.currentImageIndex = 0;
+            
+            console.log('✅ Modal fermée avec succès');
+        } catch (e) {
+            console.error('❌ Erreur lors de la fermeture de la modal:', e);
+            // Force close en cas d'erreur
+            try {
+                if (this.modal) {
+                    this.modal.style.display = 'none';
+                    this.modal.style.cssText = '';
+                }
+                document.body.style.overflow = 'auto';
+                this.currentJersey = null;
+            } catch (e2) {
+                console.error('❌ Erreur critique modal:', e2);
+                // Dernier recours: recharger la page
+                if (confirm('Erreur critique de la modal. Recharger la page ?')) {
+                    window.location.reload();
+                }
+            }
+        }
     }
 
     /**
      * Afficher la modal
      */
     show() {
-        this.modal.style.display = 'flex';
+        // Réinitialiser complètement les styles pour éviter les conflits
+        this.modal.style.cssText = `
+            display: flex !important;
+            position: fixed !important;
+            z-index: 1000000 !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(5px) !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 20px !important;
+            box-sizing: border-box !important;
+        `;
+        
         // Forcer le reflow pour l'animation
         this.modal.offsetHeight;
+        
+        console.log('👁️ Modal affichée avec styles forcés');
     }
 
     /**
@@ -172,40 +303,119 @@ class JerseyModal {
     }
 
     /**
+     * Obtenir le nom d'une catégorie
+     */
+    getCategoryName(catId) {
+        if (!catId) return 'Non spécifiée';
+        try {
+            const list = this.categoriesDef || [];
+            const found = list.find(c => c.id === catId);
+            if (found && found.name) return found.name;
+            const fallback = { 'home': 'Domicile', 'away': 'Extérieur', 'special': 'Spéciaux', 'vintage': 'Vintage', 'keeper': 'Gardien' };
+            return fallback[catId] || `Catégorie supprimée (${catId})`;
+        } catch (e) {
+            console.warn('⚠️ Erreur getCategoryName:', e);
+            return 'Catégorie inconnue';
+        }
+    }
+
+    /**
+     * Obtenir le nom d'un tag avec couleur
+     */
+    getTagInfo(tagId) {
+        if (!tagId) return { name: '', color: '#6c757d' };
+        try {
+            const list = this.tagsDef || [];
+            const found = list.find(t => t.id === tagId || t.name === tagId);
+            if (found) return { name: found.name, color: found.color || '#8B1538' };
+            const fallback = {
+                'home': { name: 'Domicile', color: '#8B1538' },
+                'away': { name: 'Extérieur', color: '#000000' },
+                'special': { name: 'Spéciaux', color: '#FFD700' },
+                'vintage': { name: 'Vintage', color: '#8B4513' },
+                'limited': { name: 'Édition limitée', color: '#FF6B6B' },
+                'fcpalestina': { name: 'FC Palestina', color: '#8B1538' },
+                'nouveau': { name: 'Nouveau', color: '#28a745' },
+                'selection': { name: 'Sélection', color: '#17a2b8' },
+                'domicile': { name: 'Domicile', color: '#8B1538' },
+                'exterieur': { name: 'Extérieur', color: '#000000' },
+                'pasbeau': { name: 'PASBEAU', color: '#dc3545' },
+                'tag_7': { name: 'Nouveau Tag', color: '#17a2b8' }
+            };
+            const norm = tagId.toString().toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+            return fallback[norm] || { name: `Tag supprimé (${tagId})`, color: '#6c757d' };
+        } catch (e) {
+            console.warn('⚠️ Erreur getTagInfo:', e);
+            return { name: 'Tag inconnu', color: '#6c757d' };
+        }
+    }
+
+    /**
+     * Rendu des tags avec couleurs
+     */
+    renderTags(tags) {
+        if (!tags || tags.length === 0) return '<span style="color: #999;">Aucun tag</span>';
+        const seen = new Set();
+        const pills = [];
+        (tags || []).forEach(raw => {
+            const info = this.getTagInfo(raw);
+            const key = info.name.toLowerCase();
+            if (seen.has(key)) return;
+            seen.add(key);
+            pills.push(`<span class="tag" style="background-color: ${info.color}; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; margin: 2px 4px 2px 0; display: inline-block; font-weight: 500;">${info.name}</span>`);
+        });
+        return pills.join('');
+    }
+
+    /**
      * Créer le HTML de la description
      * @returns {string} - HTML de la description
      */
     createDescriptionHTML() {
         const jersey = this.currentJersey;
         
-        return `
-            <div class="jersey-details">
-                <p class="jersey-description">${sanitizeHTML(jersey.description)}</p>
-                
-                <div class="jersey-info">
-                    <div class="info-item">
-                        <strong>Année:</strong> ${jersey.year}
+        try {
+            return `
+                <div class="jersey-details">
+                    <p class="jersey-description">${sanitizeHTML(jersey.description || 'Aucune description disponible')}</p>
+                    
+                    <div class="jersey-info">
+                        <div class="info-item">
+                            <strong>Année:</strong> ${jersey.year || 'Non spécifiée'}
+                        </div>
+                        <div class="info-item">
+                            <strong>Catégorie:</strong> ${this.getCategoryName(jersey.category)}
+                        </div>
                     </div>
-                    <div class="info-item">
-                        <strong>Catégorie:</strong> ${jerseyAPI.getCategoryDisplayName(jersey.category)}
+
+                    <div class="jersey-tags">
+                        <strong>Tags:</strong>
+                        ${this.renderTags(jersey.tags)}
+                    </div>
+
+                    <div class="jersey-actions">
+                        <button class="btn btn-primary" onclick="jerseyModal.shareJersey()">
+                            <i class="fas fa-share"></i> Partager
+                        </button>
+                        <button class="btn btn-secondary" onclick="jerseyModal.downloadImage()">
+                            <i class="fas fa-download"></i> Télécharger
+                        </button>
                     </div>
                 </div>
-
-                <div class="jersey-tags">
-                    <strong>Tags:</strong>
-                    ${jersey.tags.map(tag => `<span class="tag">${sanitizeHTML(tag)}</span>`).join('')}
+            `;
+        } catch (e) {
+            console.error('❌ Erreur dans createDescriptionHTML:', e);
+            return `
+                <div class="jersey-details">
+                    <p class="jersey-description">Erreur d'affichage des détails</p>
+                    <div class="jersey-actions">
+                        <button class="btn btn-secondary" onclick="jerseyModal.close()">
+                            <i class="fas fa-times"></i> Fermer
+                        </button>
+                    </div>
                 </div>
-
-                <div class="jersey-actions">
-                    <button class="btn btn-primary" onclick="jerseyModal.shareJersey()">
-                        <i class="fas fa-share"></i> Partager
-                    </button>
-                    <button class="btn btn-secondary" onclick="jerseyModal.downloadImage()">
-                        <i class="fas fa-download"></i> Télécharger
-                    </button>
-                </div>
-            </div>
-        `;
+            `;
+        }
     }
 
     /**

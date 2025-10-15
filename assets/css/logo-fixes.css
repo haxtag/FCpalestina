@@ -1,0 +1,154 @@
+/* LOGOS MODERNES ET ÉPURÉS - FC PALESTINA */
+
+/* LOGO HEADER - Design moderne avec bordures arrondies */
+.nav-logo .logo {
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    margin-right: 15px;
+    /* Effets modernes */
+    box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3) !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(139, 21, 56, 0.05)) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    backdrop-filter: blur(10px);
+}
+
+.nav-logo .logo:hover {
+    transform: scale(1.05) translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(139, 21, 56, 0.4) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Nom de marque moderne */
+.brand-name {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* LOGO FOOTER - Design card moderne */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(139, 21, 56, 0.1), rgba(139, 21, 56, 0.05));
+    border-radius: 16px;
+    border: 1px solid rgba(139, 21, 56, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 21, 56, 0.2);
+}
+
+.footer-logo-img {
+    width: 55px !important;
+    height: 55px !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    margin-right: 18px;
+    /* Style moderne épuré */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(139, 21, 56, 0.1)) !important;
+    transition: all 0.3s ease !important;
+}
+
+.footer-brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
+}
+
+/* Mode sombre - corrections spéciales pour les logos */
+[data-theme="dark"] .footer-logo-img {
+    /* Pour mode sombre, ajouter un fond subtil */
+    background: rgba(139, 21, 56, 0.2) !important;
+    border: 1px solid rgba(139, 21, 56, 0.5) !important;
+    filter: brightness(1.1) contrast(1.2) saturate(1.3) !important;
+}
+
+[data-theme="dark"] .nav-logo .logo {
+    filter: brightness(1.2) contrast(1.1) saturate(1.1) !important;
+}
+
+/* AMÉLIORATIONS GÉNÉRALES LOGOS */
+
+/* Logo header responsif */
+@media (max-width: 768px) {
+    .nav-logo .logo {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .brand-name {
+        font-size: 1.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-logo .logo {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    
+    .brand-name {
+        font-size: 1.1rem !important;
+    }
+    
+    .footer-logo-img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .footer-brand {
+        font-size: 1.1rem;
+    }
+}
+
+/* FAVICON personnalisé pour différentes tailles */
+.favicon-improvements {
+    /* Ces styles sont appliqués automatiquement par le navigateur */
+}
+
+/* Hover effects pour les logos */
+.nav-logo:hover .logo {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.footer-logo:hover .footer-logo-img {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+/* Fix pour contraste en mode clair aussi */
+body:not([data-theme="dark"]) .footer-logo-img {
+    background: rgba(139, 21, 56, 0.1);
+    border: 1px solid rgba(139, 21, 56, 0.2);
+    filter: brightness(0.95) contrast(1.1) saturate(1.2);
+}
+
+/* CORRECTION SPÉCIALE POUR FCP3.PNG si elle a un fond blanc */
+.logo[src*="fcp3.png"],
+.footer-logo-img[src*="fcp3.png"] {
+    /* Si l'image a un fond blanc, on l'inverse légèrement pour le contraste */
+    background: linear-gradient(45deg, rgba(139, 21, 56, 0.1), rgba(139, 21, 56, 0.05));
+    box-shadow: 0 2px 8px rgba(139, 21, 56, 0.2);
+}
+
+/* Mode sombre - version spéciale pour fcp3.png */
+[data-theme="dark"] .logo[src*="fcp3.png"],
+[data-theme="dark"] .footer-logo-img[src*="fcp3.png"] {
+    background: linear-gradient(45deg, rgba(139, 21, 56, 0.3), rgba(139, 21, 56, 0.15));
+    box-shadow: 0 2px 8px rgba(139, 21, 56, 0.4);
+}

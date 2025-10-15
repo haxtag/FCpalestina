@@ -41,8 +41,11 @@ async function initializeApp() {
         console.log('✅ Application initialisée avec succès');
         
     } catch (error) {
+        // Journaliser en détail et afficher un message plus informatif
+        console.error('❌ Erreur lors de l\'initialisation de l\'application:', error);
         handleError(error, 'App initialization');
-        showNotification('Erreur lors de l\'initialisation de l\'application', 'error');
+        const msg = (error && (error.message || error.toString())) || 'Erreur inconnue';
+        showNotification(`Erreur d\'initialisation: ${msg}`, 'error');
     } finally {
         toggleLoading(false);
     }
@@ -205,12 +208,15 @@ async function loadInitialData() {
     try {
         console.log('🔄 Chargement des données initiales...');
         
-        // Charger les catégories directement depuis le fichier JSON
-        const categoriesResponse = await fetch('/data/categories.json');
-        if (categoriesResponse.ok) {
+        // Charger les catégories directement depuis le fichier JSON avec cache-busting
+        const ts = Date.now();
+        const categoriesResponse = await fetch(`/data/categories.json?t=${ts}`, { cache: 'no-store' });
+        if (categoriesResponse.ok && categoriesResponse.headers.get('content-type')?.includes('application/json')) {
             const categories = await categoriesResponse.json();
             updateCategoryFilters(categories);
             console.log('📂 Catégories chargées:', categories.length);
+        } else {
+            console.warn('⚠️ Impossible de charger categories.json');
         }
         
         // Charger les statistiques
@@ -249,6 +255,17 @@ function updateCategoryFilters(categories) {
             button.style.backgroundColor = category.color;
             button.style.borderColor = category.color;
             button.style.color = 'white';
+            // Hover et active state
+            button.addEventListener('mouseenter', () => {
+                if (!button.classList.contains('active')) {
+                    button.style.opacity = '0.8';
+                }
+            });
+            button.addEventListener('mouseleave', () => {
+                if (!button.classList.contains('active')) {
+                    button.style.opacity = '1';
+                }
+            });
             console.log('✅ Couleur appliquée:', category.color);
         } else {
             console.log('❌ Pas de couleur pour:', category.name);
@@ -256,6 +273,10 @@ function updateCategoryFilters(categories) {
         
         // Ajouter l'événement de clic
         button.addEventListener('click', (e) => {
+            // Mettre à jour l'état actif des boutons
+            filterContainer.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
             // Déclencher l'événement de la galerie
             const gallery = window.gallery;
             if (gallery) {
@@ -265,6 +286,8 @@ function updateCategoryFilters(categories) {
         
         filterContainer.appendChild(button);
     });
+    
+    console.log(`🔄 ${categories.length} catégories ajoutées aux filtres`);
 }
 
 /**
