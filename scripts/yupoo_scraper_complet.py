@@ -50,7 +50,7 @@ class YupooCompleteScraper:
         }
         self.color_map = {'黑': 'Noir','白': 'Blanc','红': 'Rouge','蓝': 'Bleu','绿': 'Vert','黄': 'Jaune','粉': 'Rose','灰': 'Gris','紫': 'Violet','橙': 'Orange'}
         self.size_pattern = re.compile(r'(?:[XSML]-)?S-\d?XL|XS-4XL|S-2XL|S-4XL|\d{1,2}-\d{1,2}[ ]?码?')
-        self.season_pattern = re.compile(r'(25\d{2}|\d{2}[/-]\d{2}|\d{4})')
+        self.season_pattern = re.compile(r'(\d{2}[-/]\d{2}|\d{4})')
         
         # Configuration des headers
         self.user_agents = [
@@ -83,21 +83,27 @@ class YupooCompleteScraper:
         size = size_match.group() if size_match else ''
         if size:
             s = s.replace(size, ' ')
+        # Recherche de la saison/année partout dans le titre (début, milieu, fin)
         season = ''
-        season_match = self.season_pattern.search(s)
-        if season_match:
-            token = season_match.group()
-            if len(token) == 4 and token.isdigit():  # 2526 or 2425
-                if token.startswith('25'):
-                    season = f"20{token[:2]}-20{token[2:]}"
-                else:
-                    season = f"20{token[:2]}-20{token[2:]}"
+        season_token = ''
+        all_season_matches = list(self.season_pattern.finditer(original))
+        if all_season_matches:
+            # Prendre la dernière occurrence (souvent la vraie saison)
+            last_match = all_season_matches[-1]
+            token = last_match.group()
+            
+            if len(token) == 4 and token.isdigit():  # 2526 ou 9798
+                prefix = '20' if int(token[:2]) <= 30 else '19'
+                season = f"{prefix}{token[:2]}-{prefix}{token[2:]}"
             else:
                 parts = re.split('[-/]', token)
-                if len(parts) == 2 and all(len(p) == 2 for p in parts):
-                    season = f"20{parts[0]}-20{parts[1]}"
+                if len(parts) == 2 and all(len(p) == 2 and p.isdigit() for p in parts):
+                    prefix1 = '20' if int(parts[0]) <= 30 else '19'
+                    prefix2 = '20' if int(parts[1]) <= 30 else '19'
+                    season = f"{prefix1}{parts[0]}-{prefix2}{parts[1]}"
                 else:
                     season = token
+            # Enlever la saison du titre pour la suite du parsing
             s = s.replace(token, ' ')
         team = ''
         for k, v in self.team_map.items():
@@ -121,7 +127,8 @@ class YupooCompleteScraper:
             'home': 'Domicile', 'away': 'Extérieur', 'third': 'Troisième', 'keeper': 'Gardien', 'special': 'Édition Spéciale', 'vintage': 'Vintage'
         }[category]
         parts = []
-        season_full = season or '2024-2025'
+        # Si aucune saison trouvée, ne pas forcer 2024-2025 si le titre contient déjà une année ailleurs
+        season_full = season if season else ''
         season_short = ''
         if season_full and re.match(r'20\d{2}-20\d{2}', season_full):
             # Transformer 2024-2025 -> 24/25 pour affichage titre
@@ -228,23 +235,31 @@ class YupooCompleteScraper:
         for selector in image_selectors:
             found_imgs.extend(soup.select(selector))
         
-        # Extraire les URLs d'images
+        # Extraire seulement les images principales de l'album
         for img in found_imgs:
             img_url = img.get('data-src') or img.get('src') or img.get('data-original')
-            if img_url and ('yupoo' in img_url or 'photo' in img_url):
+            if img_url and 'yupoo' in img_url:
                 # Nettoyer et normaliser l'URL
                 if img_url.startswith('//'):
                     img_url = 'https:' + img_url
                 elif not img_url.startswith('http'):
                     img_url = urljoin(album_url, img_url)
                 
-                # Ignorer les assets du site (logos, layout)
-                if any(token in img_url for token in ['s.yupoo.com/website', '/website/', 'imgs/logo', 'imgs/layout', 'icons/logo']):
+                # Prendre seulement les images qui ont "photo" dans l'URL (vraies photos)
+                if 'photo' not in img_url:
+                    continue
+                    
+                # Ignorer les éléments du site (pas les photos de produit)
+                if any(x in img_url for x in ['website', 'logo', 'layout']):
                     continue
 
                 # Éviter les doublons
                 if img_url not in images:
                     images.append(img_url)
+                    
+                # Limiter à 6 images max pour éviter les excès
+                if len(images) >= 6:
+                    break
         
         # Trier les images par qualité supposée (raw > big > large > medium > small > square)
         def quality_key(u: str):
@@ -258,7 +273,7 @@ class YupooCompleteScraper:
             return 6
         images.sort(key=quality_key)
         logger.info(f"Trouve {len(images)} images dans l'album (tri qualité)")
-        return images[:5]  # Limiter à 5 images par maillot
+        return images  # Prendre toutes les images trouvées, pas de limite ni de complétion
     
     def scrape_album_page(self, album_url: str, album_title: str = None) -> dict:
         """Scrape un album Yupoo individuel avec titre pré-extrait"""
@@ -312,9 +327,10 @@ class YupooCompleteScraper:
                 local_name = self.download_image(img_url, jersey_id, i)
                 local_images.append(local_name)
                 time.sleep(0.5)  # Pause entre téléchargements
-            
-            # Si aucune image téléchargée mais dry-run -> simuler
-            
+
+            # Prendre systématiquement la première image comme thumbnail (logique Yupoo)
+            thumbnail = local_images[0] if local_images else "placeholder.jpg"
+
             # Créer l'objet maillot
             jersey = {
                 'id': jersey_id,
@@ -325,8 +341,8 @@ class YupooCompleteScraper:
                 'category': category_std,
                 'year': parsed.get('season_full'),
                 'price': None,
-                'images': local_images,  # liste de noms simples
-                'thumbnail': local_images[0] if local_images else "placeholder.jpg",
+                'images': local_images,  # liste de noms simples, pas de placeholder
+                'thumbnail': thumbnail,
                 'tags': self.generate_tags(translated_title, category_std, parsed),
                 'date': datetime.now().isoformat(),
                 'views': random.randint(100, 1500),
@@ -389,39 +405,23 @@ class YupooCompleteScraper:
     def get_all_album_links(self) -> list:
         """Récupère tous les liens d'albums depuis les pages categories"""
         album_links = []
-        
         try:
             logger.info(f"Recuperation des albums depuis {self.base_url}/categories")
-            
             # Parcourir plusieurs pages si nécessaire
             for page in range(1, 11):  # Pages 1 à 10
-                # Liste des albums depuis categories
-                page_url = f"{self.base_url}/categories/?page={page}"
-                
                 try:
+                    page_url = f"{self.base_url}/categories/?page={page}"
                     response = self.session.get(page_url, timeout=30)
                     response.raise_for_status()
-                    
                     soup = BeautifulSoup(response.content, 'html.parser')
-                    
                     # Chercher les liens d'albums
-                    album_selectors = [
-                        'a[href*="/albums/"]',
-                        'a[href*="/photos/"]', 
-                        '.album-link',
-                        '.photo-link',
-                        'a.image'
-                    ]
-                    
+                    links = soup.select('a[href*=\"/albums/\"]')
                     page_albums = []
-                    # Extraire les liens avec leurs titres depuis l'attribut title
-                    links = soup.select('a[href*="/albums/"]')
                     for link in links:
                         href = link.get('href')
                         title_attr = link.get('title', '').strip()
                         if href and title_attr:
                             full_url = urljoin(self.base_url, href)
-                            # Garder uniquement /albums/123456
                             parsed = urlparse(full_url)
                             path = parsed.path
                             if re.search(r'^/albums/\d+', path):
@@ -429,22 +429,15 @@ class YupooCompleteScraper:
                                 if album_info not in album_links:
                                     album_links.append(album_info)
                                     page_albums.append(album_info)
-                    
                     logger.info(f"Page {page}: {len(page_albums)} albums trouves")
-                    
-                    # Si aucun album trouvé, arrêter
                     if not page_albums:
                         break
-                    
-                    time.sleep(1)  # Pause entre pages
-                    
+                    time.sleep(1)
                 except Exception as e:
                     logger.error(f"Erreur page {page}: {e}")
                     break
-            
             logger.info(f"Total: {len(album_links)} albums trouves")
             return album_links
-            
         except Exception as e:
             logger.error(f"Erreur recuperation albums: {e}")
             return []
