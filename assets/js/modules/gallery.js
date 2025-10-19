@@ -427,7 +427,6 @@ class Gallery {
                 <p class="gallery-item-description">${sanitizeHTML(jersey.description || '')}</p>
                 <div class="gallery-item-meta">
                     <span class="gallery-item-category">${this.getCategoryName(jersey.category)}</span>
-                    <span class="gallery-item-year">${jersey.year}</span>
                 </div>
                 <div class="gallery-item-tags">${this.renderTags(jersey.tags)}</div>
                 <!-- Debug: ${JSON.stringify(jersey.tags)} -->

@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 class VintedReviewsSelenium:
     def __init__(self):
-        self.url = "https://www.vinted.fr/member/287196181-maillotsdupeuple?tab=feedback"
+        self.url = "https://www.vinted.fr/member/223176724?tab=feedback"
         self.driver = None
         
     def setup_driver(self):

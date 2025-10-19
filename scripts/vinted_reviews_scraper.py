@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 class VintedReviewsScraper:
     """Scraper pour récupérer les avis Vinted"""
     
-    def __init__(self, profile_url: str = "https://www.vinted.fr/member/287196181-maillotsdupeuple?tab=feedback"):
+    def __init__(self, profile_url: str = "https://www.vinted.fr/member/223176724?tab=feedback"):
         self.profile_url = profile_url
         self.session = requests.Session()
         
@@ -472,7 +472,7 @@ def main():
     print("=" * 50)
     
     # URL du profil Vinted
-    profile_url = "https://www.vinted.fr/member/287196181-maillotsdupeuple?tab=feedback"
+    profile_url = "https://www.vinted.fr/member/223176724?tab=feedback"
     
     # Créer et lancer le scraper
     scraper = VintedReviewsScraper(profile_url)

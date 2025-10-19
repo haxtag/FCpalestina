@@ -131,8 +131,14 @@ class JerseyModal {
         this.currentImageIndex = 0;
         this.jerseys = this.getJerseysInCategory(jersey.category);
         
+        // Limiter les images au nombre attendu
+        if (jersey.expected_image_count && jersey.images && jersey.images.length > jersey.expected_image_count) {
+            jersey.images = jersey.images.slice(0, jersey.expected_image_count);
+        }
+        
         console.log('📸 Images du maillot:', jersey.images);
         console.log('📸 Nombre d\'images:', jersey.images ? jersey.images.length : 0);
+        console.log('📸 Nombre attendu:', jersey.expected_image_count);
         
         this.updateModalContent();
         this.show();
@@ -388,9 +394,6 @@ class JerseyModal {
                     <p class="jersey-description">${sanitizeHTML(jersey.description || 'Aucune description disponible')}</p>
                     
                     <div class="jersey-info">
-                        <div class="info-item">
-                            <strong>Année:</strong> ${jersey.year || 'Non spécifiée'}
-                        </div>
                         <div class="info-item">
                             <strong>Catégorie:</strong> ${this.getCategoryName(jersey.category)}
                         </div>

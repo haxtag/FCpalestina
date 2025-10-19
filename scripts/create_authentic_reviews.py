@@ -130,7 +130,7 @@ def save_authentic_reviews():
         "total_count": len(reviews),
         "last_updated": datetime.now().isoformat(),
         "source": "Vinted",
-        "profile_url": "https://www.vinted.fr/member/287196181-maillotsdupeuple?tab=feedback",
+        "profile_url": "https://www.vinted.fr/member/223176724?tab=feedback",
         "note": "Avis authentiques basés sur des interactions Vinted réelles"
     }
     

@@ -78,6 +78,15 @@ class YupooCompleteScraper:
     
     def parse_and_translate(self, raw: str) -> dict:
         original = raw or ''
+        
+        # Extraire le nombre d'images depuis le titre (format: "Titre | 4")
+        image_count_match = re.search(r'\|\s*(\d{1,2})\s*$', original)
+        expected_image_count = None
+        if image_count_match:
+            expected_image_count = int(image_count_match.group(1))
+            # Retirer le compteur du titre pour le parsing
+            original = re.sub(r'\|\s*\d{1,2}\s*$', '', original).strip()
+        
         s = original.replace('|', ' ').strip()
         size_match = self.size_pattern.search(s)
         size = size_match.group() if size_match else ''
@@ -143,7 +152,7 @@ class YupooCompleteScraper:
         if size:
             parts.append(size)
         french_title = ' '.join(parts).strip() or 'Maillot Palestine'
-        logger.info(f"Parse titre: '{original}' -> '{french_title}' (season_full={season_full}, team={team}, category={category}, size={size})")
+        logger.info(f"Parse titre: '{original}' -> '{french_title}' (season_full={season_full}, team={team}, category={category}, size={size}, expected_images={expected_image_count})")
         return {
             'season_full': season_full,
             'season': season_full,  # compat
@@ -153,7 +162,8 @@ class YupooCompleteScraper:
             'size': size,
             'colors': colors,
             'remainder': remainder,
-            'title': french_title
+            'title': french_title,
+            'expected_image_count': expected_image_count
         }
 
     def standardize_category(self, parsed: dict) -> str:
@@ -261,19 +271,43 @@ class YupooCompleteScraper:
                 if len(images) >= 6:
                     break
         
-        # Trier les images par qualité supposée (raw > big > large > medium > small > square)
-        def quality_key(u: str):
-            u_low = u.lower()
-            if 'raw' in u_low: return 0
-            if 'big' in u_low: return 1
-            if 'large' in u_low: return 2
-            if 'medium' in u_low: return 3
-            if 'small' in u_low: return 4
-            if 'square' in u_low: return 5
-            return 6
-        images.sort(key=quality_key)
-        logger.info(f"Trouve {len(images)} images dans l'album (tri qualité)")
-        return images  # Prendre toutes les images trouvées, pas de limite ni de complétion
+        # Fonction pour vérifier si une image est de haute qualité
+        def is_high_quality(url: str) -> bool:
+            """Garder seulement les images raw, big, ou large (pas medium, small, square)"""
+            url_lower = url.lower()
+            # Exclure les basses qualités
+            if any(x in url_lower for x in ['medium', 'small', 'square']):
+                return False
+            # Inclure les hautes qualités
+            return any(x in url_lower for x in ['raw', 'big', 'large'])
+        
+        # Filtrer pour garder uniquement les images haute qualité
+        high_quality_images = [img for img in images if is_high_quality(img)]
+        
+        # Grouper par nom de base pour éviter les doublons de la même image
+        from collections import defaultdict
+        import re
+        grouped = defaultdict(list)
+        for img_url in high_quality_images:
+            # Extraire l'identifiant de base (avant .jpg, .png, etc.)
+            base_name = re.sub(r'_(raw|big|large|medium|small|square)\.(jpg|jpeg|png|webp)', '', img_url.lower())
+            grouped[base_name].append(img_url)
+        
+        # Prendre la meilleure qualité de chaque groupe
+        final_images = []
+        for base_name, urls in grouped.items():
+            # Trier par qualité (raw > big > large)
+            def quality_rank(u: str):
+                u_low = u.lower()
+                if 'raw' in u_low: return 0
+                if 'big' in u_low: return 1
+                if 'large' in u_low: return 2
+                return 3
+            urls.sort(key=quality_rank)
+            final_images.append(urls[0])  # Prendre la meilleure
+        
+        logger.info(f"Trouvé {len(images)} images totales → {len(high_quality_images)} haute qualité → {len(final_images)} uniques")
+        return final_images
     
     def scrape_album_page(self, album_url: str, album_title: str = None) -> dict:
         """Scrape un album Yupoo individuel avec titre pré-extrait"""
@@ -310,6 +344,13 @@ class YupooCompleteScraper:
             if translated_title in self.generated_titles:
                 translated_title = f"{translated_title} #{len(self.generated_titles)+1}"
             self.generated_titles.add(translated_title)
+
+            # Filtre d'exclusion : ne pas importer Barcelone ou Real Madrid
+            exclude_clubs = ['barcelone', 'barcelona', 'real madrid']
+            title_check = (translated_title or '').lower() + ' ' + (raw_title or '').lower()
+            if any(club in title_check for club in exclude_clubs):
+                logger.info(f"⚠️ Maillot exclu (club filtré): {translated_title}")
+                return None
             
             # Extraire les images
             image_urls = self.extract_images_from_album(soup, album_url)
@@ -317,6 +358,12 @@ class YupooCompleteScraper:
             if not image_urls:
                 logger.warning(f"Aucune image trouvée pour {album_url}")
                 return None
+            
+            # Limiter au nombre d'images attendu si spécifié dans le titre
+            expected_count = parsed.get('expected_image_count')
+            if expected_count and len(image_urls) > expected_count:
+                logger.info(f"Limitation des images: {len(image_urls)} → {expected_count} (selon titre)")
+                image_urls = image_urls[:expected_count]
             
             # Générer un ID unique
             jersey_id = hashlib.md5(f"{translated_title}{album_url}".encode()).hexdigest()[:12]
@@ -339,12 +386,11 @@ class YupooCompleteScraper:
                 'name': translated_title,  # certains scripts utilisent name
                 'description': f"Maillot officiel FC Palestina - {translated_title}" if 'Maillot officiel FC Palestina' not in translated_title else translated_title,
                 'category': category_std,
-                'year': parsed.get('season_full'),
                 'price': None,
                 'images': local_images,  # liste de noms simples, pas de placeholder
                 'thumbnail': thumbnail,
                 'tags': self.generate_tags(translated_title, category_std, parsed),
-                'date': datetime.now().isoformat(),
+                'expected_image_count': expected_count or len(local_images),
                 'views': random.randint(100, 1500),
                 'featured': 'Palestine' in translated_title or random.random() > 0.9,
                 'source_url': album_url,

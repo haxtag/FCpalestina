@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 class CompleteVintedReviewsScraper:
     def __init__(self):
-        self.url = "https://www.vinted.fr/member/287196181-maillotsdupeuple?tab=feedback"
+        self.url = "https://www.vinted.fr/member/223176724?tab=feedback"
         self.driver = None
         
     def setup_driver(self):
@@ -90,18 +90,60 @@ class CompleteVintedReviewsScraper:
             # Temps supplémentaire pour le JS
             time.sleep(8)
             
-            # Scroll pour déclencher tous les chargements
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(3)
-            self.driver.execute_script("window.scrollTo(0, 0);")
-            time.sleep(2)
+            # Scroll progressif pour charger TOUS les avis (lazy loading)
+            logger.info("📜 Défilement progressif pour charger tous les avis...")
+            self.scroll_to_load_all_reviews()
             
-            logger.info("✅ Page complètement chargée")
+            logger.info("✅ Page complètement chargée avec tous les avis")
             return True
             
         except Exception as e:
             logger.error(f"❌ Erreur chargement: {e}")
             return False
+    
+    def scroll_to_load_all_reviews(self):
+        """Défile progressivement pour charger tous les avis (lazy loading)"""
+        last_height = self.driver.execute_script("return document.body.scrollHeight")
+        reviews_loaded = 0
+        max_scrolls = 50  # Maximum 50 scrolls pour éviter les boucles infinies
+        scroll_count = 0
+        no_change_count = 0
+        
+        while scroll_count < max_scrolls:
+            # Compter les avis actuellement chargés
+            current_reviews = len(self.driver.find_elements(By.CSS_SELECTOR, "[data-testid*='feedback']"))
+            
+            if current_reviews > reviews_loaded:
+                logger.info(f"📊 {current_reviews} avis chargés... (objectif: 102+)")
+                reviews_loaded = current_reviews
+                no_change_count = 0
+            else:
+                no_change_count += 1
+            
+            # Si pas de nouveaux avis après 3 tentatives, on arrête
+            if no_change_count >= 3:
+                logger.info(f"✅ Chargement terminé: {reviews_loaded} avis trouvés")
+                break
+            
+            # Défiler vers le bas
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(2)  # Attendre le chargement
+            
+            # Vérifier si on a atteint le bas de la page
+            new_height = self.driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                no_change_count += 1
+            else:
+                last_height = new_height
+                no_change_count = 0
+            
+            scroll_count += 1
+        
+        # Retour en haut
+        self.driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(2)
+        
+        logger.info(f"🎯 Défilement terminé: {reviews_loaded} avis chargés après {scroll_count} scrolls")
     
     def parse_review_time(self, time_text):
         """Parse le texte de temps (ex: 'il y a 2 jours')"""
@@ -319,45 +361,72 @@ class CompleteVintedReviewsScraper:
             self.cleanup()
 
 def update_reviews_json(new_reviews):
-    """Met à jour le fichier reviews.json avec les vrais avis"""
+    """Met à jour le fichier reviews.json avec les vrais avis - FUSION INTELLIGENTE"""
     logger.info("💾 Mise à jour du fichier reviews.json...")
     
     if not new_reviews:
         logger.warning("⚠️ Aucun avis à sauvegarder")
         return False
     
-    # Créer la structure des avis pour le système
-    formatted_reviews = []
+    reviews_file = Path("data/reviews.json")
+    reviews_file.parent.mkdir(exist_ok=True)
     
+    # Charger les avis existants s'ils existent
+    existing_reviews = []
+    if reviews_file.exists():
+        try:
+            with open(reviews_file, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+                existing_reviews = existing_data.get('reviews', [])
+                logger.info(f"📂 {len(existing_reviews)} avis existants trouvés")
+        except Exception as e:
+            logger.warning(f"⚠️ Impossible de charger les avis existants: {e}")
+    
+    # Créer un dictionnaire des avis existants pour détecter les doublons
+    # Utiliser (username + comment) comme clé unique
+    existing_dict = {}
+    for review in existing_reviews:
+        key = f"{review['username']}:{review['comment']}"
+        existing_dict[key] = review
+    
+    # Ajouter les nouveaux avis (en évitant les doublons)
+    new_count = 0
     for review in new_reviews:
-        formatted_review = {
-            "id": len(formatted_reviews) + 1,
-            "username": review['username'],
-            "rating": review.get('rating', 5),
-            "comment": review['comment'],
-            "date": review.get('time', 'Récent'),
-            "source": "vinted_real",
-            "verified": True,
-            "extracted_at": review.get('extracted_at', datetime.now().isoformat())
-        }
-        formatted_reviews.append(formatted_review)
+        key = f"{review['username']}:{review['comment']}"
+        
+        if key not in existing_dict:
+            # Nouvel avis unique
+            formatted_review = {
+                "id": len(existing_dict) + 1,
+                "username": review['username'],
+                "rating": review.get('rating', 5),
+                "comment": review['comment'],
+                "date": review.get('time', 'Récent'),
+                "source": "vinted_real",
+                "verified": True,
+                "extracted_at": review.get('extracted_at', datetime.now().isoformat())
+            }
+            existing_dict[key] = formatted_review
+            new_count += 1
+    
+    # Convertir le dictionnaire en liste et réassigner les IDs
+    all_reviews = list(existing_dict.values())
+    for i, review in enumerate(all_reviews, 1):
+        review['id'] = i
     
     # Structure finale
     reviews_data = {
         "last_updated": datetime.now().isoformat(),
         "source": "vinted_real_scraper",
-        "total_reviews": len(formatted_reviews),
-        "reviews": formatted_reviews
+        "total_reviews": len(all_reviews),
+        "reviews": all_reviews
     }
     
     # Sauvegarder
-    reviews_file = Path("data/reviews.json")
-    reviews_file.parent.mkdir(exist_ok=True)
-    
     with open(reviews_file, 'w', encoding='utf-8') as f:
         json.dump(reviews_data, f, ensure_ascii=False, indent=2)
     
-    logger.info(f"✅ {len(formatted_reviews)} avis sauvegardés dans {reviews_file}")
+    logger.info(f"✅ {len(all_reviews)} avis total dans le fichier ({new_count} nouveaux ajoutés)")
     return True
 
 def main():

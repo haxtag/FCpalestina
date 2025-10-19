@@ -7,7 +7,7 @@ Le système d'avis FC Palestina utilise désormais **exclusivement les avis rée
 ## 🎯 Fonctionnalités
 
 ### ✅ Avis réels extraits automatiquement
-- **Source** : https://www.vinted.fr/member/287196181-maillotsdupeuple?tab=feedback
+- **Source** : https://www.vinted.fr/member/223176724?tab=feedback
 - **Avis actuels** : 9 avis réels authentiques
 - **Mise à jour automatique** : Détecte les nouveaux avis
 
