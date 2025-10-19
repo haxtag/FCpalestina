@@ -2,10 +2,13 @@
   {
     "id": "da9100669f8f",
     "raw_title": "日本特别版 S-2XL",
-    "title": "Édition Spéciale S-2XL",
-    "name": "Édition Spéciale S-2XL",
-    "description": "Maillot officiel FC Palestina - Édition Spéciale S-2XL",
-    "category": "special",
+    "title": "JAPAN",
+    "name": "JAPAN",
+    "description": "NEUIL",
+    "category": [
+      "home",
+      "special"
+    ],
     "price": null,
     "images": [
       "da9100669f8f_0.jpg",
@@ -15,14 +18,21 @@
     ],
     "thumbnail": "da9100669f8f_0.jpg",
     "tags": [
-      "popular",
-      "fcpalestina"
+      "fcpalestina",
+      "popular"
     ],
     "expected_image_count": 4,
     "views": 1293,
     "featured": false,
     "source_url": "https://shixingtiyu.x.yupoo.com/albums/213497346?uid=1&isSubCate=false&referrercate=",
-    "last_updated": "2025-10-19T02:30:00.510813"
+    "last_updated": "2025-10-19T02:30:00.510813",
+    "categories": [
+      "home",
+      "special"
+    ],
+    "year": "",
+    "size": "",
+    "updated_at": "2025-10-19T06:14:05.751402"
   },
   {
     "id": "f4f3118b002e",

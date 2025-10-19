@@ -14,7 +14,7 @@ def start_backend():
     """Démarrer le backend Flask"""
     print("🔧 Démarrage du backend Flask...")
     try:
-        subprocess.run([sys.executable, "scripts/simple_backend.py"], check=True)
+        subprocess.run([sys.executable, "scripts/production_backend.py"], check=True)
     except KeyboardInterrupt:
         print("\n🛑 Backend arrêté")
     except Exception as e:
@@ -34,13 +34,13 @@ def main():
     print("🚀 Lancement de FC Palestina...")
     print("📱 Site principal: http://localhost:8000")
     print("🔧 API admin: http://localhost:8001/api/")
-    print("🛑 Appuyez sur Ctrl+C pour arrêter tous les serveurs")
-    print("💡 Admin ultra-simple: http://localhost:8000/index.html?admin=true")
+    print("� Admin sécurisé: http://localhost:8000/login.html")
+    print("�🛑 Appuyez sur Ctrl+C pour arrêter tous les serveurs")
     print()
     
     # Vérifier que les fichiers existent
-    if not os.path.exists("scripts/simple_backend.py"):
-        print("❌ Erreur: scripts/simple_backend.py non trouvé")
+    if not os.path.exists("scripts/production_backend.py"):
+        print("❌ Erreur: scripts/production_backend.py non trouvé")
         return
     
     if not os.path.exists("index.html"):

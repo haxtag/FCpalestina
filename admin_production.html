@@ -4,342 +4,643 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration - FC Palestina</title>
+    <link rel="icon" type="image/png" href="assets/img/fcp3.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #2c5530;
-            --secondary-color: #ff1744;
-            --accent-color: #ff69b4;
-            --success-color: #4caf50;
-            --warning-color: #ff9800;
-            --error-color: #f44336;
-            --info-color: #2196f3;
-            --dark-color: #333;
-            --light-color: #f5f5f5;
-            --white: #ffffff;
-            --border-color: #e0e0e0;
-            --shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --primary: #2c5530;
+            --primary-dark: #1e3a21;
+            --secondary: #8B1538;
+            --accent: #ff1744;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --dark: #333;
+            --light: #f8f9fa;
+            --border: #dee2e6;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--light-color);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             min-height: 100vh;
         }
-        
-        /* Header */
+
+        /* Header Admin */
         .admin-header {
-            background: var(--white);
-            box-shadow: var(--shadow);
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .admin-logo {
             display: flex;
             align-items: center;
             gap: 1rem;
+        }
+
+        .admin-logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .admin-logo h1 {
+            color: var(--primary);
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
         }
-        
-        .admin-logo i {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 0.5rem;
-            border-radius: 8px;
-        }
-        
+
         .admin-user {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-        
-        .logout-btn {
-            background: var(--error-color);
+
+        .admin-user-info {
+            text-align: right;
+        }
+
+        .admin-user-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .admin-user-role {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .btn-logout {
+            background: var(--danger);
             color: white;
             border: none;
             padding: 0.5rem 1rem;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.3s;
-        }
-        
-        .logout-btn:hover {
-            background: #d32f2f;
-        }
-        
-        /* Navigation */
-        .admin-nav {
-            background: var(--white);
-            padding: 1rem 2rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-        }
-        
-        .nav-tabs {
-            display: flex;
-            gap: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .nav-tab {
-            padding: 1rem 1.5rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            color: var(--dark-color);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: all 0.3s;
         }
-        
-        .nav-tab:hover,
-        .nav-tab.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+
+        .btn-logout:hover {
+            background: #c82333;
+            transform: translateY(-2px);
         }
-        
-        /* Content */
-        .admin-content {
-            padding: 0 2rem 2rem;
+
+        /* Navigation Tabs */
+        .admin-tabs {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-bottom-color: var(--secondary);
+        }
+
+        /* Container */
+        .admin-container {
             max-width: 1400px;
-            margin: 0 auto;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
-        
+
         .tab-content {
             display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-        
+
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.3s;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Cards */
-        .admin-card {
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        /* Stats Grid */
+
+        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-        
+
         .stat-card {
-            background: var(--white);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: var(--shadow);
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
         }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-color);
+
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
-        
+
         .stat-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            opacity: 0.9;
         }
-        
-        .stat-number {
-            font-size: 2rem;
+
+        .stat-value {
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--dark-color);
             margin-bottom: 0.5rem;
         }
-        
+
         .stat-label {
-            color: #666;
             font-size: 0.9rem;
+            opacity: 0.9;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
-        /* Buttons */
-        .btn {
-            padding: 0.75rem 1.5rem;
+
+        /* Actions Section */
+        .actions-section {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .actions-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: var(--primary);
+            color: white;
             border: none;
+            padding: 1rem;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
-            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
-        
-        .btn-primary {
-            background: var(--primary-color);
+
+        .action-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .action-btn.success {
+            background: var(--success);
+        }
+
+        .action-btn.success:hover {
+            background: #218838;
+        }
+
+        .action-btn.warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .action-btn.warning:hover {
+            background: #e0a800;
+        }
+
+        /* Jerseys Grid */
+        .jerseys-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .jersey-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .jersey-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--primary);
+        }
+
+        .jersey-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: var(--light);
+        }
+
+        .jersey-content {
+            padding: 1rem;
+        }
+
+        .jersey-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .jersey-meta {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .jersey-tag {
+            background: var(--light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .jersey-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-icon:hover {
+            background: var(--primary);
             color: white;
         }
-        
+
+        .btn-icon.danger {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .btn-icon.danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--danger);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
         .btn-primary:hover {
-            background: #1e3a21;
+            background: var(--primary-dark);
             transform: translateY(-2px);
         }
-        
-        .btn-success {
-            background: var(--success-color);
-            color: white;
+
+        /* Images Selector */
+        .images-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
         }
-        
-        .btn-success:hover {
-            background: #388e3c;
-        }
-        
-        .quick-actions {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        /* Alerts */
-        .alert {
-            padding: 1rem 1.5rem;
+
+        .image-option {
+            position: relative;
+            aspect-ratio: 1;
+            border: 2px solid var(--border);
             border-radius: 8px;
-            margin-bottom: 1.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-option:hover {
+            border-color: var(--primary);
+        }
+
+        .image-option.selected {
+            border-color: var(--success);
+            border-width: 3px;
+        }
+
+        .image-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-option-check {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--success);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
             display: none;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            font-size: 0.8rem;
         }
-        
-        .alert-success {
-            background: #e8f5e8;
-            color: var(--success-color);
-            border-left: 4px solid var(--success-color);
+
+        .image-option.selected .image-option-check {
+            display: flex;
         }
-        
-        .alert-error {
-            background: #ffebee;
-            color: var(--error-color);
-            border-left: 4px solid var(--error-color);
-        }
-        
-        .alert-info {
-            background: #e3f2fd;
-            color: var(--info-color);
-            border-left: 4px solid var(--info-color);
-        }
-        
+
         /* Loading */
         .loading {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #666;
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
         }
-        
-        .spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid #e0e0e0;
-            border-top: 2px solid var(--primary-color);
+
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light);
+            border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
-        
-        .system-status p {
-            margin-bottom: 0.5rem;
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        
-        .info-box {
-            background: #f0f7ff;
-            border-left: 4px solid var(--info-color);
-            padding: 1rem;
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Pagination */
+        .pagination-buttons {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+        }
+
+        .pagination-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* Category/Tag Cards */
+        .item-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .item-color-preview {
+            width: 100%;
+            height: 60px;
             border-radius: 8px;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
-            .admin-header,
-            .admin-nav,
-            .admin-content {
-                padding-left: 1rem;
-                padding-right: 1rem;
+            .admin-header {
+                padding: 1rem;
             }
-            
-            .nav-tabs {
-                flex-wrap: wrap;
+
+            .admin-tabs {
+                padding: 0.5rem;
+                overflow-x: auto;
             }
-            
-            .stats-grid {
+
+            .admin-container {
+                padding: 0 1rem;
+            }
+
+            .stats-grid,
+            .actions-grid,
+            .jerseys-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .card-header {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
             }
         }
     </style>
@@ -348,480 +649,951 @@
     <!-- Header -->
     <header class="admin-header">
         <div class="admin-logo">
-            <i class="fas fa-shield-alt"></i>
-            <span>FC Palestina Admin</span>
+            <img src="assets/img/fcp3.png" alt="FC Palestina">
+            <h1>FC Palestina Admin</h1>
         </div>
-        
         <div class="admin-user">
-            <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--dark-color);">
-                <i class="fas fa-user-circle"></i>
-                <span id="username">Admin</span>
+            <div class="admin-user-info">
+                <div class="admin-user-name">
+                    <i class="fas fa-user-circle"></i> <span id="username">admin</span>
+                </div>
+                <div class="admin-user-role">Administrateur</div>
             </div>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                Déconnexion
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
             </button>
         </div>
     </header>
-    
-    <!-- Navigation -->
-    <nav class="admin-nav">
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('dashboard')">
-                <i class="fas fa-tachometer-alt"></i>
-                Tableau de bord
-            </button>
-            <button class="nav-tab" onclick="showTab('jerseys')">
-                <i class="fas fa-tshirt"></i>
-                Maillots (${window.jerseysCount || '-'})
-            </button>
-            <button class="nav-tab" onclick="showTab('reviews')">
-                <i class="fas fa-star"></i>
-                Avis Vinted
-            </button>
-            <button class="nav-tab" onclick="showTab('settings')">
-                <i class="fas fa-cog"></i>
-                Paramètres
-            </button>
-        </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="admin-tabs">
+        <button class="tab-btn active" onclick="switchTab('dashboard')">
+            <i class="fas fa-chart-line"></i> Tableau de bord
+        </button>
+        <button class="tab-btn" onclick="switchTab('jerseys')">
+            <i class="fas fa-tshirt"></i> Maillots <span id="jerseys-count">(0)</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('categories')">
+            <i class="fas fa-tags"></i> Catégories
+        </button>
+        <button class="tab-btn" onclick="switchTab('tags')">
+            <i class="fas fa-tag"></i> Tags
+        </button>
+        <button class="tab-btn" onclick="switchTab('reviews')">
+            <i class="fas fa-star"></i> Avis Vinted
+        </button>
     </nav>
-    
-    <!-- Content -->
-    <main class="admin-content">
-        <div id="alert" class="alert"></div>
-        
+
+    <!-- Container -->
+    <div class="admin-container">
         <!-- Dashboard Tab -->
-        <div id="dashboard-tab" class="tab-content active">
+        <div class="tab-content active" id="dashboard-tab">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <div class="stat-number" id="total-jerseys">-</div>
+                    <div class="stat-icon"><i class="fas fa-tshirt"></i></div>
+                    <div class="stat-value" id="stat-jerseys-total">0</div>
                     <div class="stat-label">Maillots Total</div>
                 </div>
-                
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <div class="stat-number" id="active-jerseys">-</div>
+                    <div class="stat-icon"><i class="fas fa-eye"></i></div>
+                    <div class="stat-value" id="stat-jerseys-active">0</div>
                     <div class="stat-label">Maillots Actifs</div>
                 </div>
-                
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="stat-number" id="total-reviews">-</div>
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="stat-value" id="stat-reviews">0</div>
                     <div class="stat-label">Avis Clients</div>
                 </div>
-                
                 <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-number" id="average-rating">-</div>
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-value" id="stat-rating">5.0</div>
                     <div class="stat-label">Note Moyenne</div>
                 </div>
             </div>
-            
-            <div class="admin-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <i class="fas fa-bolt"></i>
-                        Actions Rapides
-                    </h2>
+
+            <div class="actions-section">
+                <div class="actions-title">
+                    <i class="fas fa-bolt"></i> Actions Rapides
                 </div>
-                
-                <div class="quick-actions">
-                    <button class="btn btn-primary" onclick="updateReviews()">
-                        <i class="fas fa-sync-alt"></i>
-                        Mettre à jour les avis Vinted
+                <div class="actions-grid">
+                    <button class="action-btn" onclick="updateVintedReviews()">
+                        <i class="fas fa-sync-alt"></i> Mettre à jour les avis Vinted
                     </button>
-                    <button class="btn btn-primary" onclick="runYupooScraper()">
-                        <i class="fas fa-download"></i>
-                        Importer nouveaux maillots Yupoo
+                    <button class="action-btn warning" onclick="importYupooJerseys()">
+                        <i class="fas fa-download"></i> Importer nouveaux maillots Yupoo
                     </button>
-                    <button class="btn btn-success" onclick="backupData()">
-                        <i class="fas fa-save"></i>
-                        Sauvegarder les données
+                    <button class="action-btn success" onclick="saveAllData()">
+                        <i class="fas fa-save"></i> Sauvegarder les données
                     </button>
                 </div>
             </div>
-            
-            <div class="admin-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <i class="fas fa-info-circle"></i>
-                        État du système
-                    </h2>
+
+            <div class="actions-section">
+                <div class="actions-title">
+                    <i class="fas fa-info-circle"></i> État du système
                 </div>
-                
-                <div class="system-status">
-                    <p><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Serveur en ligne</p>
-                    <p><i class="fas fa-database" style="color: var(--info-color);"></i> Base de données connectée</p>
-                    <p><i class="fas fa-shield-alt" style="color: var(--primary-color);"></i> Sécurité activée</p>
-                    <p><i class="fas fa-clock" style="color: var(--warning-color);"></i> Mise à jour automatique: 2h du matin</p>
+                <div style="padding: 1rem;">
+                    <p><i class="fas fa-check-circle" style="color: var(--success);"></i> Serveur en ligne</p>
+                    <p><i class="fas fa-database" style="color: var(--success);"></i> Base de données connectée</p>
+                    <p><i class="fas fa-shield-alt" style="color: var(--success);"></i> Sécurité activée</p>
+                    <p><i class="fas fa-clock" style="color: var(--warning);"></i> Mise à jour automatique: 2h du matin</p>
                 </div>
             </div>
         </div>
-        
+
         <!-- Jerseys Tab -->
-        <div id="jerseys-tab" class="tab-content">
-            <div class="admin-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <i class="fas fa-tshirt"></i>
-                        Gestion des Maillots
-                    </h2>
-                </div>
-                
-                <div class="info-box">
-                    <p><strong>📁 Fichier:</strong> <code>data/jerseys.json</code></p>
-                    <p><strong>🔄 Mise à jour:</strong> Importation manuelle ou via scraper Yupoo</p>
-                </div>
-                
-                <div id="jerseys-info">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        Chargement des maillots...
+        <div class="tab-content" id="jerseys-tab">
+            <div class="loading" id="jerseys-loading">
+                <div class="loading-spinner"></div>
+                <p>Chargement des maillots...</p>
+            </div>
+            <div id="jerseys-container" style="display: none;">
+                <!-- Pagination Controls -->
+                <div class="pagination-controls" style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <span style="color: var(--dark); font-weight: 600;">
+                            <i class="fas fa-tshirt"></i> <span id="jerseys-showing">0-0</span> sur <span id="jerseys-total-display">0</span>
+                        </span>
+                        <select id="jerseys-per-page" class="form-select" style="width: auto;" onchange="changePerPage()">
+                            <option value="12">12 par page</option>
+                            <option value="24" selected>24 par page</option>
+                            <option value="48">48 par page</option>
+                            <option value="100">100 par page</option>
+                        </select>
                     </div>
+                    <div class="pagination-buttons" id="pagination-buttons"></div>
+                </div>
+                
+                <div class="jerseys-grid" id="jerseys-grid"></div>
+                
+                <!-- Pagination Bottom -->
+                <div class="pagination-controls" style="margin-top: 2rem;">
+                    <div class="pagination-buttons" id="pagination-buttons-bottom"></div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- Categories Tab -->
+        <div class="tab-content" id="categories-tab">
+            <div class="actions-section">
+                <button class="action-btn success" onclick="openCreateCategoryModal()">
+                    <i class="fas fa-plus"></i> Créer une catégorie
+                </button>
+            </div>
+            <div id="categories-list"></div>
+        </div>
+
+        <!-- Tags Tab -->
+        <div class="tab-content" id="tags-tab">
+            <div class="actions-section">
+                <button class="action-btn success" onclick="openCreateTagModal()">
+                    <i class="fas fa-plus"></i> Créer un tag
+                </button>
+            </div>
+            <div id="tags-list"></div>
+        </div>
+
         <!-- Reviews Tab -->
-        <div id="reviews-tab" class="tab-content">
-            <div class="admin-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <i class="fas fa-star"></i>
-                        Avis Clients Vinted
-                    </h2>
+        <div class="tab-content" id="reviews-tab">
+            <div class="actions-section">
+                <button class="action-btn" onclick="updateVintedReviews()">
+                    <i class="fas fa-sync-alt"></i> Mettre à jour les avis
+                </button>
+            </div>
+            <div id="reviews-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Jersey -->
+    <div class="modal-overlay" id="edit-jersey-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-edit"></i> Modifier le maillot
                 </div>
-                
-                <div class="info-box">
-                    <p><strong>🎯 Source:</strong> https://www.vinted.fr/member/223176724?tab=feedback</p>
-                    <p><strong>🔄 Mise à jour:</strong> Automatique chaque nuit ou manuelle</p>
-                </div>
-                
-                <div id="reviews-info">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        Chargement des avis...
+                <button class="modal-close" onclick="closeModal('edit-jersey-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-alert"></div>
+                <form id="edit-jersey-form" onsubmit="saveJersey(event)">
+                    <input type="hidden" id="edit-jersey-id">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nom du maillot</label>
+                        <input type="text" class="form-input" id="edit-jersey-name" required>
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" id="edit-jersey-description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Catégories</label>
+                        <select class="form-select" id="edit-jersey-categories" multiple style="height: 120px;"></select>
+                        <small style="color: #6c757d;">Maintenez Ctrl pour sélectionner plusieurs catégories</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tags</label>
+                        <select class="form-select" id="edit-jersey-tags" multiple style="height: 120px;"></select>
+                        <small style="color: #6c757d;">Maintenez Ctrl pour sélectionner plusieurs tags</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Image de couverture</label>
+                        <div class="images-selector" id="cover-images-selector"></div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer les modifications
+                    </button>
+                </form>
             </div>
         </div>
-        
-        <!-- Settings Tab -->
-        <div id="settings-tab" class="tab-content">
-            <div class="admin-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <i class="fas fa-cog"></i>
-                        Configuration du Site
-                    </h2>
+    </div>
+
+    <!-- Modal Create/Edit Category -->
+    <div class="modal-overlay" id="category-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-tags"></i> <span id="category-modal-title">Créer une catégorie</span>
                 </div>
-                
-                <div class="info-box">
-                    <p><strong>🔐 Identifiants par défaut:</strong></p>
-                    <p>Nom d'utilisateur: <code>admin</code></p>
-                    <p>Mot de passe: <code>admin123</code></p>
-                    <p><em>⚠️ Changez ces identifiants en production !</em></p>
-                </div>
-                
-                <div style="background: #e8f5e8; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                    <h4>✅ Configuration actuelle</h4>
-                    <p>• Avis Vinted: Automatique (2h du matin)</p>
-                    <p>• Maillots: Import manuel Yupoo disponible</p>
-                    <p>• Sécurité: Sessions activées avec timeout</p>
-                    <p>• Backend: Production ready avec logs</p>
-                </div>
+                <button class="modal-close" onclick="closeModal('category-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="category-modal-alert"></div>
+                <form id="category-form" onsubmit="saveCategory(event)">
+                    <input type="hidden" id="edit-category-id">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nom de la catégorie</label>
+                        <input type="text" class="form-input" id="edit-category-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Couleur</label>
+                        <input type="color" class="form-input" id="edit-category-color" value="#2c5530">
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </form>
             </div>
         </div>
-    </main>
+    </div>
+
+    <!-- Modal Create/Edit Tag -->
+    <div class="modal-overlay" id="tag-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-tag"></i> <span id="tag-modal-title">Créer un tag</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('tag-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="tag-modal-alert"></div>
+                <form id="tag-form" onsubmit="saveTag(event)">
+                    <input type="hidden" id="edit-tag-id">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nom du tag</label>
+                        <input type="text" class="form-input" id="edit-tag-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Couleur</label>
+                        <input type="color" class="form-input" id="edit-tag-color" value="#8B1538">
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Variables globales
-        let currentUser = null;
+        // Configuration API
+        const API_BASE_URL = 'http://localhost:8001/api';
         
+        // Variables globales
+        let jerseys = [];
+        let categories = [];
+        let tags = [];
+        let currentEditJersey = null;
+        let currentEditCategory = null;
+        let currentEditTag = null;
+        
+        // Pagination
+        let currentPage = 1;
+        let jerseysPerPage = 24;
+        let filteredJerseys = [];
+
         // Initialisation
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
+            loadDashboardStats();
+            loadJerseys();
+            loadCategories();
+            loadTags();
         });
-        
-        // Vérification de l'authentification
+
+        // Vérification authentification
         async function checkAuth() {
             try {
-                const response = await fetch('/api/auth/status', {
+                const response = await fetch(`${API_BASE_URL}/auth/status`, {
                     credentials: 'include'
                 });
                 
                 if (!response.ok) {
-                    redirectToLogin();
+                    window.location.href = '/login.html';
                     return;
                 }
                 
                 const data = await response.json();
                 
                 if (!data.authenticated) {
-                    redirectToLogin();
+                    window.location.href = '/login.html';
                     return;
                 }
                 
-                currentUser = data.username;
-                document.getElementById('username').textContent = currentUser;
-                
-                // Charger les données initiales
-                loadDashboard();
-                
+                document.getElementById('username').textContent = data.username || 'Badis';
             } catch (error) {
-                console.error('Erreur vérification auth:', error);
-                showAlert('Connexion au serveur impossible. Utilisation en mode local.', 'info');
-                // En mode local, on peut continuer
-                loadDashboard();
+                console.error('Erreur auth:', error);
+                window.location.href = '/login.html';
             }
         }
-        
-        function redirectToLogin() {
-            window.location.href = '/login.html';
-        }
-        
-        // Navigation entre tabs
-        function showTab(tabName) {
-            // Masquer tous les tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Désactiver tous les boutons de navigation
-            document.querySelectorAll('.nav-tab').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Activer le tab sélectionné
-            document.getElementById(tabName + '-tab').classList.add('active');
-            event.target.classList.add('active');
-            
-            // Charger les données spécifiques au tab
-            switch(tabName) {
-                case 'dashboard':
-                    loadDashboard();
-                    break;
-                case 'jerseys':
-                    loadJerseys();
-                    break;
-                case 'reviews':
-                    loadReviews();
-                    break;
-                case 'settings':
-                    // Rien à charger pour les settings
-                    break;
-            }
-        }
-        
-        // Chargement du tableau de bord
-        async function loadDashboard() {
-            try {
-                // Essayer de charger depuis l'API
-                const response = await fetch('/api/admin/stats', {
-                    credentials: 'include'
-                });
-                
-                if (response.ok) {
-                    const stats = await response.json();
-                    document.getElementById('total-jerseys').textContent = stats.jerseys.total;
-                    document.getElementById('active-jerseys').textContent = stats.jerseys.active;
-                    document.getElementById('total-reviews').textContent = stats.reviews.total;
-                    document.getElementById('average-rating').textContent = stats.reviews.average_rating.toFixed(1);
-                } else {
-                    throw new Error('API non disponible');
-                }
-                
-            } catch (error) {
-                // Fallback en mode local
-                try {
-                    const jerseysResponse = await fetch('/data/jerseys.json');
-                    const reviewsResponse = await fetch('/data/reviews.json');
-                    
-                    let jerseys = [];
-                    let reviews = [];
-                    
-                    if (jerseysResponse.ok) {
-                        jerseys = await jerseysResponse.json();
-                    }
-                    
-                    if (reviewsResponse.ok) {
-                        const reviewsData = await reviewsResponse.json();
-                        reviews = reviewsData.reviews || [];
-                    }
-                    
-                    // Mettre à jour les stats
-                    const activeJerseys = jerseys.filter(j => j.active !== false);
-                    const avgRating = reviews.length > 0 ? 
-                        reviews.reduce((sum, r) => sum + (r.rating || 5), 0) / reviews.length : 5.0;
-                    
-                    document.getElementById('total-jerseys').textContent = jerseys.length;
-                    document.getElementById('active-jerseys').textContent = activeJerseys.length;
-                    document.getElementById('total-reviews').textContent = reviews.length;
-                    document.getElementById('average-rating').textContent = avgRating.toFixed(1);
-                    
-                    window.jerseysCount = jerseys.length;
-                    
-                } catch (localError) {
-                    console.error('Erreur chargement local:', localError);
-                    document.getElementById('total-jerseys').textContent = '?';
-                    document.getElementById('active-jerseys').textContent = '?';
-                    document.getElementById('total-reviews').textContent = '?';
-                    document.getElementById('average-rating').textContent = '?';
-                }
-            }
-        }
-        
-        // Chargement des maillots
-        async function loadJerseys() {
-            const container = document.getElementById('jerseys-info');
-            
-            try {
-                const response = await fetch('/data/jerseys.json');
-                
-                if (!response.ok) throw new Error('Fichier jerseys.json non trouvé');
-                
-                const jerseys = await response.json();
-                
-                container.innerHTML = `
-                    <div style="background: #e8f5e8; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                        <h4>📊 Statistiques des maillots</h4>
-                        <p><strong>Total:</strong> ${jerseys.length} maillots</p>
-                        <p><strong>Actifs:</strong> ${jerseys.filter(j => j.active !== false).length} maillots</p>
-                        <p><strong>Inactifs:</strong> ${jerseys.filter(j => j.active === false).length} maillots</p>
-                    </div>
-                    
-                    <div style="background: #f0f7ff; padding: 1rem; border-radius: 8px;">
-                        <h4>🔧 Actions disponibles</h4>
-                        <p>• Utiliser le scraper Yupoo pour importer de nouveaux maillots</p>
-                        <p>• Éditer manuellement le fichier <code>data/jerseys.json</code></p>
-                        <p>• Utiliser les scripts d'import dans le dossier <code>scripts/</code></p>
-                    </div>
-                `;
-                
-            } catch (error) {
-                container.innerHTML = `
-                    <div style="background: #ffebee; padding: 1rem; border-radius: 8px; color: var(--error-color);">
-                        <h4>⚠️ Fichier jerseys.json non trouvé</h4>
-                        <p>Le fichier de données des maillots n'existe pas encore.</p>
-                        <p>Utilisez le scraper Yupoo pour créer la base de données.</p>
-                    </div>
-                `;
-            }
-        }
-        
-        // Chargement des avis
-        async function loadReviews() {
-            const container = document.getElementById('reviews-info');
-            
-            try {
-                const response = await fetch('/data/reviews.json');
-                
-                if (!response.ok) throw new Error('Fichier reviews.json non trouvé');
-                
-                const data = await response.json();
-                const reviews = data.reviews || [];
-                
-                container.innerHTML = `
-                    <div style="background: #e8f5e8; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                        <h4>📊 Statistiques des avis</h4>
-                        <p><strong>Total:</strong> ${reviews.length} avis Vinted réels</p>
-                        <p><strong>Note moyenne:</strong> ${reviews.length > 0 ? (reviews.reduce((sum, r) => sum + (r.rating || 5), 0) / reviews.length).toFixed(1) : '5.0'}/5</p>
-                        <p><strong>Dernière mise à jour:</strong> ${data.last_updated ? new Date(data.last_updated).toLocaleString('fr-FR') : 'Jamais'}</p>
-                    </div>
-                    
-                    <div style="background: #f0f7ff; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                        <h4>✅ Avis récents</h4>
-                        ${reviews.slice(0, 5).map(review => `
-                            <p style="margin: 0.5rem 0; padding: 0.5rem; background: white; border-radius: 4px;">
-                                <strong>${review.username}</strong> (${review.date}): "${review.comment}"
-                            </p>
-                        `).join('')}
-                    </div>
-                `;
-                
-            } catch (error) {
-                container.innerHTML = `
-                    <div style="background: #ffebee; padding: 1rem; border-radius: 8px; color: var(--error-color);">
-                        <h4>⚠️ Fichier reviews.json non trouvé</h4>
-                        <p>Les avis Vinted n'ont pas encore été importés.</p>
-                        <p>Utilisez le bouton "Mettre à jour les avis Vinted" pour les importer.</p>
-                    </div>
-                `;
-            }
-        }
-        
-        // Actions
-        async function updateReviews() {
-            showAlert('🔄 Mise à jour des avis Vinted en cours... Cela peut prendre quelques minutes.', 'info');
-            
-            try {
-                // Simuler l'exécution du scraper
-                const result = await fetch('/api/admin/update-reviews', {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                
-                if (result.ok) {
-                    showAlert('✅ Avis Vinted mis à jour avec succès !', 'success');
-                    loadReviews();
-                    loadDashboard();
-                } else {
-                    throw new Error('API non disponible');
-                }
-                
-            } catch (error) {
-                showAlert('ℹ️ Pour mettre à jour les avis, exécutez: python scripts/complete_vinted_scraper.py', 'info');
-            }
-        }
-        
-        async function runYupooScraper() {
-            showAlert('🔄 Import Yupoo en cours... Cela peut prendre plusieurs minutes.', 'info');
-            
-            // En production, cela déclencherait le scraper
-            showAlert('ℹ️ Pour importer des maillots Yupoo, exécutez: python scripts/smart_yupoo_scraper.py', 'info');
-        }
-        
-        function backupData() {
-            showAlert('💾 Sauvegarde des données effectuée !', 'success');
-            
-            // En production, cela créerait une sauvegarde
-            const timestamp = new Date().toISOString().slice(0, 16).replace(/[-:]/g, '');
-            console.log(`Sauvegarde créée: backup_${timestamp}.zip`);
-        }
-        
+
         // Déconnexion
         async function logout() {
             try {
-                await fetch('/api/auth/logout', {
+                await fetch(`${API_BASE_URL}/auth/logout`, {
                     method: 'POST',
                     credentials: 'include'
                 });
             } catch (error) {
                 console.error('Erreur logout:', error);
-            } finally {
-                redirectToLogin();
+            }
+            window.location.href = '/login.html';
+        }
+
+        // Switch Tab
+        function switchTab(tabName) {
+            // Désactiver tous les tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Activer le tab sélectionné
+            event.target.closest('.tab-btn').classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Charger les données si nécessaire
+            if (tabName === 'jerseys' && jerseys.length === 0) {
+                loadJerseys();
+            } else if (tabName === 'categories' && categories.length === 0) {
+                loadCategories();
+            } else if (tabName === 'tags' && tags.length === 0) {
+                loadTags();
             }
         }
-        
-        // Affichage des alertes
-        function showAlert(message, type) {
-            const alert = document.getElementById('alert');
-            alert.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> ${message}`;
-            alert.className = `alert alert-${type}`;
-            alert.style.display = 'flex';
+
+        // Charger Dashboard Stats
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/stats`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const stats = await response.json();
+                    document.getElementById('stat-jerseys-total').textContent = stats.jerseys?.total || 0;
+                    document.getElementById('stat-jerseys-active').textContent = stats.jerseys?.active || 0;
+                    document.getElementById('stat-reviews').textContent = stats.reviews?.total || 0;
+                    document.getElementById('stat-rating').textContent = (stats.reviews?.average_rating || 5.0).toFixed(1);
+                }
+            } catch (error) {
+                console.error('Erreur chargement stats:', error);
+            }
+        }
+
+        // Charger Maillots
+        async function loadJerseys() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/jerseys`, {
+                    credentials: 'include'
+                });
+                jerseys = await response.json();
+                
+                document.getElementById('jerseys-count').textContent = `(${jerseys.length})`;
+                document.getElementById('jerseys-loading').style.display = 'none';
+                document.getElementById('jerseys-container').style.display = 'block';
+                
+                displayJerseys();
+            } catch (error) {
+                console.error('Erreur chargement maillots:', error);
+                document.getElementById('jerseys-loading').innerHTML = '<p style="color: red;">Erreur de chargement</p>';
+            }
+        }
+
+        // Afficher Maillots avec Pagination
+        function displayJerseys() {
+            filteredJerseys = jerseys; // Pas de filtre pour l'instant
             
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, type === 'info' ? 8000 : 5000);
+            const totalPages = Math.ceil(filteredJerseys.length / jerseysPerPage);
+            const startIndex = (currentPage - 1) * jerseysPerPage;
+            const endIndex = Math.min(startIndex + jerseysPerPage, filteredJerseys.length);
+            const jerseysToShow = filteredJerseys.slice(startIndex, endIndex);
+            
+            // Afficher les maillots
+            const grid = document.getElementById('jerseys-grid');
+            grid.innerHTML = jerseysToShow.map(jersey => `
+                <div class="jersey-card">
+                    <img src="/assets/images/jerseys/${jersey.thumbnail || jersey.images[0]}" 
+                         alt="${jersey.title}" 
+                         class="jersey-image"
+                         onerror="this.src='/assets/img/placeholder.jpg'">
+                    <div class="jersey-content">
+                        <div class="jersey-title">${jersey.title || jersey.name}</div>
+                        <div class="jersey-meta">
+                            <span class="jersey-tag"><i class="fas fa-folder"></i> ${Array.isArray(jersey.category) ? jersey.category.join(', ') : (jersey.category || 'N/A')}</span>
+                            <span class="jersey-tag"><i class="fas fa-images"></i> ${jersey.images?.length || 0} photos</span>
+                        </div>
+                        <div class="jersey-actions">
+                            <button class="btn-icon" onclick="editJersey('${jersey.id}')">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button class="btn-icon danger" onclick="deleteJersey('${jersey.id}', '${(jersey.title || jersey.name).replace(/'/g, "\\'")}')">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Mettre à jour les infos de pagination
+            document.getElementById('jerseys-showing').textContent = `${startIndex + 1}-${endIndex}`;
+            document.getElementById('jerseys-total-display').textContent = filteredJerseys.length;
+            
+            // Afficher les boutons de pagination
+            displayPaginationButtons(totalPages);
+        }
+
+        // Afficher les boutons de pagination
+        function displayPaginationButtons(totalPages) {
+            const buttonsHtml = [];
+            
+            // Bouton Précédent
+            buttonsHtml.push(`
+                <button class="pagination-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i> Précédent
+                </button>
+            `);
+            
+            // Première page
+            if (currentPage > 3) {
+                buttonsHtml.push(`<button class="pagination-btn" onclick="changePage(1)">1</button>`);
+                if (currentPage > 4) {
+                    buttonsHtml.push(`<span class="pagination-info">...</span>`);
+                }
+            }
+            
+            // Pages autour de la page actuelle
+            for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+                buttonsHtml.push(`
+                    <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+                        ${i}
+                    </button>
+                `);
+            }
+            
+            // Dernière page
+            if (currentPage < totalPages - 2) {
+                if (currentPage < totalPages - 3) {
+                    buttonsHtml.push(`<span class="pagination-info">...</span>`);
+                }
+                buttonsHtml.push(`<button class="pagination-btn" onclick="changePage(${totalPages})">${totalPages}</button>`);
+            }
+            
+            // Bouton Suivant
+            buttonsHtml.push(`
+                <button class="pagination-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Suivant <i class="fas fa-chevron-right"></i>
+                </button>
+            `);
+            
+            const html = buttonsHtml.join('');
+            document.getElementById('pagination-buttons').innerHTML = html;
+            document.getElementById('pagination-buttons-bottom').innerHTML = html;
+        }
+
+        // Changer de page
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredJerseys.length / jerseysPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayJerseys();
+            // Scroll to top
+            document.getElementById('jerseys-tab').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Changer le nombre par page
+        function changePerPage() {
+            jerseysPerPage = parseInt(document.getElementById('jerseys-per-page').value);
+            currentPage = 1;
+            displayJerseys();
+        }
+
+        // Éditer Maillot
+        async function editJersey(jerseyId) {
+            const jersey = jerseys.find(j => j.id === jerseyId);
+            if (!jersey) return;
+            
+            currentEditJersey = jersey;
+            
+            // Remplir le formulaire
+            document.getElementById('edit-jersey-id').value = jersey.id;
+            document.getElementById('edit-jersey-name').value = jersey.title || jersey.name;
+            document.getElementById('edit-jersey-description').value = jersey.description || '';
+            
+            // Charger catégories
+            await loadCategoriesForSelect();
+            const categoriesSelect = document.getElementById('edit-jersey-categories');
+            const jerseyCategories = Array.isArray(jersey.category) ? jersey.category : (jersey.category ? [jersey.category] : []);
+            Array.from(categoriesSelect.options).forEach(option => {
+                option.selected = jerseyCategories.includes(option.value);
+            });
+            
+            // Charger tags
+            await loadTagsForSelect();
+            const tagsSelect = document.getElementById('edit-jersey-tags');
+            Array.from(tagsSelect.options).forEach(option => {
+                option.selected = jersey.tags?.includes(option.value);
+            });
+            
+            // Afficher images pour sélection cover
+            displayCoverImageSelector(jersey);
+            
+            // Ouvrir modal
+            document.getElementById('edit-jersey-modal').classList.add('active');
+        }
+
+        // Afficher sélecteur d'image de couverture
+        function displayCoverImageSelector(jersey) {
+            const container = document.getElementById('cover-images-selector');
+            container.innerHTML = (jersey.images || []).map(img => `
+                <div class="image-option ${jersey.thumbnail === img ? 'selected' : ''}" 
+                     onclick="selectCoverImage('${img}')">
+                    <img src="/assets/images/jerseys/${img}" alt="">
+                    <div class="image-option-check"><i class="fas fa-check"></i></div>
+                </div>
+            `).join('');
+        }
+
+        // Sélectionner image de couverture
+        function selectCoverImage(imageName) {
+            document.querySelectorAll('.image-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            currentEditJersey.thumbnail = imageName;
+        }
+
+        // Sauvegarder Maillot
+        async function saveJersey(event) {
+            event.preventDefault();
+            
+            const jerseyId = document.getElementById('edit-jersey-id').value;
+            const name = document.getElementById('edit-jersey-name').value;
+            const description = document.getElementById('edit-jersey-description').value;
+            const categoriesSelect = document.getElementById('edit-jersey-categories');
+            const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(opt => opt.value);
+            const tagsSelect = document.getElementById('edit-jersey-tags');
+            const selectedTags = Array.from(tagsSelect.selectedOptions).map(opt => opt.value);
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/jerseys/update`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        jersey_id: jerseyId,
+                        name: name,
+                        description: description,
+                        category: selectedCategories,
+                        tags: selectedTags
+                    })
+                });
+                
+                if (response.ok) {
+                    // Mettre à jour l'image de couverture si modifiée
+                    if (currentEditJersey.thumbnail) {
+                        await fetch(`${API_BASE_URL}/jerseys/update-cover`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({
+                                jersey_id: jerseyId,
+                                cover_image: currentEditJersey.thumbnail
+                            })
+                        });
+                    }
+                    
+                    showAlert('modal-alert', 'Maillot mis à jour avec succès !', 'success');
+                    setTimeout(() => {
+                        closeModal('edit-jersey-modal');
+                        loadJerseys();
+                        loadDashboardStats();
+                    }, 1500);
+                } else {
+                    showAlert('modal-alert', 'Erreur lors de la mise à jour', 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showAlert('modal-alert', 'Erreur serveur', 'error');
+            }
+        }
+
+        // Supprimer Maillot
+        async function deleteJersey(jerseyId, jerseyName) {
+            if (!confirm(`Êtes-vous sûr de vouloir supprimer "${jerseyName}" ?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/jerseys/${jerseyId}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    alert('Maillot supprimé avec succès !');
+                    loadJerseys();
+                    loadDashboardStats();
+                } else {
+                    alert('Erreur lors de la suppression');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur serveur');
+            }
+        }
+
+        // Charger Catégories pour Select
+        async function loadCategoriesForSelect() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/categories`, {
+                    credentials: 'include'
+                });
+                categories = await response.json();
+                
+                const select = document.getElementById('edit-jersey-categories');
+                select.innerHTML = categories.map(cat => `
+                    <option value="${cat.id}">${cat.name}</option>
+                `).join('');
+            } catch (error) {
+                console.error('Erreur chargement catégories:', error);
+            }
+        }
+
+        // Charger Tags pour Select
+        async function loadTagsForSelect() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tags`, {
+                    credentials: 'include'
+                });
+                tags = await response.json();
+                
+                const select = document.getElementById('edit-jersey-tags');
+                select.innerHTML = tags.map(tag => `
+                    <option value="${tag.id}">${tag.name}</option>
+                `).join('');
+            } catch (error) {
+                console.error('Erreur chargement tags:', error);
+            }
+        }
+
+        // Charger Catégories
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/categories`, {
+                    credentials: 'include'
+                });
+                categories = await response.json();
+                displayCategories();
+            } catch (error) {
+                console.error('Erreur chargement catégories:', error);
+            }
+        }
+
+        // Afficher Catégories
+        function displayCategories() {
+            const list = document.getElementById('categories-list');
+            list.innerHTML = `
+                <div class="jerseys-grid">
+                    ${categories.map(cat => `
+                        <div class="item-card">
+                            <div class="item-color-preview" style="background: ${cat.color || '#2c5530'};">
+                                <i class="fas fa-tags"></i> ${cat.name}
+                            </div>
+                            <div class="jersey-actions">
+                                <button class="btn-icon" onclick="editCategory('${cat.id}')">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </button>
+                                <button class="btn-icon danger" onclick="deleteCategory('${cat.id}')">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Charger Tags
+        async function loadTags() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tags`, {
+                    credentials: 'include'
+                });
+                tags = await response.json();
+                displayTags();
+            } catch (error) {
+                console.error('Erreur chargement tags:', error);
+            }
+        }
+
+        // Afficher Tags
+        function displayTags() {
+            const list = document.getElementById('tags-list');
+            list.innerHTML = `
+                <div class="jerseys-grid">
+                    ${tags.map(tag => `
+                        <div class="item-card">
+                            <div class="item-color-preview" style="background: ${tag.color || '#8B1538'};">
+                                <i class="fas fa-tag"></i> ${tag.name}
+                            </div>
+                            <div class="jersey-actions">
+                                <button class="btn-icon" onclick="editTag('${tag.id}')">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </button>
+                                <button class="btn-icon danger" onclick="deleteTag('${tag.id}')">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Actions Rapides
+        async function updateVintedReviews() {
+            if (!confirm('Mettre à jour les avis Vinted ? Cela peut prendre quelques minutes.')) {
+                return;
+            }
+            alert('Fonctionnalité en cours de développement');
+        }
+
+        function importYupooJerseys() {
+            alert('Utilisez le scraper depuis le terminal:\npython scripts/yupoo_scraper_complet.py --limit 50');
+        }
+
+        async function saveAllData() {
+            alert('Données sauvegardées automatiquement !');
+        }
+
+        // Utilitaires
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            // Vider tous les alerts
+            const alerts = ['modal-alert', 'category-modal-alert', 'tag-modal-alert'];
+            alerts.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = '';
+            });
+        }
+
+        function showAlert(containerId, message, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${message}
+                </div>
+            `;
+        }
+
+        // ===== GESTION CATÉGORIES =====
+        function openCreateCategoryModal() {
+            currentEditCategory = null;
+            document.getElementById('category-modal-title').textContent = 'Créer une catégorie';
+            document.getElementById('edit-category-id').value = '';
+            document.getElementById('edit-category-name').value = '';
+            document.getElementById('edit-category-color').value = '#2c5530';
+            document.getElementById('category-modal-alert').innerHTML = '';
+            document.getElementById('category-modal').classList.add('active');
+        }
+
+        function editCategory(id) {
+            const category = categories.find(c => c.id === id);
+            if (!category) return;
+            
+            currentEditCategory = category;
+            document.getElementById('category-modal-title').textContent = 'Modifier la catégorie';
+            document.getElementById('edit-category-id').value = category.id;
+            document.getElementById('edit-category-name').value = category.name;
+            document.getElementById('edit-category-color').value = category.color || '#2c5530';
+            document.getElementById('category-modal-alert').innerHTML = '';
+            document.getElementById('category-modal').classList.add('active');
+        }
+
+        async function saveCategory(event) {
+            event.preventDefault();
+            
+            const categoryId = document.getElementById('edit-category-id').value;
+            const name = document.getElementById('edit-category-name').value;
+            const color = document.getElementById('edit-category-color').value;
+            
+            try {
+                const endpoint = categoryId ? '/categories/update' : '/categories/create';
+                const payload = categoryId 
+                    ? { id: categoryId, name, color }
+                    : { name, color };
+                
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    showAlert('category-modal-alert', categoryId ? 'Catégorie mise à jour !' : 'Catégorie créée !', 'success');
+                    setTimeout(() => {
+                        closeModal('category-modal');
+                        loadCategories();
+                    }, 1500);
+                } else {
+                    showAlert('category-modal-alert', 'Erreur lors de la sauvegarde', 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showAlert('category-modal-alert', 'Erreur serveur', 'error');
+            }
+        }
+
+        async function deleteCategory(id) {
+            const category = categories.find(c => c.id === id);
+            if (!category || !confirm(`Êtes-vous sûr de vouloir supprimer "${category.name}" ?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/categories/delete`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ id: id })
+                });
+                
+                if (response.ok) {
+                    alert('Catégorie supprimée !');
+                    loadCategories();
+                } else {
+                    alert('Erreur lors de la suppression');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur serveur');
+            }
+        }
+
+        // ===== GESTION TAGS =====
+        function openCreateTagModal() {
+            currentEditTag = null;
+            document.getElementById('tag-modal-title').textContent = 'Créer un tag';
+            document.getElementById('edit-tag-id').value = '';
+            document.getElementById('edit-tag-name').value = '';
+            document.getElementById('edit-tag-color').value = '#8B1538';
+            document.getElementById('tag-modal-alert').innerHTML = '';
+            document.getElementById('tag-modal').classList.add('active');
+        }
+
+        function editTag(id) {
+            const tag = tags.find(t => t.id === id);
+            if (!tag) return;
+            
+            currentEditTag = tag;
+            document.getElementById('tag-modal-title').textContent = 'Modifier le tag';
+            document.getElementById('edit-tag-id').value = tag.id;
+            document.getElementById('edit-tag-name').value = tag.name;
+            document.getElementById('edit-tag-color').value = tag.color || '#8B1538';
+            document.getElementById('tag-modal-alert').innerHTML = '';
+            document.getElementById('tag-modal').classList.add('active');
+        }
+
+        async function saveTag(event) {
+            event.preventDefault();
+            
+            const tagId = document.getElementById('edit-tag-id').value;
+            const name = document.getElementById('edit-tag-name').value;
+            const color = document.getElementById('edit-tag-color').value;
+            
+            try {
+                const endpoint = tagId ? '/tags/update' : '/tags/create';
+                const payload = tagId 
+                    ? { id: tagId, name, color }
+                    : { name, color };
+                
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    showAlert('tag-modal-alert', tagId ? 'Tag mis à jour !' : 'Tag créé !', 'success');
+                    setTimeout(() => {
+                        closeModal('tag-modal');
+                        loadTags();
+                    }, 1500);
+                } else {
+                    showAlert('tag-modal-alert', 'Erreur lors de la sauvegarde', 'error');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showAlert('tag-modal-alert', 'Erreur serveur', 'error');
+            }
+        }
+
+        async function deleteTag(id) {
+            const tag = tags.find(t => t.id === id);
+            if (!tag || !confirm(`Êtes-vous sûr de vouloir supprimer "${tag.name}" ?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/tags/delete`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ id: id })
+                });
+                
+                if (response.ok) {
+                    alert('Tag supprimé !');
+                    loadTags();
+                } else {
+                    alert('Erreur lors de la suppression');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur serveur');
+            }
         }
     </script>
 </body>
