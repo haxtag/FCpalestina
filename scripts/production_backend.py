@@ -37,10 +37,19 @@ CONFIG_FILE = os.path.join(DATA_DIR, 'config.json')
 # Créer l'application Flask
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', secrets.token_hex(32))
+
+# Configuration CORS pour accepter les requêtes depuis Render et localhost
+allowed_origins = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'https://fcpalestina.onrender.com',
+    'http://fcpalestina.onrender.com'
+]
+
 CORS(app, 
      supports_credentials=True,
-     origins=['http://localhost:8000', 'http://127.0.0.1:8000'],
-     allow_headers=['Content-Type'],
+     origins=allowed_origins,
+     allow_headers=['Content-Type', 'Authorization'],
      methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 
 # Configuration par défaut
