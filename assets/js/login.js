@@ -42,7 +42,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     loadingSpinner.style.display = 'block';
     
     try {
-        const response = await fetch('http://localhost:8001/api/auth/login', {
+        const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 // Check if already logged in
 window.addEventListener('DOMContentLoaded', () => {
     // Vérifier la session avec le backend (via cookies)
-    fetch('http://localhost:8001/api/auth/status', {
+    fetch('/api/auth/status', {
         credentials: 'include' // Important pour inclure les cookies de session
     })
     .then(response => response.json())
