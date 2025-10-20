@@ -53,7 +53,7 @@ DEFAULT_CONFIG = {
     "site": {
         "name": "FC Palestina",
         "domain": "",
-        "email": "contact@fcpalestina.com",
+    "email": "contact@maillotsdupeuple.com",
         "maintenance_mode": False
     },
     "scraping": {

@@ -113,18 +113,18 @@ apt update && apt upgrade -y
 apt install -y python3 python3-pip python3-venv nginx certbot python3-certbot-nginx
 
 # Créer utilisateur
-adduser fcpalestina
-usermod -aG sudo fcpalestina
-su - fcpalestina
+adduser maillotsdupeuple
+usermod -aG sudo maillotsdupeuple
+su - maillotsdupeuple
 ```
 
 #### Installer l'application
 ```bash
 # Cloner ou uploader les fichiers
-cd /home/fcpalestina
+cd /home/maillotsdupeuple
 git clone votre-repo.git site
 # OU
-# scp -r FCpalestina/ fcpalestina@votre-ip:/home/fcpalestina/site
+# scp -r MaillotsDuPeuple/ maillotsdupeuple@votre-ip:/home/maillotsdupeuple/site
 
 cd site
 
@@ -147,7 +147,7 @@ pip install gunicorn
 
 #### B. Créer service systemd
 ```bash
-sudo nano /etc/systemd/system/fcpalestina.service
+sudo nano /etc/systemd/system/maillotsdupeuple.service
 ```
 
 Contenu:
@@ -157,10 +157,10 @@ Description=FC Palestina Backend
 After=network.target
 
 [Service]
-User=fcpalestina
-WorkingDirectory=/home/fcpalestina/site
-Environment="PATH=/home/fcpalestina/site/venv/bin"
-ExecStart=/home/fcpalestina/site/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8001 scripts.production_backend:app
+User=maillotsdupeuple
+WorkingDirectory=/home/maillotsdupeuple/site
+Environment="PATH=/home/maillotsdupeuple/site/venv/bin"
+ExecStart=/home/maillotsdupeuple/site/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8001 scripts.production_backend:app
 
 [Install]
 WantedBy=multi-user.target
@@ -168,7 +168,7 @@ WantedBy=multi-user.target
 
 #### C. Configuration Nginx
 ```bash
-sudo nano /etc/nginx/sites-available/fcpalestina
+sudo nano /etc/nginx/sites-available/maillotsdupeuple
 ```
 
 Contenu:
@@ -179,7 +179,7 @@ server {
 
     # Frontend (fichiers statiques)
     location / {
-        root /home/fcpalestina/site;
+        root /home/maillotsdupeuple/site;
         index index.html;
         try_files $uri $uri/ =404;
     }
@@ -195,7 +195,7 @@ server {
 
     # Assets
     location /assets {
-        root /home/fcpalestina/site;
+        root /home/maillotsdupeuple/site;
         expires 30d;
         add_header Cache-Control "public, immutable";
     }
@@ -205,14 +205,14 @@ server {
 #### D. Activer et démarrer
 ```bash
 # Activer site
-sudo ln -s /etc/nginx/sites-available/fcpalestina /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/maillotsdupeuple /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 
 # Démarrer backend
-sudo systemctl start fcpalestina
-sudo systemctl enable fcpalestina
-sudo systemctl status fcpalestina
+sudo systemctl start maillotsdupeuple
+sudo systemctl enable maillotsdupeuple
+sudo systemctl status maillotsdupeuple
 ```
 
 ---
@@ -234,20 +234,20 @@ sudo certbot renew --dry-run
 ### Logs
 ```bash
 # Backend
-sudo journalctl -u fcpalestina -f
+sudo journalctl -u maillotsdupeuple -f
 
 # Nginx
 sudo tail -f /var/log/nginx/error.log
 sudo tail -f /var/log/nginx/access.log
 
 # Application
-tail -f /home/fcpalestina/site/backend_production.log
+tail -f /home/maillotsdupeuple/site/backend_production.log
 ```
 
 ### Redémarrer services
 ```bash
 # Backend
-sudo systemctl restart fcpalestina
+sudo systemctl restart maillotsdupeuple
 
 # Nginx
 sudo systemctl reload nginx
@@ -255,11 +255,11 @@ sudo systemctl reload nginx
 
 ### Mise à jour du code
 ```bash
-cd /home/fcpalestina/site
+cd /home/maillotsdupeuple/site
 git pull  # ou upload nouveaux fichiers
 source venv/bin/activate
 pip install -r requirements.txt
-sudo systemctl restart fcpalestina
+sudo systemctl restart maillotsdupeuple
 ```
 
 ---
@@ -280,17 +280,17 @@ sudo systemctl restart fcpalestina
 
 ```bash
 # Créer script de backup
-nano /home/fcpalestina/backup.sh
+nano /home/maillotsdupeuple/backup.sh
 ```
 
 ```bash
 #!/bin/bash
 DATE=$(date +%Y%m%d_%H%M%S)
-BACKUP_DIR="/home/fcpalestina/backups"
+BACKUP_DIR="/home/maillotsdupeuple/backups"
 mkdir -p $BACKUP_DIR
 
 # Backup data
-tar -czf $BACKUP_DIR/data_$DATE.tar.gz /home/fcpalestina/site/data/
+tar -czf $BACKUP_DIR/data_$DATE.tar.gz /home/maillotsdupeuple/site/data/
 
 # Garder seulement les 7 derniers backups
 find $BACKUP_DIR -name "data_*.tar.gz" -mtime +7 -delete
@@ -298,11 +298,11 @@ find $BACKUP_DIR -name "data_*.tar.gz" -mtime +7 -delete
 
 ```bash
 # Rendre exécutable
-chmod +x /home/fcpalestina/backup.sh
+chmod +x /home/maillotsdupeuple/backup.sh
 
 # Ajouter au cron (tous les jours à 3h du matin)
 crontab -e
-0 3 * * * /home/fcpalestina/backup.sh
+0 3 * * * /home/maillotsdupeuple/backup.sh
 ```
 
 ---
@@ -330,8 +330,8 @@ crontab -e
 
 ### Backend ne démarre pas
 ```bash
-sudo systemctl status fcpalestina
-sudo journalctl -u fcpalestina -n 50
+sudo systemctl status maillotsdupeuple
+sudo journalctl -u maillotsdupeuple -n 50
 ```
 
 ### Erreur 502 Bad Gateway

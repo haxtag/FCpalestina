@@ -14,8 +14,8 @@ Site vitrine présentant une collection de maillots de football avec :
 
 ```bash
 # Cloner le repo
-git clone https://github.com/haxtag/FCpalestina.git
-cd FCpalestina
+git clone https://github.com/haxtag/MaillotsDuPeuple.git
+cd MaillotsDuPeuple
 
 # Installer les dépendances Python
 pip install -r scripts/requirements.txt
@@ -29,7 +29,7 @@ Le site sera accessible sur `http://localhost:8000`
 ## Structure
 
 ```
-FCpalestina/
+MaillotsDuPeuple/
 ├── assets/           # CSS, JS, images
 ├── data/            # Données JSON (maillots, avis)
 ├── scripts/         # Scripts Python (scraping, imports)

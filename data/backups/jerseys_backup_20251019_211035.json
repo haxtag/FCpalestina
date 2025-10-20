@@ -1,0 +1,537 @@
+[
+  {
+    "id": "da9100669f8f",
+    "raw_title": "日本特别版 S-2XL",
+    "title": "Édition Spéciale S-2XL",
+    "name": "Édition Spéciale S-2XL",
+    "description": "Maillot officiel FC Palestina - Édition Spéciale S-2XL",
+    "category": "special",
+    "price": null,
+    "images": [
+      "da9100669f8f_0.jpg",
+      "da9100669f8f_1.jpg",
+      "da9100669f8f_2.jpg",
+      "da9100669f8f_3.jpg"
+    ],
+    "thumbnail": "da9100669f8f_0.jpg",
+    "tags": [
+      "popular",
+      "fcpalestina"
+    ],
+    "expected_image_count": 4,
+    "views": 191,
+    "featured": true,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213497346?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:07:34.792799"
+  },
+  {
+    "id": "f4f3118b002e",
+    "raw_title": "利物浦特别版 S-2XL",
+    "title": "Liverpool Édition Spéciale S-2XL",
+    "name": "Liverpool Édition Spéciale S-2XL",
+    "description": "Maillot officiel FC Palestina - Liverpool Édition Spéciale S-2XL",
+    "category": "special",
+    "price": null,
+    "images": [
+      "f4f3118b002e_0.jpg",
+      "f4f3118b002e_1.jpg",
+      "f4f3118b002e_2.jpg",
+      "f4f3118b002e_3.jpg",
+      "f4f3118b002e_4.jpg",
+      "f4f3118b002e_5.jpg"
+    ],
+    "thumbnail": "f4f3118b002e_0.jpg",
+    "tags": [
+      "popular",
+      "fcpalestina"
+    ],
+    "expected_image_count": 6,
+    "views": 306,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213497275?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:07:40.103595"
+  },
+  {
+    "id": "130031c18730",
+    "raw_title": "白巴黎特别版 S-2XL",
+    "title": "Édition Spéciale S-2XL #4",
+    "name": "Édition Spéciale S-2XL #4",
+    "description": "Maillot officiel FC Palestina - Édition Spéciale S-2XL #4",
+    "category": "special",
+    "price": null,
+    "images": [
+      "130031c18730_0.jpg",
+      "130031c18730_1.jpg",
+      "130031c18730_2.jpg",
+      "130031c18730_3.jpg",
+      "130031c18730_4.jpg"
+    ],
+    "thumbnail": "130031c18730_0.jpg",
+    "tags": [
+      "popular",
+      "fcpalestina"
+    ],
+    "expected_image_count": 5,
+    "views": 764,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213497063?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:07:48.948249"
+  },
+  {
+    "id": "bcb12ee9da73",
+    "raw_title": "2526桑德兰主场S--4XL",
+    "title": "25/26 Domicile",
+    "name": "25/26 Domicile",
+    "description": "Maillot officiel FC Palestina - 25/26 Domicile",
+    "category": "home",
+    "price": null,
+    "images": [
+      "bcb12ee9da73_0.jpg",
+      "bcb12ee9da73_1.jpg",
+      "bcb12ee9da73_2.jpg",
+      "bcb12ee9da73_3.jpg",
+      "bcb12ee9da73_4.jpg",
+      "bcb12ee9da73_5.jpg"
+    ],
+    "thumbnail": "bcb12ee9da73_0.jpg",
+    "tags": [
+      "new",
+      "fcpalestina",
+      "home"
+    ],
+    "expected_image_count": 6,
+    "views": 1238,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213496953?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:07:55.127197"
+  },
+  {
+    "id": "3d20b771a99b",
+    "raw_title": "2526瑞士主场S--4XL",
+    "title": "25/26 Domicile #6",
+    "name": "25/26 Domicile #6",
+    "description": "Maillot officiel FC Palestina - 25/26 Domicile #6",
+    "category": "home",
+    "price": null,
+    "images": [
+      "3d20b771a99b_0.jpg",
+      "3d20b771a99b_1.jpg",
+      "3d20b771a99b_2.jpg",
+      "3d20b771a99b_3.jpg",
+      "3d20b771a99b_4.jpg"
+    ],
+    "thumbnail": "3d20b771a99b_0.jpg",
+    "tags": [
+      "new",
+      "fcpalestina",
+      "home"
+    ],
+    "expected_image_count": 5,
+    "views": 120,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213496828?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:01.877364"
+  },
+  {
+    "id": "5aa729f6ab88",
+    "raw_title": "2526马赛二客 S-4XL",
+    "title": "25/26 Extérieur S-4XL",
+    "name": "25/26 Extérieur S-4XL",
+    "description": "Maillot officiel FC Palestina - 25/26 Extérieur S-4XL",
+    "category": "away",
+    "price": null,
+    "images": [
+      "5aa729f6ab88_0.jpg",
+      "5aa729f6ab88_1.jpg",
+      "5aa729f6ab88_2.jpg",
+      "5aa729f6ab88_3.jpg",
+      "5aa729f6ab88_4.jpg",
+      "5aa729f6ab88_5.jpg"
+    ],
+    "thumbnail": "5aa729f6ab88_0.jpg",
+    "tags": [
+      "away",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 6,
+    "views": 1280,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213496708?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:08.922538"
+  },
+  {
+    "id": "e91601c8dd2b",
+    "raw_title": "2526河床训练服-白 S-4XL",
+    "title": "25/26 Édition Spéciale S-4XL",
+    "name": "25/26 Édition Spéciale S-4XL",
+    "description": "Maillot officiel FC Palestina - 25/26 Édition Spéciale S-4XL",
+    "category": "special",
+    "price": null,
+    "images": [
+      "e91601c8dd2b_0.jpg",
+      "e91601c8dd2b_1.jpg",
+      "e91601c8dd2b_2.jpg",
+      "e91601c8dd2b_3.jpg",
+      "e91601c8dd2b_4.jpg"
+    ],
+    "thumbnail": "e91601c8dd2b_0.jpg",
+    "tags": [
+      "popular",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 5,
+    "views": 1017,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213496480?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:15.428586"
+  },
+  {
+    "id": "6fdb8a5663ad",
+    "raw_title": "2526多特客S--4XL",
+    "title": "25/26 Dortmund Extérieur",
+    "name": "25/26 Dortmund Extérieur",
+    "description": "Maillot officiel FC Palestina - 25/26 Dortmund Extérieur",
+    "category": "away",
+    "price": null,
+    "images": [
+      "6fdb8a5663ad_0.jpg",
+      "6fdb8a5663ad_1.jpg",
+      "6fdb8a5663ad_2.jpg",
+      "6fdb8a5663ad_3.jpg",
+      "6fdb8a5663ad_4.jpg"
+    ],
+    "thumbnail": "6fdb8a5663ad_0.jpg",
+    "tags": [
+      "away",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 5,
+    "views": 714,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213496380?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:21.235402"
+  },
+  {
+    "id": "93607a9fcfc7",
+    "raw_title": "2526博卡训练服-蓝S-4XL",
+    "title": "25/26 Édition Spéciale S-4XL #10",
+    "name": "25/26 Édition Spéciale S-4XL #10",
+    "description": "Maillot officiel FC Palestina - 25/26 Édition Spéciale S-4XL #10",
+    "category": "special",
+    "price": null,
+    "images": [
+      "93607a9fcfc7_0.jpg",
+      "93607a9fcfc7_1.jpg",
+      "93607a9fcfc7_2.jpg",
+      "93607a9fcfc7_3.jpg",
+      "93607a9fcfc7_4.jpg"
+    ],
+    "thumbnail": "93607a9fcfc7_0.jpg",
+    "tags": [
+      "popular",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 5,
+    "views": 744,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213496314?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:26.743946"
+  },
+  {
+    "id": "32df56731839",
+    "raw_title": "2526赛季杯黄多特S-4ⅩL",
+    "title": "25/26 Dortmund Domicile",
+    "name": "25/26 Dortmund Domicile",
+    "description": "Maillot officiel FC Palestina - 25/26 Dortmund Domicile",
+    "category": "home",
+    "price": null,
+    "images": [
+      "32df56731839_0.jpg",
+      "32df56731839_1.jpg",
+      "32df56731839_2.jpg",
+      "32df56731839_3.jpg",
+      "32df56731839_4.jpg"
+    ],
+    "thumbnail": "32df56731839_0.jpg",
+    "tags": [
+      "new",
+      "fcpalestina",
+      "home"
+    ],
+    "expected_image_count": 5,
+    "views": 362,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213496117?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:33.338362"
+  },
+  {
+    "id": "53a0622b376c",
+    "raw_title": "25-26那不勒斯欧冠-客 S-4XL",
+    "title": "25/26 Naples Extérieur 25-26",
+    "name": "25/26 Naples Extérieur 25-26",
+    "description": "Maillot officiel FC Palestina - 25/26 Naples Extérieur 25-26",
+    "category": "away",
+    "price": null,
+    "images": [
+      "53a0622b376c_0.jpg",
+      "53a0622b376c_1.jpg",
+      "53a0622b376c_2.jpg",
+      "53a0622b376c_3.jpg",
+      "53a0622b376c_4.jpg",
+      "53a0622b376c_5.jpg"
+    ],
+    "thumbnail": "53a0622b376c_0.jpg",
+    "tags": [
+      "away",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 6,
+    "views": 1074,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213495973?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:40.323145"
+  },
+  {
+    "id": "965443e3b1e4",
+    "raw_title": "25-26那不勒斯守门员S-4XL",
+    "title": "25/26 Naples Gardien 25-26",
+    "name": "25/26 Naples Gardien 25-26",
+    "description": "Maillot officiel FC Palestina - 25/26 Naples Gardien 25-26",
+    "category": "keeper",
+    "price": null,
+    "images": [
+      "965443e3b1e4_0.jpg",
+      "965443e3b1e4_1.jpg",
+      "965443e3b1e4_2.jpg",
+      "965443e3b1e4_3.jpg",
+      "965443e3b1e4_4.jpg",
+      "965443e3b1e4_5.jpg"
+    ],
+    "thumbnail": "965443e3b1e4_0.jpg",
+    "tags": [
+      "keeper",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 6,
+    "views": 1366,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213495819?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:47.041779"
+  },
+  {
+    "id": "0644145ae379",
+    "raw_title": "25-26曼城特别版 S-2XL",
+    "title": "25/26 Manchester City Édition Spéciale 25-26",
+    "name": "25/26 Manchester City Édition Spéciale 25-26",
+    "description": "Maillot officiel FC Palestina - 25/26 Manchester City Édition Spéciale 25-26",
+    "category": "special",
+    "price": null,
+    "images": [
+      "0644145ae379_0.jpg",
+      "0644145ae379_1.jpg",
+      "0644145ae379_2.jpg",
+      "0644145ae379_3.jpg"
+    ],
+    "thumbnail": "0644145ae379_0.jpg",
+    "tags": [
+      "popular",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 4,
+    "views": 557,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213495637?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:53.253863"
+  },
+  {
+    "id": "3b97fcef3104",
+    "raw_title": "25-26巴黎FC客场-白 S-4XL",
+    "title": "25/26 Extérieur 25-26",
+    "name": "25/26 Extérieur 25-26",
+    "description": "Maillot officiel FC Palestina - 25/26 Extérieur 25-26",
+    "category": "away",
+    "price": null,
+    "images": [
+      "3b97fcef3104_0.jpg",
+      "3b97fcef3104_1.jpg",
+      "3b97fcef3104_2.jpg",
+      "3b97fcef3104_3.jpg",
+      "3b97fcef3104_4.jpg"
+    ],
+    "thumbnail": "3b97fcef3104_0.jpg",
+    "tags": [
+      "away",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 5,
+    "views": 686,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213494089?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:08:57.907544"
+  },
+  {
+    "id": "7900129226fe",
+    "raw_title": "25-26 意大利客-白 S-4XL",
+    "title": "25/26 Extérieur 25-26 #16",
+    "name": "25/26 Extérieur 25-26 #16",
+    "description": "Maillot officiel FC Palestina - 25/26 Extérieur 25-26 #16",
+    "category": "away",
+    "price": null,
+    "images": [
+      "7900129226fe_0.jpg",
+      "7900129226fe_1.jpg",
+      "7900129226fe_2.jpg",
+      "7900129226fe_3.jpg",
+      "7900129226fe_4.jpg"
+    ],
+    "thumbnail": "7900129226fe_0.jpg",
+    "tags": [
+      "away",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 5,
+    "views": 1035,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213493992?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:09:03.288626"
+  },
+  {
+    "id": "0989e234c34e",
+    "raw_title": "25-26 德国二客 S-4XL",
+    "title": "25/26 Extérieur 25-26 #17",
+    "name": "25/26 Extérieur 25-26 #17",
+    "description": "Maillot officiel FC Palestina - 25/26 Extérieur 25-26 #17",
+    "category": "away",
+    "price": null,
+    "images": [
+      "0989e234c34e_0.jpg",
+      "0989e234c34e_1.jpg",
+      "0989e234c34e_2.jpg",
+      "0989e234c34e_3.jpg",
+      "0989e234c34e_4.jpg"
+    ],
+    "thumbnail": "0989e234c34e_0.jpg",
+    "tags": [
+      "away",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 5,
+    "views": 236,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213493880?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:09:08.243479"
+  },
+  {
+    "id": "ccba67a3fa70",
+    "raw_title": "25-26 墨西哥客-白 S-4XL",
+    "title": "25/26 Extérieur 25-26 #18",
+    "name": "25/26 Extérieur 25-26 #18",
+    "description": "Maillot officiel FC Palestina - 25/26 Extérieur 25-26 #18",
+    "category": "away",
+    "price": null,
+    "images": [
+      "ccba67a3fa70_0.jpg",
+      "ccba67a3fa70_1.jpg",
+      "ccba67a3fa70_2.jpg",
+      "ccba67a3fa70_3.jpg"
+    ],
+    "thumbnail": "ccba67a3fa70_0.jpg",
+    "tags": [
+      "away",
+      "new",
+      "fcpalestina"
+    ],
+    "expected_image_count": 4,
+    "views": 979,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213493619?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:09:13.888223"
+  },
+  {
+    "id": "338ef6a897ac",
+    "raw_title": "99-00尤文 主 S-2XL",
+    "title": "1999-2000 Juventus Domicile 99-00",
+    "name": "1999-2000 Juventus Domicile 99-00",
+    "description": "Maillot officiel FC Palestina - 1999-2000 Juventus Domicile 99-00",
+    "category": "home",
+    "price": null,
+    "images": [
+      "338ef6a897ac_0.jpg",
+      "338ef6a897ac_1.jpg",
+      "338ef6a897ac_2.jpg",
+      "338ef6a897ac_3.jpg"
+    ],
+    "thumbnail": "338ef6a897ac_0.jpg",
+    "tags": [
+      "fcpalestina",
+      "home"
+    ],
+    "expected_image_count": 4,
+    "views": 1348,
+    "featured": true,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213493490?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:09:18.312484"
+  },
+  {
+    "id": "87159e87c38b",
+    "raw_title": "97巴西主 S-2XL",
+    "title": "Domicile S-2XL",
+    "name": "Domicile S-2XL",
+    "description": "Maillot officiel FC Palestina - Domicile S-2XL",
+    "category": "home",
+    "price": null,
+    "images": [
+      "87159e87c38b_0.jpg",
+      "87159e87c38b_1.jpg",
+      "87159e87c38b_2.jpg",
+      "87159e87c38b_3.jpg",
+      "87159e87c38b_4.jpg",
+      "87159e87c38b_5.jpg"
+    ],
+    "thumbnail": "87159e87c38b_0.jpg",
+    "tags": [
+      "fcpalestina",
+      "home"
+    ],
+    "expected_image_count": 6,
+    "views": 105,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213493340?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:09:24.928229"
+  },
+  {
+    "id": "fe0d1cb7b4d1",
+    "raw_title": "96英格兰 客 S-2XL",
+    "title": "Extérieur S-2XL",
+    "name": "Extérieur S-2XL",
+    "description": "Maillot officiel FC Palestina - Extérieur S-2XL",
+    "category": "away",
+    "price": null,
+    "images": [
+      "fe0d1cb7b4d1_0.jpg",
+      "fe0d1cb7b4d1_1.jpg",
+      "fe0d1cb7b4d1_2.jpg",
+      "fe0d1cb7b4d1_3.jpg"
+    ],
+    "thumbnail": "fe0d1cb7b4d1_0.jpg",
+    "tags": [
+      "away",
+      "fcpalestina"
+    ],
+    "expected_image_count": 4,
+    "views": 1381,
+    "featured": false,
+    "source_url": "https://shixingtiyu.x.yupoo.com/albums/213493182?uid=1&isSubCate=false&referrercate=",
+    "last_updated": "2025-10-19T21:09:30.568784"
+  }
+]

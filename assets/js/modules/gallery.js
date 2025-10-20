@@ -406,7 +406,15 @@ class Gallery {
         article.dataset.id = jersey.id;
         article.dataset.jerseyId = jersey.id;
 
-    const imageUrl = jersey.thumbnail || (jersey.images && jersey.images[0]) || 'placeholder.jpg';
+    // Tous les maillots doivent avoir une thumbnail valide
+    const imageUrl = jersey.thumbnail || (jersey.images && jersey.images[0]);
+    
+    // Si pas d'image, on ne devrait jamais arriver ici (données nettoyées)
+    if (!imageUrl) {
+        console.error('Maillot sans image détecté:', jersey);
+        return; // Ne pas créer la carte
+    }
+    
     // Si l'URL commence déjà par http, on la garde telle quelle, sinon on prepend le dossier local
     const imagePath = /^https?:/i.test(imageUrl) ? imageUrl : `${window.CONFIG.IMAGES_BASE_URL}/${imageUrl}`;
 
@@ -453,7 +461,7 @@ class Gallery {
             ['special', { name: 'Spéciaux', color: '#FFD700' }],
             ['vintage', { name: 'Vintage', color: '#8B4513' }],
             ['limited', { name: 'Édition limitée', color: '#FF6B6B' }],
-            ['fcpalestina', { name: 'FC Palestina', color: '#8B1538' }],
+            ['fcpalestina', { name: 'Maillots Du Peuple', color: '#8B1538' }],
             ['nouveau', { name: 'Nouveau', color: '#28a745' }],
             ['selection', { name: 'Sélection', color: '#17a2b8' }],
             ['domicile', { name: 'Domicile', color: '#8B1538' }],

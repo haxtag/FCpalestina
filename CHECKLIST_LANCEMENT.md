@@ -139,12 +139,7 @@
 ## 📞 CONTACTS UTILES
 
 ### Support Technique
-- **Hébergeur**: support@votre-hebergeur.com
-- **Registrar domaine**: support@votre-registrar.com
-- **Flask/Python**: Stack Overflow, Reddit r/flask
-
-### Urgence
-- **Site down**: Vérifier UptimeRobot → SSH serveur → Logs
+ **Backend crashé**: `sudo systemctl restart maillotsdupeuple`
 - **Backend crashé**: `sudo systemctl restart fcpalestina`
 - **Nginx erreur**: `sudo systemctl reload nginx`
 

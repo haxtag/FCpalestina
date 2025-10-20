@@ -129,7 +129,7 @@ python launch_site.py
 ## 📁 **Structure des Fichiers**
 
 ```
-FCpalestina/
+MaillotsDuPeuple/
 ├── admin_production.html       # ⭐ Interface admin complète
 ├── admin_production_backup.html # Sauvegarde ancienne version
 ├── login.html                   # Page de connexion

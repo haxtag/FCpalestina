@@ -348,7 +348,7 @@ class JerseyModal {
                 'special': { name: 'Spéciaux', color: '#FFD700' },
                 'vintage': { name: 'Vintage', color: '#8B4513' },
                 'limited': { name: 'Édition limitée', color: '#FF6B6B' },
-                'fcpalestina': { name: 'FC Palestina', color: '#8B1538' },
+                'fcpalestina': { name: 'Maillots Du Peuple', color: '#8B1538' },
                 'nouveau': { name: 'Nouveau', color: '#28a745' },
                 'selection': { name: 'Sélection', color: '#17a2b8' },
                 'domicile': { name: 'Domicile', color: '#8B1538' },
