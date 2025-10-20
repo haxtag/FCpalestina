@@ -719,6 +719,44 @@ def save_jerseys_bulk():
         logger.error(f"Erreur save_jerseys: {e}")
         return jsonify({'error': str(e)}), 500
 
+# Route temporaire pour télécharger les images (démo uniquement)
+@app.route('/api/admin/download-images', methods=['POST'])
+@require_auth
+def download_images():
+    """Télécharge les images manquantes depuis les URLs dans jerseys.json"""
+    try:
+        import subprocess
+        import sys
+        
+        # Lancer le script de téléchargement
+        script_path = os.path.join(os.path.dirname(__file__), 'download_images.py')
+        result = subprocess.run(
+            [sys.executable, script_path],
+            capture_output=True,
+            text=True,
+            timeout=300  # 5 minutes max
+        )
+        
+        logger.info(f"Script download_images terminé: {result.returncode}")
+        
+        if result.returncode == 0:
+            return jsonify({
+                'success': True,
+                'message': 'Téléchargement des images lancé avec succès',
+                'output': result.stdout
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Erreur lors du téléchargement',
+                'output': result.stderr
+            }), 500
+            
+    except Exception as e:
+        logger.error(f"Erreur download_images: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
 # Gestion des erreurs
 @app.errorhandler(404)
 def not_found(error):
