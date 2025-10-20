@@ -919,7 +919,7 @@
 
     <script>
         // Configuration API
-        const API_BASE_URL = 'http://localhost:8001/api';
+        const API_BASE_URL = '/api';
         
         // Variables globales
         let jerseys = [];
@@ -951,21 +951,21 @@
                 });
                 
                 if (!response.ok) {
-                    window.location.href = '/login.html';
+                    window.location.href = '/login';
                     return;
                 }
                 
                 const data = await response.json();
                 
                 if (!data.authenticated) {
-                    window.location.href = '/login.html';
+                    window.location.href = '/login';
                     return;
                 }
                 
                 document.getElementById('username').textContent = data.username || 'Badis';
             } catch (error) {
                 console.error('Erreur auth:', error);
-                window.location.href = '/login.html';
+                window.location.href = '/login';
             }
         }
 
@@ -979,7 +979,7 @@
             } catch (error) {
                 console.error('Erreur logout:', error);
             }
-            window.location.href = '/login.html';
+            window.location.href = '/login';
         }
 
         // Switch Tab
