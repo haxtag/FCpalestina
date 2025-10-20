@@ -48,24 +48,39 @@ def _ensure_placeholder_images(base_dir: Path) -> tuple[Path, Path]:
         x = (400 - (bbox[2] - bbox[0])) // 2
         y = (400 - (bbox[3] - bbox[1])) // 2
         draw.text((x, y), text, fill=(255, 255, 255), font=font)
-        img.save(path, 'JPEG', quality=85)
+        # Tenter un enregistrement JPEG ; si indisponible (libjpeg manquante), on lèvera une exception
+        img.save(path, format='JPEG', quality=85)
 
     # Générer le fichier principal s'il manque
+    def _download_remote_placeholder(path: Path):
+        url = 'https://via.placeholder.com/400x400/2c5530/ffffff.jpg?text=Maillots+Du+Peuple'
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
+        with open(path, 'wb') as f:
+            f.write(r.content)
+
     if not placeholder_ui.exists():
         try:
             if PIL_AVAILABLE:
-                _generate_with_pillow(placeholder_ui)
-                logger.info(f"Placeholder UI généré: {placeholder_ui}")
+                try:
+                    _generate_with_pillow(placeholder_ui)
+                    # Vérifier la taille du fichier généré
+                    if placeholder_ui.stat().st_size <= 0:
+                        raise RuntimeError("placeholder.jpg vide après génération Pillow")
+                    logger.info(f"Placeholder UI généré: {placeholder_ui}")
+                except Exception as e:
+                    logger.warning(f"Génération Pillow échouée ({e}), fallback téléchargement distant")
+                    _download_remote_placeholder(placeholder_ui)
+                    if placeholder_ui.stat().st_size <= 0:
+                        raise RuntimeError("placeholder.jpg vide après téléchargement distant")
+                    logger.info(f"Placeholder UI téléchargé (fallback): {placeholder_ui}")
             else:
-                # Fallback: télécharger une petite image de placeholder
-                url = 'https://via.placeholder.com/400x400/2c5530/ffffff.jpg?text=Maillots+Du+Peuple'
-                r = requests.get(url, timeout=20)
-                r.raise_for_status()
-                with open(placeholder_ui, 'wb') as f:
-                    f.write(r.content)
+                _download_remote_placeholder(placeholder_ui)
+                if placeholder_ui.stat().st_size <= 0:
+                    raise RuntimeError("placeholder.jpg vide après téléchargement distant (no PIL)")
                 logger.info(f"Placeholder UI téléchargé: {placeholder_ui}")
         except Exception as e:
-            logger.error(f"Impossible de créer le placeholder UI ({e})")
+            logger.error(f"Impossible d'obtenir un placeholder UI non vide ({e})")
 
     # Dupliquer dans le dossier jerseys s'il manque
     if not placeholder_jerseys.exists():
