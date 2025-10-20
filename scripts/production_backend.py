@@ -728,21 +728,28 @@ def download_images():
         import subprocess
         import sys
         
-        # Lancer le script de téléchargement
+        # Répertoire racine du projet
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         script_path = os.path.join(os.path.dirname(__file__), 'download_images.py')
+        
+        # Lancer le script de téléchargement avec le bon répertoire de travail
         result = subprocess.run(
             [sys.executable, script_path],
             capture_output=True,
             text=True,
-            timeout=300  # 5 minutes max
+            timeout=300,  # 5 minutes max
+            cwd=base_dir  # Exécuter depuis la racine du projet
         )
         
         logger.info(f"Script download_images terminé: {result.returncode}")
+        logger.info(f"Stdout: {result.stdout}")
+        if result.stderr:
+            logger.error(f"Stderr: {result.stderr}")
         
         if result.returncode == 0:
             return jsonify({
                 'success': True,
-                'message': 'Téléchargement des images lancé avec succès',
+                'message': 'Téléchargement des images terminé',
                 'output': result.stdout
             })
         else:

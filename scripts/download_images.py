@@ -15,10 +15,22 @@ logger = logging.getLogger(__name__)
 
 def download_missing_images():
     """Télécharge uniquement les images qui manquent"""
-    # Chemins
-    base_dir = Path(__file__).parent.parent
+    # Chemins - utiliser le répertoire courant au lieu de __file__
+    base_dir = Path.cwd()
     jerseys_file = base_dir / 'data' / 'jerseys.json'
     images_dir = base_dir / 'assets' / 'images' / 'jerseys'
+    
+    logger.info(f"Base directory: {base_dir}")
+    logger.info(f"Jerseys file: {jerseys_file}")
+    logger.info(f"Images directory: {images_dir}")
+    logger.info(f"Base directory: {base_dir}")
+    logger.info(f"Jerseys file: {jerseys_file}")
+    logger.info(f"Images directory: {images_dir}")
+    
+    # Vérifier que le fichier jerseys existe
+    if not jerseys_file.exists():
+        logger.error(f"Fichier jerseys.json introuvable: {jerseys_file}")
+        return {"downloaded": 0, "skipped": 0, "errors": 1}
     
     # Créer le dossier images si nécessaire
     images_dir.mkdir(parents=True, exist_ok=True)
