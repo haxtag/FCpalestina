@@ -725,6 +725,18 @@ def internal_error(error):
 def serve_index():
     return send_from_directory(os.path.dirname(os.path.dirname(__file__)), 'index.html')
 
+@app.route('/login')
+def serve_login():
+    return send_from_directory(os.path.dirname(os.path.dirname(__file__)), 'login.html')
+
+@app.route('/admin')
+def serve_admin():
+    return send_from_directory(os.path.dirname(os.path.dirname(__file__)), 'admin_production.html')
+
+@app.route('/merci')
+def serve_merci():
+    return send_from_directory(os.path.dirname(os.path.dirname(__file__)), 'merci.html')
+
 @app.route('/<path:filename>')
 def serve_static(filename):
     return send_from_directory(os.path.dirname(os.path.dirname(__file__)), filename)
