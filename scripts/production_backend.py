@@ -62,7 +62,10 @@ DEFAULT_CONFIG = {
     "site": {
         "name": "FC Palestina",
         "domain": "",
-    "email": "contact@maillotsdupeuple.com",
+        "email": "contact@maillotsdupeuple.com",
+        # URLs publiques optionnelles pour servir les images depuis un stockage externe (S3/R2/Cloudinary)
+        "images_base_url": "/assets/images/jerseys",
+        "thumbnails_base_url": "/assets/images/thumbnails",
         "maintenance_mode": False
     },
     "scraping": {
@@ -119,6 +122,25 @@ def save_json_file(filepath, data):
     except Exception as e:
         logger.error(f"Erreur sauvegarde {filepath}: {e}")
         return False
+
+@app.route('/api/config-public', methods=['GET'])
+def get_public_config():
+    """Exposer une configuration publique minimale (sans données sensibles).
+    Permet au front de récupérer des URLs d'images externes.
+    """
+    try:
+        cfg = load_config()
+        site = cfg.get('site', {})
+        return jsonify({
+            "images_base_url": site.get('images_base_url', "/assets/images/jerseys"),
+            "thumbnails_base_url": site.get('thumbnails_base_url', "/assets/images/thumbnails")
+        })
+    except Exception as e:
+        logger.error(f"Erreur /api/config-public: {e}")
+        return jsonify({
+            "images_base_url": "/assets/images/jerseys",
+            "thumbnails_base_url": "/assets/images/thumbnails"
+        })
 
 def require_auth(f):
     """Décorateur pour vérifier l'authentification"""
