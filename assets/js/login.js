@@ -60,7 +60,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             showAlert('Connexion réussie! Redirection...', 'success');
             
             setTimeout(() => {
-                window.location.href = 'admin_production.html';
+                window.location.href = '/admin';
             }, 1000);
         } else {
             showAlert(data.error || 'Identifiants incorrects');
@@ -86,7 +86,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(data => {
         if (data.authenticated) {
-            window.location.href = 'admin_production.html';
+            window.location.href = '/admin';
         }
     })
     .catch(err => console.log('Session check failed'));
