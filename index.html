@@ -88,6 +88,24 @@
         .btn-primary:hover {
             box-shadow: 0 6px 20px rgba(139, 21, 56, 0.4) !important;
         }
+
+        /* Fix mobile menu: on white panel, links must be dark/visible */
+        @media (max-width: 768px) {
+            .nav-menu {
+                background: var(--white) !important;
+            }
+            .nav-link {
+                color: var(--text-dark) !important;
+                background: transparent !important;
+            }
+            .nav-link:hover,
+            .nav-link.active {
+                color: var(--white) !important;
+                background: var(--primary-color) !important;
+            }
+            /* Remove underline effect that can be misaligned on stacked items */
+            .nav-link::after { display: none !important; }
+        }
     </style>
 </head>
 <body>
