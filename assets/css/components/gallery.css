@@ -95,7 +95,15 @@
     overflow: hidden;
 }
 
-/* Bouton "Tous" - bordure et fond bordeaux */
+/*
+ * ⚠️ COULEURS DES CATÉGORIES GÉRÉES DYNAMIQUEMENT
+ * Les couleurs des boutons sont maintenant chargées depuis categories.json
+ * et appliquées via categoryColors.js au démarrage de la page.
+ * Pour changer les couleurs : modifier data/categories.json
+ * ⚠️ NE PAS AJOUTER DE RÈGLES HARDCODÉES ICI
+ */
+
+/* Ancien code commenté (maintenant géré dynamiquement)
 .filter-btn[data-filter="all"] {
     border-color: #8B1538 !important;
     color: #8B1538 !important;
@@ -108,7 +116,6 @@
     border-color: #8B1538 !important;
 }
 
-/* Bouton "Domicile" - bordure et fond bordeaux */
 .filter-btn[data-filter="home"] {
     border-color: #8B1538 !important;
     color: #8B1538 !important;
@@ -121,7 +128,6 @@
     border-color: #8B1538 !important;
 }
 
-/* Bouton "Extérieur" - bordure et fond gris */
 .filter-btn[data-filter="away"] {
     border-color: #6B7280 !important;
     color: #6B7280 !important;
@@ -134,7 +140,6 @@
     border-color: #6B7280 !important;
 }
 
-/* Bouton "Troisième" - bordure et fond noir */
 .filter-btn[data-filter="third"] {
     border-color: #000000 !important;
     color: #000000 !important;
@@ -147,7 +152,6 @@
     border-color: #000000 !important;
 }
 
-/* Bouton "Spéciaux" - bordure et fond jaune/or */
 .filter-btn[data-filter="special"] {
     border-color: #F59E0B !important;
     color: #F59E0B !important;
@@ -160,7 +164,6 @@
     border-color: #F59E0B !important;
 }
 
-/* Bouton "Gardien" - bordure et fond orange */
 .filter-btn[data-filter="goalkeeper"] {
     border-color: #F97316 !important;
     color: #F97316 !important;
@@ -173,7 +176,6 @@
     border-color: #F97316 !important;
 }
 
-/* Bouton "Vintage" - bordure et fond marron */
 .filter-btn[data-filter="vintage"] {
     border-color: #92400E !important;
     color: #92400E !important;
@@ -185,6 +187,7 @@
     color: var(--white) !important;
     border-color: #92400E !important;
 }
+*/
 
 .filter-btn::before {
     content: '';
