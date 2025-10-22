@@ -84,7 +84,7 @@
 
 .filter-btn {
     padding: var(--spacing-sm) var(--spacing-lg);
-    background: var(--white);
+    background: transparent;
     color: var(--text-dark);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
@@ -95,6 +95,83 @@
     overflow: hidden;
 }
 
+/* Bouton "Tous" - bordure et fond bordeaux */
+.filter-btn[data-filter="all"] {
+    border-color: #8B1538;
+    color: #8B1538;
+}
+
+.filter-btn[data-filter="all"].active {
+    background: #8B1538;
+    color: var(--white);
+}
+
+/* Bouton "Domicile" - bordure et fond bordeaux */
+.filter-btn[data-filter="home"] {
+    border-color: #8B1538;
+    color: #8B1538;
+}
+
+.filter-btn[data-filter="home"].active {
+    background: #8B1538;
+    color: var(--white);
+}
+
+/* Bouton "Extérieur" - bordure et fond gris */
+.filter-btn[data-filter="away"] {
+    border-color: #6B7280;
+    color: #6B7280;
+}
+
+.filter-btn[data-filter="away"].active {
+    background: #6B7280;
+    color: var(--white);
+}
+
+/* Bouton "Troisième" - bordure et fond noir */
+.filter-btn[data-filter="third"] {
+    border-color: #000000;
+    color: #000000;
+}
+
+.filter-btn[data-filter="third"].active {
+    background: #000000;
+    color: var(--white);
+}
+
+/* Bouton "Spéciaux" - bordure et fond jaune/or */
+.filter-btn[data-filter="special"] {
+    border-color: #F59E0B;
+    color: #F59E0B;
+}
+
+.filter-btn[data-filter="special"].active {
+    background: #F59E0B;
+    color: var(--white);
+}
+
+/* Bouton "Gardien" - bordure et fond orange */
+.filter-btn[data-filter="goalkeeper"] {
+    border-color: #F97316;
+    color: #F97316;
+}
+
+.filter-btn[data-filter="goalkeeper"].active {
+    background: #F97316;
+    color: var(--white);
+}
+
+/* Bouton "Vintage" - bordure et fond marron */
+.filter-btn[data-filter="vintage"] {
+    border-color: #92400E;
+    color: #92400E;
+}
+
+.filter-btn[data-filter="vintage"].active {
+    background: #92400E;
+    color: var(--white);
+}
+
 .filter-btn::before {
     content: '';
     position: absolute;
@@ -102,7 +179,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(44, 85, 48, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transition: left var(--transition-normal);
 }
 
@@ -110,13 +187,9 @@
     left: 100%;
 }
 
-.filter-btn:hover,
-.filter-btn.active {
-    background: var(--primary-color);
-    color: var(--white);
-    border-color: var(--primary-color);
+.filter-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(44, 85, 48, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* ===== SEARCH BAR ===== */
