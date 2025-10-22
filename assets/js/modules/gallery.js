@@ -59,66 +59,8 @@ class Gallery {
      * Mettre à jour les boutons de filtre avec les couleurs des catégories
      */
     async updateFilterButtons() {
-        try {
-            // Charger les catégories avec leurs couleurs
-            const ts = Date.now();
-            const response = await fetch(`/data/categories.json?t=${ts}`, { cache: 'no-store' });
-            if (response.ok) {
-                const categories = await response.json();
-                
-                // Mettre à jour chaque bouton de filtre
-                this.filterButtons.forEach(btn => {
-                    const filter = btn.dataset.filter;
-                    if (filter === 'all') {
-                        // Bouton "Tous" avec dégradé spécial
-                        btn.style.cssText += `
-                            background: linear-gradient(135deg, #8B1538, #A61E47) !important;
-                            color: white !important;
-                            border: 2px solid #8B1538 !important;
-                            position: relative;
-                            overflow: hidden;
-                        `;
-                        return;
-                    }
-                    
-                    // Trouver la catégorie correspondante
-                    const category = categories.find(cat => cat.id === filter);
-                    if (category && category.color) {
-                        // Appliquer la couleur de la catégorie
-                        btn.style.cssText += `
-                            --category-color: ${category.color};
-                            background: white !important;
-                            color: ${category.color} !important;
-                            border: 2px solid ${category.color} !important;
-                            position: relative;
-                            overflow: hidden;
-                            transition: all 0.3s ease !important;
-                        `;
-                        
-                        // Ajouter un pseudo-élément de couleur
-                        btn.addEventListener('mouseenter', () => {
-                            btn.style.background = category.color + ' !important';
-                            btn.style.color = 'white !important';
-                        });
-                        
-                        btn.addEventListener('mouseleave', () => {
-                            if (!btn.classList.contains('active')) {
-                                btn.style.background = 'white !important';
-                                btn.style.color = category.color + ' !important';
-                            }
-                        });
-                        
-                        // Mettre à jour l'état actif
-                        if (btn.classList.contains('active')) {
-                            btn.style.background = category.color + ' !important';
-                            btn.style.color = 'white !important';
-                        }
-                    }
-                });
-            }
-        } catch (error) {
-            console.warn('⚠️ Impossible de charger les couleurs des catégories:', error);
-        }
+        // Cette fonction n'est plus nécessaire car on utilise uniquement le CSS
+        // On la garde vide pour ne pas casser d'autres appels
     }
 
     /**
@@ -157,32 +99,12 @@ class Gallery {
      * @param {string} category - Catégorie sélectionnée
      */
     handleCategoryFilter(category) {
-        // Mettre à jour l'état actif des boutons avec maintien des couleurs
+        // Mettre à jour l'état actif des boutons (simple, sans styles inline)
         this.filterButtons.forEach(btn => {
-            btn.classList.remove('active');
-            const filter = btn.dataset.filter;
-            
-            if (filter === category) {
+            if (btn.dataset.filter === category) {
                 btn.classList.add('active');
-                // Maintenir la couleur active
-                if (filter === 'all') {
-                    btn.style.background = 'linear-gradient(135deg, #8B1538, #A61E47) !important';
-                    btn.style.color = 'white !important';
-                } else {
-                    const categoryColor = btn.style.getPropertyValue('--category-color') || '#8B1538';
-                    btn.style.background = categoryColor + ' !important';
-                    btn.style.color = 'white !important';
-                }
             } else {
-                // Restaurer l'état inactif
-                if (filter === 'all') {
-                    btn.style.background = 'linear-gradient(135deg, #8B1538, #A61E47) !important';
-                    btn.style.color = 'white !important';
-                } else {
-                    const categoryColor = btn.style.getPropertyValue('--category-color') || '#8B1538';
-                    btn.style.background = 'white !important';
-                    btn.style.color = categoryColor + ' !important';
-                }
+                btn.classList.remove('active');
             }
         });
 

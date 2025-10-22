@@ -84,8 +84,7 @@
 
 .filter-btn {
     padding: var(--spacing-sm) var(--spacing-lg);
-    background: transparent;
-    color: var(--text-dark);
+    background: transparent !important;
     border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     font-weight: 500;
@@ -97,79 +96,93 @@
 
 /* Bouton "Tous" - bordure et fond bordeaux */
 .filter-btn[data-filter="all"] {
-    border-color: #8B1538;
-    color: #8B1538;
+    border-color: #8B1538 !important;
+    color: #8B1538 !important;
+    background: transparent !important;
 }
 
 .filter-btn[data-filter="all"].active {
-    background: #8B1538;
-    color: var(--white);
+    background: #8B1538 !important;
+    color: var(--white) !important;
+    border-color: #8B1538 !important;
 }
 
 /* Bouton "Domicile" - bordure et fond bordeaux */
 .filter-btn[data-filter="home"] {
-    border-color: #8B1538;
-    color: #8B1538;
+    border-color: #8B1538 !important;
+    color: #8B1538 !important;
+    background: transparent !important;
 }
 
 .filter-btn[data-filter="home"].active {
-    background: #8B1538;
-    color: var(--white);
+    background: #8B1538 !important;
+    color: var(--white) !important;
+    border-color: #8B1538 !important;
 }
 
 /* Bouton "Extérieur" - bordure et fond gris */
 .filter-btn[data-filter="away"] {
-    border-color: #6B7280;
-    color: #6B7280;
+    border-color: #6B7280 !important;
+    color: #6B7280 !important;
+    background: transparent !important;
 }
 
 .filter-btn[data-filter="away"].active {
-    background: #6B7280;
-    color: var(--white);
+    background: #6B7280 !important;
+    color: var(--white) !important;
+    border-color: #6B7280 !important;
 }
 
 /* Bouton "Troisième" - bordure et fond noir */
 .filter-btn[data-filter="third"] {
-    border-color: #000000;
-    color: #000000;
+    border-color: #000000 !important;
+    color: #000000 !important;
+    background: transparent !important;
 }
 
 .filter-btn[data-filter="third"].active {
-    background: #000000;
-    color: var(--white);
+    background: #000000 !important;
+    color: var(--white) !important;
+    border-color: #000000 !important;
 }
 
 /* Bouton "Spéciaux" - bordure et fond jaune/or */
 .filter-btn[data-filter="special"] {
-    border-color: #F59E0B;
-    color: #F59E0B;
+    border-color: #F59E0B !important;
+    color: #F59E0B !important;
+    background: transparent !important;
 }
 
 .filter-btn[data-filter="special"].active {
-    background: #F59E0B;
-    color: var(--white);
+    background: #F59E0B !important;
+    color: var(--white) !important;
+    border-color: #F59E0B !important;
 }
 
 /* Bouton "Gardien" - bordure et fond orange */
 .filter-btn[data-filter="goalkeeper"] {
-    border-color: #F97316;
-    color: #F97316;
+    border-color: #F97316 !important;
+    color: #F97316 !important;
+    background: transparent !important;
 }
 
 .filter-btn[data-filter="goalkeeper"].active {
-    background: #F97316;
-    color: var(--white);
+    background: #F97316 !important;
+    color: var(--white) !important;
+    border-color: #F97316 !important;
 }
 
 /* Bouton "Vintage" - bordure et fond marron */
 .filter-btn[data-filter="vintage"] {
-    border-color: #92400E;
-    color: #92400E;
+    border-color: #92400E !important;
+    color: #92400E !important;
+    background: transparent !important;
 }
 
 .filter-btn[data-filter="vintage"].active {
-    background: #92400E;
-    color: var(--white);
+    background: #92400E !important;
+    color: var(--white) !important;
+    border-color: #92400E !important;
 }
 
 .filter-btn::before {
