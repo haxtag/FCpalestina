@@ -272,7 +272,8 @@
             border: 2px solid var(--border);
             border-radius: 12px;
             overflow: hidden;
-            transition: all 0.3s;
+            /* Limiter les transitions pour éviter le clignotement/reflow */
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
         }
 
         .jersey-card:hover {
@@ -287,6 +288,7 @@
             height: 250px;
             object-fit: cover;
             background: var(--light);
+            display: block; /* évite le décalage lié au baseline inline */
         }
 
         .jersey-content {
@@ -1141,8 +1143,11 @@
             if (page < 1 || page > totalPages) return;
             currentPage = page;
             displayJerseys();
-            // Scroll to top
-            document.getElementById('jerseys-tab').scrollIntoView({ behavior: 'smooth' });
+            // Scroll to top (sans animation pour éviter les saccades)
+            const tab = document.getElementById('jerseys-tab');
+            if (tab && typeof tab.scrollIntoView === 'function') {
+                tab.scrollIntoView();
+            }
         }
 
         // Changer le nombre par page
