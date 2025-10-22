@@ -99,10 +99,47 @@ function initializeNavigation() {
                         behavior: 'smooth',
                         block: 'start'
                     });
+                    // Marquer le lien comme actif immédiatement
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
                 }
             }
         });
     });
+
+    // ScrollSpy: activer le lien correspondant à la section visible
+    const sections = document.querySelectorAll('section[id]');
+    if (sections.length && navLinks.length) {
+        const linkById = new Map();
+        navLinks.forEach(l => {
+            const href = l.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                linkById.set(href.slice(1), l);
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            // Trouver l'entrée la plus visible au-dessus du pli
+            const visible = entries
+                .filter(en => en.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+            if (visible.length) {
+                const currentId = visible[0].target.id;
+                const activeLink = linkById.get(currentId);
+                if (activeLink) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    activeLink.classList.add('active');
+                }
+            }
+        }, {
+            root: null,
+            // Compenser la hauteur du header fixe pour l'activation
+            rootMargin: '-120px 0px -60% 0px',
+            threshold: [0.25, 0.5, 0.75, 1]
+        });
+
+        sections.forEach(sec => observer.observe(sec));
+    }
 }
 
 /**
