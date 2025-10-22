@@ -276,7 +276,8 @@
         }
 
         .jersey-card:hover {
-            transform: translateY(-5px);
+            /* Éviter tout décalage visuel des cartes au survol/clic */
+            transform: none;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             border-color: var(--primary);
         }
