@@ -60,7 +60,7 @@ DEFAULT_CONFIG = {
         "session_timeout": 3600  # 1 heure
     },
     "site": {
-        "name": "FC Palestina",
+        "name": "Maillots Du Peuple",
         "domain": "",
         "email": "contact@maillotsdupeuple.com",
         # URLs publiques optionnelles pour servir les images depuis un stockage externe (S3/R2/Cloudinary)
