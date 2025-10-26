@@ -118,27 +118,69 @@ function initializeNavigation() {
             }
         });
 
-        const observer = new IntersectionObserver((entries) => {
-            // Trouver l'entrée la plus visible au-dessus du pli
-            const visible = entries
-                .filter(en => en.isIntersecting)
-                .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-            if (visible.length) {
-                const currentId = visible[0].target.id;
-                const activeLink = linkById.get(currentId);
+        // Conserver le dernier ratio de chaque section pour éviter l'état bloqué
+        const lastRatios = new Map();
+
+        const applyActive = (sectionIdFallback = null) => {
+            // Choisir la section avec le ratio le plus élevé (> 0)
+            let bestId = null;
+            let bestRatio = 0;
+            lastRatios.forEach((ratio, id) => {
+                if (ratio > bestRatio) {
+                    bestRatio = ratio;
+                    bestId = id;
+                }
+            });
+
+            // Fallback explicite en haut de page
+            if (!bestId && sectionIdFallback) {
+                bestId = sectionIdFallback;
+            }
+
+            if (bestId) {
+                const activeLink = linkById.get(bestId);
                 if (activeLink) {
                     navLinks.forEach(l => l.classList.remove('active'));
                     activeLink.classList.add('active');
                 }
             }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                // Stocker le dernier ratio connu (0 si non intersecté)
+                lastRatios.set(en.target.id, en.isIntersecting ? en.intersectionRatio : 0);
+            });
+
+            // Quand on est tout en haut, forcer Accueil
+            const atTop = (window.scrollY || window.pageYOffset) < 120;
+            applyActive(atTop ? 'home' : null);
         }, {
             root: null,
             // Compenser la hauteur du header fixe pour l'activation
-            rootMargin: '-120px 0px -60% 0px',
-            threshold: [0.25, 0.5, 0.75, 1]
+            rootMargin: '-96px 0px -60% 0px',
+            threshold: [0, 0.25, 0.5, 0.75, 1]
         });
 
-        sections.forEach(sec => observer.observe(sec));
+        sections.forEach(sec => {
+            lastRatios.set(sec.id, 0);
+            observer.observe(sec);
+        });
+
+        // Sécurité: mettre Accueil actif au chargement
+        navLinks.forEach(l => l.classList.remove('active'));
+        const homeLink = linkById.get('home');
+        if (homeLink) homeLink.classList.add('active');
+
+        // Fallback sur scroll (utile sur certains navigateurs)
+        window.addEventListener('scroll', throttle(() => {
+            const atTop = (window.scrollY || window.pageYOffset) < 120;
+            if (atTop) {
+                navLinks.forEach(l => l.classList.remove('active'));
+                const hl = linkById.get('home');
+                if (hl) hl.classList.add('active');
+            }
+        }, 150));
     }
 }
 
@@ -279,6 +321,9 @@ function updateCategoryFilters(categories) {
     const existingButtons = filterContainer.querySelectorAll('.filter-btn:not([data-filter="all"])');
     existingButtons.forEach(btn => btn.remove());
 
+    // Déterminer la catégorie active actuelle (si la galerie est initialisée)
+    const currentCat = (window.gallery && window.gallery.currentCategory) ? window.gallery.currentCategory : 'all';
+
     // Ajouter les nouvelles catégories
     categories.forEach(category => {
         console.log('🎨 Catégorie:', category.name, 'Couleur:', category.color);
@@ -308,21 +353,18 @@ function updateCategoryFilters(categories) {
             console.log('❌ Pas de couleur pour:', category.name);
         }
         
-        // Ajouter l'événement de clic
-        button.addEventListener('click', (e) => {
-            // Mettre à jour l'état actif des boutons
-            filterContainer.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            
-            // Déclencher l'événement de la galerie
-            const gallery = window.gallery;
-            if (gallery) {
-                gallery.handleCategoryFilter(category.id);
-            }
-        });
+        // L'état actif sera géré par la délégation d'événements dans Gallery
         
         filterContainer.appendChild(button);
     });
+    
+    // Appliquer l'état actif visuel cohérent
+    const allButtons = filterContainer.querySelectorAll('.filter-btn');
+    allButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === currentCat));
+    if (![...allButtons].some(b => b.classList.contains('active'))) {
+        const allBtn = filterContainer.querySelector('.filter-btn[data-filter="all"]');
+        if (allBtn) allBtn.classList.add('active');
+    }
     
     console.log(`🔄 ${categories.length} catégories ajoutées aux filtres`);
 }

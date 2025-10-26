@@ -19,7 +19,8 @@ class Gallery {
     this.categoriesDef = null;
         
         this.galleryGrid = document.getElementById('gallery-grid');
-        this.filterButtons = document.querySelectorAll('.filter-btn');
+    this.filterContainer = document.querySelector('.gallery-filters');
+    this.filterButtons = document.querySelectorAll('.filter-btn');
         this.searchInput = document.getElementById('search-input');
         this.loadMoreBtn = document.getElementById('load-more');
         this.paginationContainer = document.getElementById('pagination-container');
@@ -67,12 +68,20 @@ class Gallery {
      * Liaison des événements
      */
     bindEvents() {
-        // Filtres par catégorie
-        this.filterButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.handleCategoryFilter(e.target.dataset.filter);
+        // Filtres par catégorie (délégation pour gérer les boutons dynamiques)
+        if (this.filterContainer) {
+            this.filterContainer.addEventListener('click', (e) => {
+                const btn = e.target.closest('.filter-btn');
+                if (!btn || !this.filterContainer.contains(btn)) return;
+
+                // Mettre à jour l'état actif visuel dans le même conteneur
+                this.filterButtons = this.filterContainer.querySelectorAll('.filter-btn');
+                this.filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                this.handleCategoryFilter(btn.dataset.filter);
             });
-        });
+        }
 
         // Recherche
         if (this.searchInput) {
@@ -99,14 +108,10 @@ class Gallery {
      * @param {string} category - Catégorie sélectionnée
      */
     handleCategoryFilter(category) {
-        // Mettre à jour l'état actif des boutons (simple, sans styles inline)
-        this.filterButtons.forEach(btn => {
-            if (btn.dataset.filter === category) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
+        // Toujours resynchroniser la collection de boutons (ils peuvent être régénérés)
+        if (this.filterContainer) {
+            this.filterButtons = this.filterContainer.querySelectorAll('.filter-btn');
+        }
 
         // Réinitialiser et charger
         this.currentCategory = category;
