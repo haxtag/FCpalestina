@@ -7,8 +7,8 @@ class Gallery {
         this.currentPage = 1;
         this.currentCategory = 'all';
         this.currentSearch = '';
-        this.currentSort = 'date';
-        this.currentOrder = 'desc';
+        this.currentSort = 'yupoo'; // Ordre Yupoo (les premiers du JSON = plus récents)
+        this.currentOrder = 'asc';
         this.isLoading = false;
         this.itemsPerPage = 12; // 12 maillots par page pour meilleur affichage
         this.totalPages = 0;
@@ -217,6 +217,9 @@ class Gallery {
                 let aValue, bValue;
                 
                 switch (this.currentSort) {
+                    case 'yupoo':
+                        // Garder l'ordre original du JSON (les premiers = plus récents sur Yupoo)
+                        return 0;
                     case 'date':
                         aValue = new Date(a.created_at || a.updated_at || 0);
                         bValue = new Date(b.created_at || b.updated_at || 0);
