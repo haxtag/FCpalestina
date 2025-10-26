@@ -325,12 +325,28 @@ class JerseyModal {
             const list = this.categoriesDef || [];
             const found = list.find(c => c.id === catId);
             if (found && found.name) return found.name;
-            const fallback = { 'home': 'Domicile', 'away': 'Extérieur', 'special': 'Spéciaux', 'vintage': 'Vintage', 'keeper': 'Gardien' };
-            return fallback[catId] || `Catégorie supprimée (${catId})`;
+            const fallback = { 'home': 'Domicile', 'away': 'Extérieur', 'special': 'Spéciaux', 'vintage': 'Vintage', 'keeper': 'Gardien', 'third': 'Troisième' };
+            return fallback[catId] || catId;
         } catch (e) {
             console.warn('⚠️ Erreur getCategoryName:', e);
             return 'Catégorie inconnue';
         }
+    }
+
+    /**
+     * Obtenir tous les noms de catégories (gère les tableaux)
+     */
+    getCategoriesDisplay(jerseyCategory) {
+        if (!jerseyCategory) return 'Non spécifiée';
+        
+        // Si c'est un tableau de catégories
+        if (Array.isArray(jerseyCategory)) {
+            if (jerseyCategory.length === 0) return 'Non spécifiée';
+            return jerseyCategory.map(cat => this.getCategoryName(cat)).join(', ');
+        }
+        
+        // Si c'est une seule catégorie
+        return this.getCategoryName(jerseyCategory);
     }
 
     /**
@@ -395,7 +411,7 @@ class JerseyModal {
                     
                     <div class="jersey-info">
                         <div class="info-item">
-                            <strong>Catégorie:</strong> ${this.getCategoryName(jersey.category)}
+                            <strong>Catégorie:</strong> ${this.getCategoriesDisplay(jersey.category)}
                         </div>
                     </div>
 

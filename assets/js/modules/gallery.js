@@ -407,20 +407,34 @@ class Gallery {
         return pills.join('');
     }
 
-    // Nom de catégorie depuis categories.json si dispo, sinon fallback jerseyAPI
+    // Nom de catégorie depuis categories.json si dispo, sinon fallback
     getCategoryName(catId) {
         if (!catId) return 'Non spécifiée';
         try {
             const list = this.categoriesDef || [];
             const found = list.find(c => c.id === catId);
             if (found && found.name) return found.name;
-            const fallback = { 'home': 'Domicile', 'away': 'Extérieur', 'special': 'Spéciaux', 'vintage': 'Vintage', 'keeper': 'Gardien' };
+            const fallback = { 'home': 'Domicile', 'away': 'Extérieur', 'special': 'Spéciaux', 'vintage': 'Vintage', 'keeper': 'Gardien', 'third': 'Troisième' };
             const jerseyApiName = (typeof jerseyAPI?.getCategoryDisplayName === 'function') ? jerseyAPI.getCategoryDisplayName(catId) : null;
-            return fallback[catId] || jerseyApiName || `Catégorie supprimée (${catId})`;
+            return fallback[catId] || jerseyApiName || catId;
         } catch (e) {
             console.warn('⚠️ Erreur getCategoryName:', e);
             return 'Catégorie inconnue';
         }
+    }
+
+    // Obtenir tous les noms de catégories (gère les tableaux)
+    getCategoriesDisplay(jerseyCategory) {
+        if (!jerseyCategory) return 'Non spécifiée';
+        
+        // Si c'est un tableau de catégories
+        if (Array.isArray(jerseyCategory)) {
+            if (jerseyCategory.length === 0) return 'Non spécifiée';
+            return jerseyCategory.map(cat => this.getCategoryName(cat)).join(', ');
+        }
+        
+        // Si c'est une seule catégorie
+        return this.getCategoryName(jerseyCategory);
     }
 
     /**
