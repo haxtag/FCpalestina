@@ -226,6 +226,38 @@ class YupooCompleteScraper:
             logger.error(f"Erreur telechargement image {image_url}: {e}")
             return "placeholder.jpg"  # Image par défaut
     
+    def extract_cover_image(self, soup: BeautifulSoup, album_url: str) -> str:
+        """Extrait l'image de couverture/présentation (celle à côté du titre en haut sur Yupoo)"""
+        
+        # Sélecteurs Yupoo corrects basés sur l'analyse HTML réelle
+        cover_selectors = [
+            '.showalbumheader__gallerycover img',  # Sélecteur principal trouvé
+            '.showalbumheader__gallerycover .autocover',
+            '.album__cover img',
+            '.showalbum__cover img', 
+            '.album-cover img'
+        ]
+        
+        for selector in cover_selectors:
+            cover_elem = soup.select_one(selector)
+            if cover_elem:
+                img_url = cover_elem.get('data-src') or cover_elem.get('src') or cover_elem.get('data-original')
+                if img_url and 'photo' in img_url.lower():
+                    # Normaliser l'URL
+                    if img_url.startswith('//'):
+                        img_url = 'https:' + img_url
+                    elif not img_url.startswith('http'):
+                        img_url = urljoin(album_url, img_url)
+                    
+                    # Garder medium (bonne qualité accessible), améliorer small/square vers medium
+                    img_url = img_url.replace('/small.jpg', '/medium.jpg').replace('/square.jpg', '/medium.jpg')
+                    
+                    logger.info(f"✅ Image de couverture trouvée via {selector}: {img_url}")
+                    return img_url
+        
+        logger.warning("⚠️ Image de couverture introuvable, utilisation de la première image de galerie")
+        return None
+
     def extract_images_from_album(self, soup: BeautifulSoup, album_url: str) -> list:
         """Extrait toutes les images d'un album Yupoo"""
         images = []
@@ -352,7 +384,10 @@ class YupooCompleteScraper:
                 logger.info(f"⚠️ Maillot exclu (club filtré): {translated_title}")
                 return None
             
-            # Extraire les images
+            # Extraire l'image de couverture Yupoo (présentation en haut)
+            cover_image_url = self.extract_cover_image(soup, album_url)
+            
+            # Extraire les images de la galerie
             image_urls = self.extract_images_from_album(soup, album_url)
             
             if not image_urls:
@@ -368,15 +403,21 @@ class YupooCompleteScraper:
             # Générer un ID unique
             jersey_id = hashlib.md5(f"{translated_title}{album_url}".encode()).hexdigest()[:12]
             
-            # Télécharger les images localement
+            # Télécharger l'image de couverture (présentation Yupoo)
+            cover_image_name = None
+            if cover_image_url:
+                cover_image_name = self.download_image(cover_image_url, jersey_id, 'cover')
+                time.sleep(0.5)
+            
+            # Télécharger les images de la galerie
             local_images = []
             for i, img_url in enumerate(image_urls):
                 local_name = self.download_image(img_url, jersey_id, i)
                 local_images.append(local_name)
                 time.sleep(0.5)  # Pause entre téléchargements
 
-            # Prendre systématiquement la première image comme thumbnail (logique Yupoo)
-            thumbnail = local_images[0] if local_images else "placeholder.jpg"
+            # Utiliser l'image de couverture comme thumbnail, sinon première galerie
+            thumbnail = cover_image_name if (cover_image_name and cover_image_name != "placeholder.jpg") else (local_images[0] if local_images else "placeholder.jpg")
 
             # Créer l'objet maillot
             jersey = {
