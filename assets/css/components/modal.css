@@ -11,12 +11,14 @@
     backdrop-filter: blur(5px);
     animation: fadeIn 0.3s ease-out;
     overscroll-behavior: contain; /* avoid bouncing background */
-    overflow: hidden; /* prevent outer scrollbar when content grows */
+    /* Use a single scroll on the overlay so long content remains reachable */
+    overflow-y: auto;
 }
 
 .modal.active {
     display: flex;
-    align-items: center;
+    /* Top-align when content is taller than the viewport to avoid cropping */
+    align-items: flex-start;
     justify-content: center;
     padding: var(--spacing-md);
 }
@@ -27,9 +29,9 @@
     border-radius: var(--radius-xl);
     max-width: 900px;
     width: 100%;
-    max-height: 96vh;
-    /* No internal scrollbar: everything fits the viewport */
-    overflow: hidden;
+    /* Let content define height; overlay handles the scrolling */
+    max-height: none;
+    overflow: visible;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 0;
     scrollbar-gutter: stable both-edges;
@@ -37,6 +39,8 @@
     animation: fadeInUp 0.4s ease-out;
     display: flex;
     flex-direction: column;
+    /* Provide breathing room when overlay scrolls */
+    margin: var(--spacing-lg) 0;
 }
 
 .modal-close {
@@ -218,7 +222,8 @@
 @media (max-width: 768px) {
     .modal-content {
         max-width: 95%;
-        max-height: 98vh;
+        /* no max-height on the content; overlay scrolls */
+        max-height: none;
         padding-bottom: 0;
     }
 
@@ -251,7 +256,7 @@
 
     .modal-content {
         max-width: 100%;
-        max-height: 100vh;
+        max-height: none;
         padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom, 0px));
         border-radius: 0;
     }

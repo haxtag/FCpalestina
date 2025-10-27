@@ -445,8 +445,15 @@ async function syncWithYupoo() {
 /**
  * Gestion des erreurs globales
  */
+// Ne pas afficher d'alerte pour les erreurs de chargement de ressources (script/link/img)
 window.addEventListener('error', (e) => {
-    handleError(e.error, 'Global error');
+    const target = e.target || {};
+    const isResource = target.tagName === 'LINK' || target.tagName === 'SCRIPT' || target.tagName === 'IMG';
+    if (isResource && !e.message) {
+        console.warn('Resource load error ignored:', target?.tagName, target?.src || target?.href);
+        return;
+    }
+    handleError(e.error || new Error(e.message || 'Erreur inconnue'), 'Global error');
 });
 
 window.addEventListener('unhandledrejection', (e) => {
