@@ -27,13 +27,11 @@
     border-radius: var(--radius-xl);
     max-width: 900px;
     width: 100%;
-    max-height: 90vh;
-    /* Allow internal scrolling while keeping the backdrop locked */
-    overflow-x: hidden;
-    overflow-y: auto;
+    max-height: 96vh;
+    /* No internal scrollbar: everything fits the viewport */
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
-    /* Only keep minimal safe-area padding to avoid a visible white band */
-    padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: 0;
     scrollbar-gutter: stable both-edges;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 0.4s ease-out;
@@ -67,13 +65,14 @@
 
 .modal-image {
     width: 100%;
-    height: 50vh; /* free more space for nav + thumbnails */
+    /* Adapt the image height so the whole modal fits without scrolling */
+    height: clamp(38vh, calc(100vh - 360px), 52vh);
     object-fit: cover;
     display: block;
 }
 
 .modal-info {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-xl);
     background: var(--white);
 }
 
@@ -97,12 +96,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-xl);
     background: var(--light-gray);
     border-top: 1px solid var(--border-color);
-    position: sticky;/* keep visible above thumbnails */
-    bottom: 96px; /* roughly thumbnails height */
-    z-index: 2;
 }
 
 .modal-nav-btn {
@@ -140,15 +136,12 @@
 .modal-thumbnails {
     display: flex;
     gap: var(--spacing-sm);
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-xl);
     background: var(--white);
     border-top: 1px solid var(--border-color);
     overflow-x: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) var(--light-gray);
-    position: sticky;
-    bottom: 0;
-    z-index: 2;
 }
 
 .modal-thumbnails::-webkit-scrollbar {
@@ -225,12 +218,12 @@
 @media (max-width: 768px) {
     .modal-content {
         max-width: 95%;
-        max-height: 96vh; /* tiny boost to help reach bottom */
-        padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
+        max-height: 98vh;
+        padding-bottom: 0;
     }
 
     .modal-image {
-        height: 42vh;
+        height: clamp(36vh, calc(100vh - 380px), 48vh);
     }
 
     .modal-info {
@@ -248,7 +241,7 @@
         height: 35px;
         font-size: var(--font-size-2xl);
     }
-    .modal-nav { bottom: 72px; }
+    .modal-nav { padding: var(--spacing-sm) var(--spacing-lg); }
 }
 
 @media (max-width: 480px) {
@@ -264,7 +257,7 @@
     }
 
     .modal-image {
-        height: 40vh; /* balanced on very small screens */
+        height: clamp(34vh, calc(100vh - 400px), 44vh); /* very small screens */
     }
 
     .modal-info {
