@@ -11,6 +11,7 @@
     backdrop-filter: blur(5px);
     animation: fadeIn 0.3s ease-out;
     overscroll-behavior: contain; /* avoid bouncing background */
+    overflow: hidden; /* prevent outer scrollbar when content grows */
 }
 
 .modal.active {
@@ -66,13 +67,13 @@
 
 .modal-image {
     width: 100%;
-    height: 55vh; /* free vertical space for nav + thumbnails */
+    height: 50vh; /* free more space for nav + thumbnails */
     object-fit: cover;
     display: block;
 }
 
 .modal-info {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     background: var(--white);
 }
 
@@ -99,6 +100,9 @@
     padding: var(--spacing-md) var(--spacing-xl);
     background: var(--light-gray);
     border-top: 1px solid var(--border-color);
+    position: sticky;/* keep visible above thumbnails */
+    bottom: 96px; /* roughly thumbnails height */
+    z-index: 2;
 }
 
 .modal-nav-btn {
@@ -142,6 +146,9 @@
     overflow-x: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) var(--light-gray);
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
 }
 
 .modal-thumbnails::-webkit-scrollbar {
@@ -223,7 +230,7 @@
     }
 
     .modal-image {
-        height: 45vh;
+        height: 42vh;
     }
 
     .modal-info {
@@ -241,6 +248,7 @@
         height: 35px;
         font-size: var(--font-size-2xl);
     }
+    .modal-nav { bottom: 72px; }
 }
 
 @media (max-width: 480px) {
@@ -256,7 +264,7 @@
     }
 
     .modal-image {
-        height: 42vh; /* balanced on very small screens */
+        height: 40vh; /* balanced on very small screens */
     }
 
     .modal-info {
