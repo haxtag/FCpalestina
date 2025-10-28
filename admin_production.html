@@ -6,6 +6,21 @@
     <title>Administration - Maillots Du Peuple</title>
     <link rel="icon" type="image/png" href="assets/img/fcp3.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Configuration minimale pour récupérer la base d'images publique (CDN)
+        window.CONFIG = window.CONFIG || { IMAGES_BASE_URL: '/assets/images/jerseys' };
+        (async () => {
+            try {
+                const res = await fetch('/api/config-public', { credentials: 'include' });
+                if (res.ok) {
+                    const pub = await res.json();
+                    if (pub && pub.images_base_url) {
+                        window.CONFIG.IMAGES_BASE_URL = pub.images_base_url;
+                    }
+                }
+            } catch (_) { /* no-op */ }
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -1046,7 +1061,7 @@
             }
         }
 
-        // Afficher Maillots avec Pagination
+        // Afficher les maillots avec Pagination
         function displayJerseys() {
             filteredJerseys = jerseys; // Pas de filtre pour l'instant
             
@@ -1057,9 +1072,11 @@
             
             // Afficher les maillots
             const grid = document.getElementById('jerseys-grid');
+            // Utiliser window.CONFIG.IMAGES_BASE_URL pour le CDN
+            const imagesBase = (window.CONFIG && window.CONFIG.IMAGES_BASE_URL) || '/assets/images/jerseys';
             grid.innerHTML = jerseysToShow.map(jersey => `
                 <div class="jersey-card">
-                    <img src="/assets/images/jerseys/${jersey.thumbnail || jersey.images[0]}" 
+                    <img src="${imagesBase}/${jersey.thumbnail || jersey.images[0]}" 
                          alt="${jersey.title}" 
                          class="jersey-image"
                          onerror="this.src='/assets/img/placeholder.jpg'">
@@ -1194,10 +1211,12 @@
         // Afficher sélecteur d'image de couverture
         function displayCoverImageSelector(jersey) {
             const container = document.getElementById('cover-images-selector');
+                // Utiliser window.CONFIG.IMAGES_BASE_URL pour le CDN
+                const imagesBase = (window.CONFIG && window.CONFIG.IMAGES_BASE_URL) || '/assets/images/jerseys';
             container.innerHTML = (jersey.images || []).map(img => `
                 <div class="image-option ${jersey.thumbnail === img ? 'selected' : ''}" 
                      onclick="selectCoverImage('${img}')">
-                    <img src="/assets/images/jerseys/${img}" alt="">
+                        <img src="${imagesBase}/${img}" alt="">
                     <div class="image-option-check"><i class="fas fa-check"></i></div>
                 </div>
             `).join('');

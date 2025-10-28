@@ -15,7 +15,7 @@ const CONFIG = {
     ANIMATION_DELAY: 100,
     
     // Debug
-    DEBUG: true
+    DEBUG: false
 };
 
 // Exposer la configuration globalement

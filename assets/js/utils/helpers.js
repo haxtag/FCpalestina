@@ -108,8 +108,12 @@ function sanitizeHTML(str) {
 function handleError(error, context = 'Unknown') {
     console.error(`[${context}]`, error);
     
-    // Afficher une notification à l'utilisateur
-    alert('Une erreur est survenue. Veuillez réessayer.');
+    // Log uniquement (pas d'alert intrusif, car les erreurs sont souvent gérées ailleurs)
+    // Si showNotification est disponible, on peut l'utiliser pour un message discret
+    if (typeof showNotification === 'function' && window.CONFIG && window.CONFIG.DEBUG) {
+        const msg = (error && (error.message || error.toString())) || 'Erreur inconnue';
+        showNotification(`Erreur [${context}]: ${msg}`, 'error', 5000);
+    }
 }
 
 /**
