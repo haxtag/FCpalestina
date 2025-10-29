@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.maillotsdupeuple.com/sitemap.xml
+
+# Fichiers/dossiers à ne pas indexer
+Disallow: /scripts/
+Disallow: /data/backups/
+Disallow: *.log$
+Disallow: *.py$
+Disallow: *.bat$
+Disallow: /admin.html
+Disallow: /admin-login.html
