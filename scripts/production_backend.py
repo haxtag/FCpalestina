@@ -38,7 +38,8 @@ CONFIG_FILE = os.path.join(DATA_DIR, 'config.json')
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', secrets.token_hex(32))
 
-# Configuration CORS pour accepter les requêtes depuis Render et localhost
+# Configuration CORS pour accepter les requêtes (local, Render et prod)
+# Base par défaut
 allowed_origins = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
@@ -46,11 +47,41 @@ allowed_origins = [
     'http://fcpalestina.onrender.com'
 ]
 
-CORS(app, 
-     supports_credentials=True,
-     origins=allowed_origins,
-     allow_headers=['Content-Type', 'Authorization'],
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
+# Extensions dynamiques via variables d'env et config.json
+try:
+    extra = set()
+
+    # 1) Via variable d'environnement ALLOWED_ORIGINS (séparée par des virgules)
+    env_origins = os.environ.get('ALLOWED_ORIGINS', '')
+    if env_origins:
+        extra.update([o.strip() for o in env_origins.split(',') if o.strip()])
+
+    # 2) Via config.json -> site.domain (ajoute http/https et www.)
+    cfg = None
+    if os.path.exists(CONFIG_FILE):
+        cfg = load_config()
+    else:
+        cfg = DEFAULT_CONFIG
+    domain = (cfg or {}).get('site', {}).get('domain', '').strip()
+    if domain:
+        for scheme in ('https://', 'http://'):
+            extra.add(f"{scheme}{domain}")
+            if not domain.startswith('www.'):
+                extra.add(f"{scheme}www.{domain}")
+
+    # Fusionner sans doublons
+    allowed_origins = list(dict.fromkeys(allowed_origins + sorted(extra)))
+except Exception:
+    # En cas de problème, rester sur la base par défaut
+    pass
+
+CORS(
+    app,
+    supports_credentials=True,
+    origins=allowed_origins,
+    allow_headers=['Content-Type', 'Authorization'],
+    methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+)
 
 # Configuration par défaut
 DEFAULT_CONFIG = {
@@ -741,7 +772,7 @@ def save_jerseys_bulk():
         logger.error(f"Erreur save_jerseys: {e}")
         return jsonify({'error': str(e)}), 500
 
-# Route temporaire pour télécharger les images (démo uniquement)
+# Route pour lancer des scripts lourds côté admin
 @app.route('/api/admin/download-images', methods=['POST'])
 @require_auth
 def download_images():
@@ -749,25 +780,23 @@ def download_images():
     try:
         import subprocess
         import sys
-        
-        # Répertoire racine du projet
+
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         script_path = os.path.join(os.path.dirname(__file__), 'download_images.py')
-        
-        # Lancer le script de téléchargement avec le bon répertoire de travail
+
         result = subprocess.run(
             [sys.executable, script_path],
             capture_output=True,
             text=True,
             timeout=300,  # 5 minutes max
-            cwd=base_dir  # Exécuter depuis la racine du projet
+            cwd=base_dir
         )
-        
+
         logger.info(f"Script download_images terminé: {result.returncode}")
         logger.info(f"Stdout: {result.stdout}")
         if result.stderr:
             logger.error(f"Stderr: {result.stderr}")
-        
+
         if result.returncode == 0:
             return jsonify({
                 'success': True,
@@ -780,10 +809,64 @@ def download_images():
                 'error': 'Erreur lors du téléchargement',
                 'output': result.stderr
             }), 500
-            
+
     except Exception as e:
         logger.error(f"Erreur download_images: {e}")
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/admin/import-yupoo', methods=['POST'])
+@require_auth
+def import_yupoo():
+    """Déclenche le scraper Yupoo complet côté serveur (admin uniquement)."""
+    try:
+        import subprocess
+        import sys
+
+        payload = request.get_json(silent=True) or {}
+        fresh = bool(payload.get('fresh'))
+        dry_run = bool(payload.get('dry_run'))
+        limit = payload.get('limit')
+
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        script_path = os.path.join(os.path.dirname(__file__), 'yupoo_scraper_complet.py')
+
+        cmd = [sys.executable, script_path]
+        if fresh:
+            cmd.append('--fresh')
+        if dry_run:
+            cmd.append('--dry-run')
+        if isinstance(limit, int) and limit > 0:
+            cmd.extend(['--limit', str(limit)])
+
+        logger.info(f"Lancement import Yupoo (cmd={' '.join(cmd)})")
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=1800,  # 30 minutes max
+            cwd=base_dir
+        )
+
+        logger.info(f"Script import_yupoo terminé: {result.returncode}")
+        if result.stdout:
+            logger.info(f"Stdout: {result.stdout[:2000]}")
+        if result.stderr:
+            logger.error(f"Stderr: {result.stderr[:2000]}")
+
+        success = result.returncode == 0
+        return jsonify({
+            'success': success,
+            'output': result.stdout,
+            'error': None if success else (result.stderr or 'Erreur inconnue')
+        }), (200 if success else 500)
+
+    except subprocess.TimeoutExpired:
+        logger.error("Import Yupoo: délai dépassé")
+        return jsonify({'success': False, 'error': 'Import trop long (>30min), interrompu.'}), 504
+    except Exception as e:
+        logger.error(f"Erreur import_yupoo: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 # Gestion des erreurs

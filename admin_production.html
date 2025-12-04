@@ -737,7 +737,7 @@
                     <button class="action-btn" onclick="updateVintedReviews()">
                         <i class="fas fa-sync-alt"></i> Mettre à jour les avis Vinted
                     </button>
-                    <button class="action-btn warning" onclick="importYupooJerseys()">
+                    <button class="action-btn warning" id="importYupooBtn" onclick="importYupooJerseys()">
                         <i class="fas fa-download"></i> Importer nouveaux maillots Yupoo
                     </button>
                     <button class="action-btn info" onclick="downloadMissingImages()" id="downloadImagesBtn">
@@ -1425,8 +1425,41 @@
             alert('Fonctionnalité en cours de développement');
         }
 
-        function importYupooJerseys() {
-            alert('Utilisez le scraper depuis le terminal:\npython scripts/yupoo_scraper_complet.py --limit 50');
+        async function importYupooJerseys() {
+            if (!confirm('Importer les nouveaux maillots depuis Yupoo ? Cela peut prendre plusieurs minutes.')) {
+                return;
+            }
+
+            const btn = document.getElementById('importYupooBtn');
+            const originalText = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Import en cours...';
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/import-yupoo`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fresh: false }) // on importe uniquement les nouveaux maillots
+                });
+
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert('Import Yupoo terminé avec succès. Consultez le log si besoin.');
+                } else {
+                    alert('Erreur lors de l\'import Yupoo:\n' + (data.error || 'Erreur inconnue'));
+                }
+            } catch (error) {
+                console.error('Erreur import Yupoo:', error);
+                alert('Erreur de connexion au serveur lors de l\'import.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText || '<i class="fas fa-download"></i> Importer nouveaux maillots Yupoo';
+                }
+            }
         }
 
         async function downloadMissingImages() {
