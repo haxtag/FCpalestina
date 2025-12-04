@@ -781,6 +781,16 @@ def download_images():
         import subprocess
         import sys
 
+        # Sélectionner un interpréteur Python valable (uWSGI -> vrai python3)
+        python_cmd = sys.executable
+        if os.path.basename(python_cmd).lower().startswith('uwsgi'):
+            venv = os.environ.get('VIRTUAL_ENV')
+            candidate = os.path.join(venv, 'bin', 'python3') if venv else ''
+            if candidate and os.path.exists(candidate):
+                python_cmd = candidate
+            else:
+                python_cmd = '/usr/bin/python3'
+
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         script_path = os.path.join(os.path.dirname(__file__), 'download_images.py')
 
@@ -831,7 +841,7 @@ def import_yupoo():
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         script_path = os.path.join(os.path.dirname(__file__), 'yupoo_scraper_complet.py')
 
-        cmd = [sys.executable, script_path]
+        cmd = [python_cmd, script_path]
         if fresh:
             cmd.append('--fresh')
         if dry_run:

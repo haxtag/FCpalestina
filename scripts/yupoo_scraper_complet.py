@@ -494,8 +494,10 @@ class YupooCompleteScraper:
         album_links = []
         try:
             logger.info(f"Recuperation des albums depuis {self.base_url}/categories")
-            # Parcourir plusieurs pages si nécessaire
-            for page in range(1, 11):  # Pages 1 à 10
+            # Parcourir les pages jusqu'à ce qu'il n'y ait plus d'albums (avec garde-fou)
+            page = 1
+            max_pages = 30  # sécurité
+            while page <= max_pages:
                 try:
                     page_url = f"{self.base_url}/categories/?page={page}"
                     response = self.session.get(page_url, timeout=30)
@@ -519,6 +521,7 @@ class YupooCompleteScraper:
                     logger.info(f"Page {page}: {len(page_albums)} albums trouves")
                     if not page_albums:
                         break
+                    page += 1
                     time.sleep(1)
                 except Exception as e:
                     logger.error(f"Erreur page {page}: {e}")
