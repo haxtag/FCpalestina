@@ -833,6 +833,16 @@ def import_yupoo():
         import subprocess
         import sys
 
+        # Choisir un interpréteur Python valide (uWSGI -> vrai python3)
+        python_cmd = sys.executable
+        if os.path.basename(python_cmd).lower().startswith('uwsgi'):
+            venv = os.environ.get('VIRTUAL_ENV')
+            candidate = os.path.join(venv, 'bin', 'python3') if venv else ''
+            if candidate and os.path.exists(candidate):
+                python_cmd = candidate
+            else:
+                python_cmd = '/usr/bin/python3'
+
         payload = request.get_json(silent=True) or {}
         fresh = bool(payload.get('fresh'))
         dry_run = bool(payload.get('dry_run'))
