@@ -51,7 +51,7 @@ def remove_without_images(jerseys):
     
     for jersey in jerseys:
         has_valid_image = False
-        
+
         # Vérifier cover_image
         cover = jersey.get('cover_image', '')
         if cover:
@@ -62,8 +62,17 @@ def remove_without_images(jerseys):
                     has_valid_image = True
             # Si c'est une URL
             elif cover.startswith('http'):
+                # Accepte Cloudflare/R2/CDN ou extensions d'image
+                if (
+                    'cloudflare' in cover or
+                    'r2cdn' in cover or
+                    cover.endswith(('.jpg', '.jpeg', '.png', '.webp'))
+                ):
+                    has_valid_image = True
+            # Si c'est un nom de fichier image
+            elif cover.endswith(('.jpg', '.jpeg', '.png', '.webp')):
                 has_valid_image = True
-        
+
         # Vérifier images array
         images = jersey.get('images', [])
         if images and len(images) > 0:
@@ -73,9 +82,18 @@ def remove_without_images(jerseys):
                         has_valid_image = True
                         break
                 elif img.startswith('http'):
+                    if (
+                        'cloudflare' in img or
+                        'r2cdn' in img or
+                        img.endswith(('.jpg', '.jpeg', '.png', '.webp'))
+                    ):
+                        has_valid_image = True
+                        break
+                # Si c'est un nom de fichier image
+                elif img.endswith(('.jpg', '.jpeg', '.png', '.webp')):
                     has_valid_image = True
                     break
-        
+
         if has_valid_image:
             with_images.append(jersey)
         else:
