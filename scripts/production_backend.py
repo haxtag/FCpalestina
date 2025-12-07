@@ -889,6 +889,64 @@ def import_yupoo():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+@app.route('/api/admin/clean-jerseys', methods=['POST'])
+@require_auth
+def clean_jerseys():
+    """Nettoyage des maillots (doublons, sans images ou derniers N)."""
+    try:
+        import subprocess
+        import sys
+
+        python_cmd = sys.executable
+        if os.path.basename(python_cmd).lower().startswith('uwsgi'):
+            venv = os.environ.get('VIRTUAL_ENV')
+            candidate = os.path.join(venv, 'bin', 'python3') if venv else ''
+            if candidate and os.path.exists(candidate):
+                python_cmd = candidate
+            else:
+                python_cmd = '/usr/bin/python3'
+
+        payload = request.get_json(silent=True) or {}
+        mode = payload.get('mode', 'last')
+        number = int(payload.get('number') or 0)
+
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        script_path = os.path.join(os.path.dirname(__file__), 'clean_duplicates.py')
+
+        cmd = [python_cmd, script_path, '--mode', mode, '--yes']
+        if mode == 'last' and number > 0:
+            cmd.extend(['--number', str(number)])
+
+        logger.info(f"Lancement clean_jerseys (cmd={' '.join(cmd)})")
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=300,
+            cwd=base_dir
+        )
+
+        logger.info(f"Script clean_jerseys terminé: {result.returncode}")
+        if result.stdout:
+            logger.info(f"Stdout: {result.stdout[:2000]}")
+        if result.stderr:
+            logger.error(f"Stderr: {result.stderr[:2000]}")
+
+        success = result.returncode == 0
+        return jsonify({
+            'success': success,
+            'output': result.stdout,
+            'error': None if success else (result.stderr or 'Erreur inconnue')
+        }), (200 if success else 500)
+
+    except subprocess.TimeoutExpired:
+        logger.error("Clean jerseys: délai dépassé")
+        return jsonify({'success': False, 'error': 'Nettoyage trop long (>5min), interrompu.'}), 504
+    except Exception as e:
+        logger.error(f"Erreur clean_jerseys: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 # Gestion des erreurs
 @app.errorhandler(404)
 def not_found(error):

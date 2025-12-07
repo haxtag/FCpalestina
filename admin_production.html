@@ -752,6 +752,9 @@
                     <button class="action-btn info" onclick="downloadMissingImages()" id="downloadImagesBtn">
                         <i class="fas fa-images"></i> Télécharger images manquantes (Démo)
                     </button>
+                    <button class="action-btn danger" id="cleanJerseysBtn" onclick="cleanJerseysAdmin()">
+                        <i class="fas fa-broom"></i> Nettoyer les maillots
+                    </button>
                     <button class="action-btn success" onclick="saveAllData()">
                         <i class="fas fa-save"></i> Sauvegarder les données
                     </button>
@@ -1490,6 +1493,69 @@
                 if (btn) {
                     btn.disabled = false;
                     btn.innerHTML = originalText || '<i class="fas fa-download"></i> Importer nouveaux maillots Yupoo';
+                }
+            }
+        }
+
+        async function cleanJerseysAdmin() {
+            const modeChoice = prompt('Nettoyage:\n1 = Supprimer les N derniers\n2 = Supprimer sans images\n3 = Supprimer doublons\n4 = Complet (doublons + sans images)', '1');
+            if (modeChoice === null) return;
+
+            let mode = 'last';
+            if (modeChoice === '2') mode = 'no-images';
+            else if (modeChoice === '3') mode = 'duplicates';
+            else if (modeChoice === '4') mode = 'all';
+
+            let number = 0;
+            if (mode === 'last') {
+                const nStr = prompt('Combien de maillots supprimer (les plus récents) ?', '200');
+                if (nStr === null) return;
+                number = parseInt(nStr) || 0;
+                if (number <= 0) {
+                    alert('Nombre invalide');
+                    return;
+                }
+            }
+
+            const confirmMsg = mode === 'last'
+                ? `Supprimer les ${number} derniers maillots ?`
+                : `Lancer le nettoyage (${mode}) ?`;
+
+            if (!confirm(confirmMsg)) return;
+
+            const btn = document.getElementById('cleanJerseysBtn');
+            const original = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Nettoyage...';
+            }
+
+            try {
+                const payload = { mode };
+                if (mode === 'last') payload.number = number;
+
+                const response = await fetch(`${API_BASE_URL}/admin/clean-jerseys`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert('Nettoyage terminé\n\n' + (data.output ? data.output.substring(0, 600) : '')); 
+                    loadJerseys();
+                    loadStats();
+                } else {
+                    alert('Erreur nettoyage:\n' + (data.error || 'Erreur inconnue'));
+                }
+            } catch (error) {
+                console.error('Erreur clean jerseys:', error);
+                alert('Erreur de connexion au serveur lors du nettoyage.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = original || '<i class="fas fa-broom"></i> Nettoyer les maillots';
                 }
             }
         }

@@ -2,10 +2,10 @@
 """
 Script de nettoyage des doublons et maillots sans images
 """
+import argparse
 import json
 import os
 from pathlib import Path
-import hashlib
 from datetime import datetime
 import shutil
 
@@ -16,13 +16,11 @@ def load_jerseys():
 
 def save_jerseys(jerseys):
     """Sauvegarder les maillots avec backup"""
-    # Backup
     os.makedirs('data/backups', exist_ok=True)
     backup_name = f"data/backups/jerseys_before_clean_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     shutil.copy2('data/jerseys.json', backup_name)
     print(f"✓ Backup créé: {backup_name}")
-    
-    # Sauvegarder
+
     with open('data/jerseys.json', 'w', encoding='utf-8') as f:
         json.dump(jerseys, f, ensure_ascii=False, indent=2)
 
@@ -101,80 +99,117 @@ def remove_last_n(jerseys, n):
     
     return kept, removed
 
-def main():
-    print("🧹 Nettoyage des maillots\n")
-    
-    # Charger
+def run_cleanup(mode: str, number: int = 0, auto_confirm: bool = False):
+    """Nettoyer selon le mode choisi (non interactif)."""
     jerseys = load_jerseys()
     initial_count = len(jerseys)
-    print(f"📊 Maillots actuels: {initial_count}\n")
-    
-    # Menu
-    print("Options:")
-    print("1. Supprimer les doublons (basé sur le titre)")
-    print("2. Supprimer les maillots sans images")
-    print("3. Supprimer les N derniers maillots")
-    print("4. Tout nettoyer (doublons + sans images)")
-    
-    choice = input("\nChoisissez une option (1-4): ").strip()
-    
     cleaned = jerseys
     removed_items = []
-    
-    if choice == '1':
+
+    if mode == 'duplicates':
         print("\n🔍 Recherche des doublons...")
         cleaned, removed_items = remove_duplicates(jerseys)
-        
-    elif choice == '2':
+
+    elif mode == 'no-images':
         print("\n🔍 Recherche des maillots sans images...")
         cleaned, removed_items = remove_without_images(jerseys)
-        
-    elif choice == '3':
-        try:
-            n = int(input("\nCombien de maillots supprimer (depuis la fin)? "))
-            print(f"\n🔍 Suppression des {n} derniers maillots...")
-            cleaned, removed_items = remove_last_n(jerseys, n)
-        except ValueError:
-            print("❌ Nombre invalide")
-            return
-            
-    elif choice == '4':
+
+    elif mode == 'last':
+        print(f"\n🔍 Suppression des {number} derniers maillots...")
+        cleaned, removed_items = remove_last_n(jerseys, number)
+
+    elif mode == 'all':
         print("\n🔍 Nettoyage complet...")
-        # D'abord les doublons
         print("\nÉtape 1: Doublons")
         cleaned, dup_removed = remove_duplicates(jerseys)
         removed_items.extend(dup_removed)
-        
-        # Ensuite les sans images
+
         print("\nÉtape 2: Sans images")
         cleaned, no_img_removed = remove_without_images(cleaned)
         removed_items.extend(no_img_removed)
-        
+
     else:
-        print("❌ Option invalide")
-        return
-    
-    # Résumé
+        print("❌ Mode invalide")
+        return False
+
     final_count = len(cleaned)
     removed_count = len(removed_items)
-    
+
     print(f"\n📊 Résumé:")
     print(f"  Avant: {initial_count} maillots")
     print(f"  Après: {final_count} maillots")
     print(f"  Supprimés: {removed_count} maillots")
-    
+
     if removed_count == 0:
         print("\n✓ Aucun maillot à supprimer!")
-        return
-    
-    # Confirmation
+        return True
+
+    if auto_confirm:
+        save_jerseys(cleaned)
+        print(f"\n✓ Nettoyage terminé! {removed_count} maillots supprimés.")
+        print(f"✓ {final_count} maillots conservés.")
+        return True
+
     confirm = input("\n⚠️  Confirmer la suppression? (oui/non): ").strip().lower()
     if confirm in ['oui', 'o', 'yes', 'y']:
         save_jerseys(cleaned)
         print(f"\n✓ Nettoyage terminé! {removed_count} maillots supprimés.")
         print(f"✓ {final_count} maillots conservés.")
-    else:
-        print("\n❌ Nettoyage annulé.")
+        return True
+
+    print("\n❌ Nettoyage annulé.")
+    return False
+
+
+def interactive_menu():
+    """Mode interactif legacy (console)."""
+    print("🧹 Nettoyage des maillots\n")
+
+    jerseys = load_jerseys()
+    initial_count = len(jerseys)
+    print(f"📊 Maillots actuels: {initial_count}\n")
+
+    print("Options:")
+    print("1. Supprimer les doublons (basé sur le titre)")
+    print("2. Supprimer les maillots sans images")
+    print("3. Supprimer les N derniers maillots")
+    print("4. Tout nettoyer (doublons + sans images)")
+
+    choice = input("\nChoisissez une option (1-4): ").strip()
+
+    if choice == '1':
+        return run_cleanup('duplicates')
+    if choice == '2':
+        return run_cleanup('no-images')
+    if choice == '3':
+        try:
+            n = int(input("\nCombien de maillots supprimer (depuis la fin)? "))
+        except ValueError:
+            print("❌ Nombre invalide")
+            return False
+        return run_cleanup('last', number=n)
+    if choice == '4':
+        return run_cleanup('all')
+
+    print("❌ Option invalide")
+    return False
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Nettoyage des maillots")
+    parser.add_argument('--mode', choices=['duplicates', 'no-images', 'last', 'all'], help='Mode de nettoyage')
+    parser.add_argument('--number', type=int, default=0, help='Nombre de maillots (pour mode last)')
+    parser.add_argument('--yes', action='store_true', help='Confirmer automatiquement')
+
+    args = parser.parse_args()
+
+    if args.mode:
+        success = run_cleanup(args.mode, args.number, auto_confirm=args.yes)
+        raise SystemExit(0 if success else 1)
+
+    # Mode interactif si aucun argument
+    success = interactive_menu()
+    raise SystemExit(0 if success else 1)
 
 if __name__ == "__main__":
     main()
