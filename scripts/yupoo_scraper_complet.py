@@ -303,42 +303,48 @@ class YupooCompleteScraper:
                 if len(images) >= 6:
                     break
         
-        # Fonction pour vérifier si une image est de haute qualité
-        def is_high_quality(url: str) -> bool:
-            """Garder seulement les images raw, big, ou large (pas medium, small, square)"""
+        # Fonction pour vérifier si une image est acceptable (au moins moyenne qualité)
+        def is_acceptable_quality(url: str) -> bool:
+            """Accepter les images raw, big, large, ou medium (exclure seulement small et square)"""
             url_lower = url.lower()
-            # Exclure les basses qualités
-            if any(x in url_lower for x in ['medium', 'small', 'square']):
+            # Exclure les très basses qualités
+            if any(x in url_lower for x in ['small', 'square', 'thumb']):
                 return False
-            # Inclure les hautes qualités
-            return any(x in url_lower for x in ['raw', 'big', 'large'])
+            # Accepter tout le reste (raw, big, large, medium, etc.)
+            return True
         
-        # Filtrer pour garder uniquement les images haute qualité
-        high_quality_images = [img for img in images if is_high_quality(img)]
+        # Filtrer pour garder les images de qualité acceptable
+        acceptable_images = [img for img in images if is_acceptable_quality(img)]
+        
+        # Si aucune image acceptable trouvée, prendre toutes les images trouvées
+        if not acceptable_images:
+            logger.warning(f"Aucune image de qualité acceptable trouvée, utilisation de tous les formats disponibles")
+            acceptable_images = images
         
         # Grouper par nom de base pour éviter les doublons de la même image
         from collections import defaultdict
         import re
         grouped = defaultdict(list)
-        for img_url in high_quality_images:
-            # Extraire l'identifiant de base (avant .jpg, .png, etc.)
-            base_name = re.sub(r'_(raw|big|large|medium|small|square)\.(jpg|jpeg|png|webp)', '', img_url.lower())
+        for img_url in acceptable_images:
+            # Extraire l'identifiant de base (avant les variantes de qualité)
+            base_name = re.sub(r'_(raw|big|large|medium|small|square|thumb)\.(jpg|jpeg|png|webp)', '', img_url.lower())
             grouped[base_name].append(img_url)
         
         # Prendre la meilleure qualité de chaque groupe
         final_images = []
         for base_name, urls in grouped.items():
-            # Trier par qualité (raw > big > large)
+            # Trier par qualité (raw > big > large > medium)
             def quality_rank(u: str):
                 u_low = u.lower()
                 if 'raw' in u_low: return 0
                 if 'big' in u_low: return 1
                 if 'large' in u_low: return 2
-                return 3
+                if 'medium' in u_low: return 3
+                return 4
             urls.sort(key=quality_rank)
             final_images.append(urls[0])  # Prendre la meilleure
         
-        logger.info(f"Trouvé {len(images)} images totales → {len(high_quality_images)} haute qualité → {len(final_images)} uniques")
+        logger.info(f"Trouvé {len(images)} images totales → {len(acceptable_images)} qualité acceptable → {len(final_images)} uniques")
         return final_images
     
     def scrape_album_page(self, album_url: str, album_title: str = None) -> dict:
@@ -400,8 +406,8 @@ class YupooCompleteScraper:
                 logger.info(f"Limitation des images: {len(image_urls)} → {expected_count} (selon titre)")
                 image_urls = image_urls[:expected_count]
             
-            # Générer un ID unique
-            jersey_id = hashlib.md5(f"{translated_title}{album_url}".encode()).hexdigest()[:12]
+            # Générer un ID unique basé UNIQUEMENT sur l'URL (plus stable que titre qui peut varier)
+            jersey_id = hashlib.md5(album_url.encode()).hexdigest()[:12]
             
             # Télécharger l'image de couverture (présentation Yupoo)
             cover_image_name = None
@@ -621,7 +627,8 @@ class YupooCompleteScraper:
                 logger.info(f"Nettoyage: {removed} entrees invalides supprimees")
 
             # Sauvegarde finale
-            all_jerseys = (cleaned_existing + new_jerseys) if not fresh else new_jerseys
+            # Combiner: NOUVEAUX EN PREMIER pour qu'ils apparaissent en haut du site
+            all_jerseys = (new_jerseys + cleaned_existing) if not fresh else new_jerseys
             success = self.save_jerseys(all_jerseys)
             
             if success:

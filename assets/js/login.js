@@ -42,7 +42,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     loadingSpinner.style.display = 'block';
     
     try {
-        const response = await fetch('/api/auth/login', {
+        // Determine the API URL based on environment
+        const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? `http://localhost:8001/api/auth/login`
+            : `/api/auth/login`;
+        
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,7 +65,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             showAlert('Connexion réussie! Redirection...', 'success');
             
             setTimeout(() => {
-                window.location.href = '/admin';
+                window.location.href = '/admin_production.html';
             }, 1000);
         } else {
             showAlert(data.error || 'Identifiants incorrects');
@@ -80,13 +85,17 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 // Check if already logged in
 window.addEventListener('DOMContentLoaded', () => {
     // Vérifier la session avec le backend (via cookies)
-    fetch('/api/auth/status', {
+    const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? `http://localhost:8001/api/auth/status`
+        : `/api/auth/status`;
+    
+    fetch(apiUrl, {
         credentials: 'include' // Important pour inclure les cookies de session
     })
     .then(response => response.json())
     .then(data => {
         if (data.authenticated) {
-            window.location.href = '/admin';
+            window.location.href = '/admin_production.html';
         }
     })
     .catch(err => console.log('Session check failed'));

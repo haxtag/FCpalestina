@@ -7,11 +7,20 @@
     <link rel="icon" type="image/png" href="assets/img/fcp3.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
+        // Déterminer l'URL de base de l'API selon l'environnement
+        const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:8001'
+            : '';
+        
         // Configuration minimale pour récupérer la base d'images publique (CDN)
-        window.CONFIG = window.CONFIG || { IMAGES_BASE_URL: '/assets/images/jerseys' };
+        window.CONFIG = window.CONFIG || { 
+            IMAGES_BASE_URL: '/assets/images/jerseys',
+            API_BASE: apiBase
+        };
+        
         (async () => {
             try {
-                const res = await fetch('/api/config-public', { credentials: 'include' });
+                const res = await fetch(`${apiBase}/api/config-public`, { credentials: 'include' });
                 if (res.ok) {
                     const pub = await res.json();
                     if (pub && pub.images_base_url) {
@@ -939,8 +948,11 @@
     </div>
 
     <script>
-        // Configuration API
-        const API_BASE_URL = '/api';
+        // Configuration API - Déterminer l'URL de base selon l'environnement
+        const apiHostname = window.location.hostname;
+        const API_BASE_URL = (apiHostname === 'localhost' || apiHostname === '127.0.0.1')
+            ? 'http://localhost:8001/api'
+            : '/api';
         
         // Variables globales
         let jerseys = [];
@@ -1426,7 +1438,19 @@
         }
 
         async function importYupooJerseys() {
-            if (!confirm('Importer les nouveaux maillots depuis Yupoo ? Cela peut prendre plusieurs minutes.')) {
+            // Demander le nombre de maillots à importer
+            const limit = prompt('Combien de nouveaux albums traiter ?\n(0 ou vide = tous les albums, 50-100 = rapide)', '50');
+            
+            if (limit === null) {
+                return; // Annulé
+            }
+            
+            const limitNum = parseInt(limit) || 0;
+            const message = limitNum > 0 
+                ? `Importer les ${limitNum} albums les plus récents ?`
+                : 'Importer TOUS les nouveaux maillots ? (peut être long)';
+            
+            if (!confirm(message)) {
                 return;
             }
 
@@ -1438,16 +1462,24 @@
             }
 
             try {
+                const payload = { fresh: false };
+                if (limitNum > 0) {
+                    payload.limit = limitNum;
+                }
+                
                 const response = await fetch(`${API_BASE_URL}/admin/import-yupoo`, {
                     method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ fresh: false }) // on importe uniquement les nouveaux maillots
+                    body: JSON.stringify(payload)
                 });
 
                 const data = await response.json();
                 if (response.ok && data.success) {
-                    alert('Import Yupoo terminé avec succès. Consultez le log si besoin.');
+                    alert('Import Yupoo terminé avec succès!\n\n' + (data.output ? data.output.substring(0, 500) : 'Consultez les logs.'));
+                    // Recharger les données
+                    loadJerseys();
+                    loadStats();
                 } else {
                     alert('Erreur lors de l\'import Yupoo:\n' + (data.error || 'Erreur inconnue'));
                 }
